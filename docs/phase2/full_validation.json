@@ -1,0 +1,188 @@
+{
+  "generated_at_utc": "2026-11-15T09:58:08+00:00",
+  "validation_mode": "deep",
+  "status": "pass",
+  "source_months": 24,
+  "bronze_partitions": 24,
+  "bronze_columns": 113,
+  "bronze_rows": 14080680,
+  "by_year": {
+    "2024": 7079061,
+    "2025": 7001619
+  },
+  "bronze_parquet_bytes": 445109486,
+  "monthly": [
+    {
+      "month": "2024-01",
+      "source_rows": 547271,
+      "bronze_rows": 547271,
+      "parquet_bytes": 17833166,
+      "row_groups": 30
+    },
+    {
+      "month": "2024-02",
+      "source_rows": 519221,
+      "bronze_rows": 519221,
+      "parquet_bytes": 15848866,
+      "row_groups": 28
+    },
+    {
+      "month": "2024-03",
+      "source_rows": 591767,
+      "bronze_rows": 591767,
+      "parquet_bytes": 18726531,
+      "row_groups": 32
+    },
+    {
+      "month": "2024-04",
+      "source_rows": 582185,
+      "bronze_rows": 582185,
+      "parquet_bytes": 17700433,
+      "row_groups": 32
+    },
+    {
+      "month": "2024-05",
+      "source_rows": 609743,
+      "bronze_rows": 609743,
+      "parquet_bytes": 20039367,
+      "row_groups": 33
+    },
+    {
+      "month": "2024-06",
+      "source_rows": 611132,
+      "bronze_rows": 611132,
+      "parquet_bytes": 19985677,
+      "row_groups": 34
+    },
+    {
+      "month": "2024-07",
+      "source_rows": 634613,
+      "bronze_rows": 634613,
+      "parquet_bytes": 21277270,
+      "row_groups": 35
+    },
+    {
+      "month": "2024-08",
+      "source_rows": 619025,
+      "bronze_rows": 619025,
+      "parquet_bytes": 19365660,
+      "row_groups": 34
+    },
+    {
+      "month": "2024-09",
+      "source_rows": 582622,
+      "bronze_rows": 582622,
+      "parquet_bytes": 17427810,
+      "row_groups": 32
+    },
+    {
+      "month": "2024-10",
+      "source_rows": 615497,
+      "bronze_rows": 615497,
+      "parquet_bytes": 18547740,
+      "row_groups": 34
+    },
+    {
+      "month": "2024-11",
+      "source_rows": 575404,
+      "bronze_rows": 575404,
+      "parquet_bytes": 17681642,
+      "row_groups": 32
+    },
+    {
+      "month": "2024-12",
+      "source_rows": 590581,
+      "bronze_rows": 590581,
+      "parquet_bytes": 19055356,
+      "row_groups": 32
+    },
+    {
+      "month": "2025-01",
+      "source_rows": 539747,
+      "bronze_rows": 539747,
+      "parquet_bytes": 16940365,
+      "row_groups": 29
+    },
+    {
+      "month": "2025-02",
+      "source_rows": 504884,
+      "bronze_rows": 504884,
+      "parquet_bytes": 15810709,
+      "row_groups": 28
+    },
+    {
+      "month": "2025-03",
+      "source_rows": 600872,
+      "bronze_rows": 600872,
+      "parquet_bytes": 19146816,
+      "row_groups": 33
+    },
+    {
+      "month": "2025-04",
+      "source_rows": 583950,
+      "bronze_rows": 583950,
+      "parquet_bytes": 18030087,
+      "row_groups": 32
+    },
+    {
+      "month": "2025-05",
+      "source_rows": 605648,
+      "bronze_rows": 605648,
+      "parquet_bytes": 19009087,
+      "row_groups": 33
+    },
+    {
+      "month": "2025-06",
+      "source_rows": 611575,
+      "bronze_rows": 611575,
+      "parquet_bytes": 19386648,
+      "row_groups": 34
+    },
+    {
+      "month": "2025-07",
+      "source_rows": 631428,
+      "bronze_rows": 631428,
+      "parquet_bytes": 20003485,
+      "row_groups": 35
+    },
+    {
+      "month": "2025-08",
+      "source_rows": 602378,
+      "bronze_rows": 602378,
+      "parquet_bytes": 19522890,
+      "row_groups": 33
+    },
+    {
+      "month": "2025-09",
+      "source_rows": 562439,
+      "bronze_rows": 562439,
+      "parquet_bytes": 17313033,
+      "row_groups": 31
+    },
+    {
+      "month": "2025-10",
+      "source_rows": 605844,
+      "bronze_rows": 605844,
+      "parquet_bytes": 19057585,
+      "row_groups": 33
+    },
+    {
+      "month": "2025-11",
+      "source_rows": 570550,
+      "bronze_rows": 570550,
+      "parquet_bytes": 18075558,
+      "row_groups": 31
+    },
+    {
+      "month": "2025-12",
+      "source_rows": 582304,
+      "bronze_rows": 582304,
+      "parquet_bytes": 19323705,
+      "row_groups": 32
+    }
+  ],
+  "known_source_exceptions": {
+    "2024-08_missing_flight_number": 1,
+    "2025-09_completed_missing_arrdel15": 1
+  }
+}

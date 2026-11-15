@@ -1,0 +1,26 @@
+{
+  "generated_at_utc": "2026-11-15T09:54:05+00:00",
+  "source_month": "2024-01",
+  "source_zip_sha256": "fe089b45523f9d4ac0ccd0e176a543d274e914ee5ae5bd384dbaafc7dc06ebfd",
+  "source_csv_uncompressed_bytes": 246830488,
+  "benchmark_scope": "conversion plus Parquet hashing; ZIP verification excluded from timed section",
+  "output_directory": "data\\tmp\\phase2_benchmark\\2024-01-hv8qx1q5",
+  "measurements": [
+    {
+      "compression": "snappy",
+      "rows": 547271,
+      "parquet_bytes": 22852840,
+      "elapsed_seconds": 6.921,
+      "rows_per_second": 79068.8,
+      "row_groups": 30
+    },
+    {
+      "compression": "zstd",
+      "rows": 547271,
+      "parquet_bytes": 17833166,
+      "elapsed_seconds": 7.228,
+      "rows_per_second": 75716.9,
+      "row_groups": 30
+    }
+  ]
+}

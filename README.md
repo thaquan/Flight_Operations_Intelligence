@@ -4,7 +4,7 @@
 
 A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
 
-**Current status:** Phase 1 complete and verified (24/24 months; 14,080,680 real flight observations). Phases 2–8 are planned, not implemented.
+**Current status:** Phases 1–2 complete and verified locally (24/24 months; 14,080,680 real flight observations preserved in Bronze). Phases 3–8 are planned, not implemented.
 
 ## Business questions
 
@@ -70,15 +70,45 @@ Phase 1 deliverables:
 - [Aggregate machine-readable profile](docs/phase1/2024_2025/aggregate_profile.json)
 - Monthly machine-readable profiles in `docs/phase1/2024_2025/profiles/`
 
+## Phase 2: build the Bronze Parquet layer
+
+The Phase 2 pipeline reads the official BTS monthly ZIPs in bounded PyArrow CSV batches, validates each source against Phase 1 checksums, and writes partitioned, ZSTD-compressed Parquet with row-level lineage. It supports month-range backfills, idempotent reruns, explicit reprocessing, and recovery of interrupted local outputs.
+
+Install the tested local dependencies in a virtual environment (Python 3.13 on Windows was used for the verified run):
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-phase2.txt
+```
+
+Activate the environment first, or call its Python executable directly. Run from the project root with the 24 raw ZIPs already downloaded:
+
+```bash
+python -m src.phase2.ingest --start 2024-01 --end 2025-12 --dry-run
+python -m src.phase2.ingest --start 2024-01 --end 2025-12
+python -m src.phase2.validate --deep --report docs/phase2/full_validation.json
+python -m pytest -q
+```
+
+**Verified local result:** 24/24 Parquet partitions, **14,080,680/14,080,680** rows reconciled, 113 fields per Bronze record (109 source + 4 lineage), and 445,109,486 Parquet bytes. The 24-month rerun skipped every partition without changing the ingestion manifest; 33 Python tests passed. Two reviewed Phase 1 source exceptions were preserved and checked.
+
+- [Phase 2 overview and documentation](docs/phase2/README.md)
+- [Bronze schema](docs/phase2/bronze_schema.md)
+- [Operations and recovery runbook](docs/phase2/runbook.md)
+- [Deep validation report](docs/phase2/full_validation.json)
+- [Measured performance](docs/phase2/performance_benchmark.md)
+
+The generated `data/bronze/` tree and its ingestion manifest are deliberately Git-ignored. Reproduce them locally from the official raw ZIPs; PostgreSQL and dbt modeling begin in Phase 3.
+
 ## Planned stack and scope
 
 | Layer | Planned technology | Status |
 | --- | --- | --- |
 | Source acquisition / profiling | Python | Phase 1 |
-| Bronze storage | Source ZIP + partitioned Parquet (Polars/PyArrow) | Phase 2 |
+| Bronze storage | Python, PyArrow, Polars and partitioned Parquet | Phase 2 complete |
 | Silver warehouse | PostgreSQL + Docker Compose | Phase 3 |
 | Transformations | dbt Core | Phase 3 |
-| Tests and CI | pytest, dbt tests, GitHub Actions | Phase 4 |
+| Tests and CI | pytest tests implemented; dbt tests and GitHub Actions planned | Phase 2 / Phase 4 |
 | BI | Power BI Desktop (Import) | Phase 5 |
 | Weather integration | NOAA GHCNh, station mapping, IANA time zones | Phase 6 |
 | Orchestration | Dagster OSS | Phase 7 |
@@ -107,4 +137,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). The verified Phase 1 implementation is published on the `main` branch. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, local databases and credentials remain excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phase 1 is published on `main`; Phase 2 has been verified in the local working tree and is awaiting a separate push. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
