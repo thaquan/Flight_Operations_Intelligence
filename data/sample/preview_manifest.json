@@ -1,0 +1,38 @@
+{
+  "source_sample_sha256": "71a898a5c604e088667e0e8565efc9a68aeb5a73f43cd2d3d323dcf727a77e71",
+  "preview_sha256": "cf4b6f634d67af7a1486b01570c40324a6470b80a91bd39625f04b0da560c907",
+  "preview_rows": 1200,
+  "months": [
+    "2024-01",
+    "2024-02",
+    "2024-03",
+    "2024-04",
+    "2024-05",
+    "2024-06",
+    "2024-07",
+    "2024-08",
+    "2024-09",
+    "2024-10",
+    "2024-11",
+    "2024-12",
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12"
+  ],
+  "rows_per_month": 50,
+  "status_quotas_per_month": {
+    "completed": 46,
+    "cancelled": 3,
+    "diverted": 1
+  },
+  "sampling_warning": "Illustrative stratified subset, not for population KPI estimates."
+}
