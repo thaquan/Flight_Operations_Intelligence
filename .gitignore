@@ -1,5 +1,6 @@
 # Source data and generated local assets
 data/raw/
+data/bronze/
 data/processed/
 data/tmp/
 *.parquet

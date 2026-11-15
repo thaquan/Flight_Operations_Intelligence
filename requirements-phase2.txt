@@ -1,0 +1,4 @@
+# Tested on Windows with Python 3.13. Install into the local .venv.
+pyarrow==26.0.1
+polars==1.44.2
+pytest==9.2.0
