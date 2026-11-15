@@ -1,0 +1,1487 @@
+{
+  "generated_at_utc": "2026-11-15T03:04:51+00:00",
+  "period": {
+    "start": "2024-01",
+    "end": "2025-12",
+    "expected_months": 24,
+    "verified_months": 24
+  },
+  "phase1_complete": true,
+  "checks": {
+    "errors": [],
+    "warnings": [
+      "2024-08: flight record missing a candidate business-key component; preserve source-row lineage",
+      "2025-09: completed flight missing ArrDel15; excluded from arrival punctuality denominator"
+    ]
+  },
+  "overall": {
+    "scheduled_flights": 14080680,
+    "completed_flights": 13844732,
+    "cancelled_flights": 199191,
+    "diverted_not_cancelled_flights": 36757,
+    "arrival_delay15_eligible_flights": 13844731,
+    "on_time_arrivals": 10860127,
+    "arrival_delayed_15min": 2984604,
+    "arrival_on_time_pct": 78.4423,
+    "arrival_delay15_pct": 21.5577,
+    "cancellation_pct_of_scheduled": 1.4146,
+    "diversion_pct_of_scheduled": 0.261
+  },
+  "source_storage": {
+    "verified_zip_bytes": 709735704,
+    "verified_uncompressed_csv_bytes": 6370981019
+  },
+  "distinct_entities": {
+    "origin_airports": 358,
+    "destination_airports": 358,
+    "reporting_airlines": 15,
+    "directed_routes": 7328
+  },
+  "by_year": {
+    "2024": {
+      "scheduled_flights": 7079061,
+      "completed_flights": 6965247,
+      "cancelled_flights": 96315,
+      "diverted_not_cancelled_flights": 17499,
+      "arrival_delay15_eligible_flights": 6965247,
+      "on_time_arrivals": 5515281,
+      "arrival_delayed_15min": 1449966,
+      "arrival_on_time_pct": 79.1828,
+      "arrival_delay15_pct": 20.8172,
+      "cancellation_pct_of_scheduled": 1.3606,
+      "diversion_pct_of_scheduled": 0.2472
+    },
+    "2025": {
+      "scheduled_flights": 7001619,
+      "completed_flights": 6879485,
+      "cancelled_flights": 102876,
+      "diverted_not_cancelled_flights": 19258,
+      "arrival_delay15_eligible_flights": 6879484,
+      "on_time_arrivals": 5344846,
+      "arrival_delayed_15min": 1534638,
+      "arrival_on_time_pct": 77.6925,
+      "arrival_delay15_pct": 22.3075,
+      "cancellation_pct_of_scheduled": 1.4693,
+      "diversion_pct_of_scheduled": 0.2751
+    }
+  },
+  "year_over_year_2025_vs_2024": {
+    "scheduled_flights_pct_change": -1.094,
+    "arrival_delay15_percentage_point_change": 1.4903,
+    "cancellation_percentage_point_change": 0.1087
+  },
+  "monthly": [
+    {
+      "month": "2024-01",
+      "rows": 547271,
+      "date_min": "2024-01-01",
+      "date_max": "2024-01-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 547271,
+      "completed_flights": 525370,
+      "cancelled_flights": 20389,
+      "diverted_not_cancelled_flights": 1512,
+      "arrival_delay15_eligible_flights": 525370,
+      "on_time_arrivals": 398960,
+      "arrival_delayed_15min": 126410,
+      "arrival_on_time_pct": 75.9389,
+      "arrival_delay15_pct": 24.0611,
+      "cancellation_pct_of_scheduled": 3.7256,
+      "diversion_pct_of_scheduled": 0.2763
+    },
+    {
+      "month": "2024-02",
+      "rows": 519221,
+      "date_min": "2024-02-01",
+      "date_max": "2024-02-29",
+      "distinct_flight_dates": 29,
+      "scheduled_flights": 519221,
+      "completed_flights": 515269,
+      "cancelled_flights": 3002,
+      "diverted_not_cancelled_flights": 950,
+      "arrival_delay15_eligible_flights": 515269,
+      "on_time_arrivals": 433233,
+      "arrival_delayed_15min": 82036,
+      "arrival_on_time_pct": 84.079,
+      "arrival_delay15_pct": 15.921,
+      "cancellation_pct_of_scheduled": 0.5782,
+      "diversion_pct_of_scheduled": 0.183
+    },
+    {
+      "month": "2024-03",
+      "rows": 591767,
+      "date_min": "2024-03-01",
+      "date_max": "2024-03-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 591767,
+      "completed_flights": 585413,
+      "cancelled_flights": 5120,
+      "diverted_not_cancelled_flights": 1234,
+      "arrival_delay15_eligible_flights": 585413,
+      "on_time_arrivals": 463381,
+      "arrival_delayed_15min": 122032,
+      "arrival_on_time_pct": 79.1545,
+      "arrival_delay15_pct": 20.8455,
+      "cancellation_pct_of_scheduled": 0.8652,
+      "diversion_pct_of_scheduled": 0.2085
+    },
+    {
+      "month": "2024-04",
+      "rows": 582185,
+      "date_min": "2024-04-01",
+      "date_max": "2024-04-30",
+      "distinct_flight_dates": 30,
+      "scheduled_flights": 582185,
+      "completed_flights": 576915,
+      "cancelled_flights": 4035,
+      "diverted_not_cancelled_flights": 1235,
+      "arrival_delay15_eligible_flights": 576915,
+      "on_time_arrivals": 466967,
+      "arrival_delayed_15min": 109948,
+      "arrival_on_time_pct": 80.9421,
+      "arrival_delay15_pct": 19.0579,
+      "cancellation_pct_of_scheduled": 0.6931,
+      "diversion_pct_of_scheduled": 0.2121
+    },
+    {
+      "month": "2024-05",
+      "rows": 609743,
+      "date_min": "2024-05-01",
+      "date_max": "2024-05-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 609743,
+      "completed_flights": 599226,
+      "cancelled_flights": 8244,
+      "diverted_not_cancelled_flights": 2273,
+      "arrival_delay15_eligible_flights": 599226,
+      "on_time_arrivals": 440950,
+      "arrival_delayed_15min": 158276,
+      "arrival_on_time_pct": 73.5866,
+      "arrival_delay15_pct": 26.4134,
+      "cancellation_pct_of_scheduled": 1.352,
+      "diversion_pct_of_scheduled": 0.3728
+    },
+    {
+      "month": "2024-06",
+      "rows": 611132,
+      "date_min": "2024-06-01",
+      "date_max": "2024-06-30",
+      "distinct_flight_dates": 30,
+      "scheduled_flights": 611132,
+      "completed_flights": 601272,
+      "cancelled_flights": 7876,
+      "diverted_not_cancelled_flights": 1984,
+      "arrival_delay15_eligible_flights": 601272,
+      "on_time_arrivals": 451327,
+      "arrival_delayed_15min": 149945,
+      "arrival_on_time_pct": 75.062,
+      "arrival_delay15_pct": 24.938,
+      "cancellation_pct_of_scheduled": 1.2888,
+      "diversion_pct_of_scheduled": 0.3246
+    },
+    {
+      "month": "2024-07",
+      "rows": 634613,
+      "date_min": "2024-07-01",
+      "date_max": "2024-07-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 634613,
+      "completed_flights": 613938,
+      "cancelled_flights": 18372,
+      "diverted_not_cancelled_flights": 2303,
+      "arrival_delay15_eligible_flights": 613938,
+      "on_time_arrivals": 432073,
+      "arrival_delayed_15min": 181865,
+      "arrival_on_time_pct": 70.3773,
+      "arrival_delay15_pct": 29.6227,
+      "cancellation_pct_of_scheduled": 2.895,
+      "diversion_pct_of_scheduled": 0.3629
+    },
+    {
+      "month": "2024-08",
+      "rows": 619025,
+      "date_min": "2024-08-01",
+      "date_max": "2024-08-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 619025,
+      "completed_flights": 604303,
+      "cancelled_flights": 12714,
+      "diverted_not_cancelled_flights": 2008,
+      "arrival_delay15_eligible_flights": 604303,
+      "on_time_arrivals": 462491,
+      "arrival_delayed_15min": 141812,
+      "arrival_on_time_pct": 76.533,
+      "arrival_delay15_pct": 23.467,
+      "cancellation_pct_of_scheduled": 2.0539,
+      "diversion_pct_of_scheduled": 0.3244
+    },
+    {
+      "month": "2024-09",
+      "rows": 582622,
+      "date_min": "2024-09-01",
+      "date_max": "2024-09-30",
+      "distinct_flight_dates": 30,
+      "scheduled_flights": 582622,
+      "completed_flights": 578262,
+      "cancelled_flights": 3499,
+      "diverted_not_cancelled_flights": 861,
+      "arrival_delay15_eligible_flights": 578262,
+      "on_time_arrivals": 488584,
+      "arrival_delayed_15min": 89678,
+      "arrival_on_time_pct": 84.4918,
+      "arrival_delay15_pct": 15.5082,
+      "cancellation_pct_of_scheduled": 0.6006,
+      "diversion_pct_of_scheduled": 0.1478
+    },
+    {
+      "month": "2024-10",
+      "rows": 615497,
+      "date_min": "2024-10-01",
+      "date_max": "2024-10-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 615497,
+      "completed_flights": 608514,
+      "cancelled_flights": 6284,
+      "diverted_not_cancelled_flights": 699,
+      "arrival_delay15_eligible_flights": 608514,
+      "on_time_arrivals": 528171,
+      "arrival_delayed_15min": 80343,
+      "arrival_on_time_pct": 86.7969,
+      "arrival_delay15_pct": 13.2031,
+      "cancellation_pct_of_scheduled": 1.021,
+      "diversion_pct_of_scheduled": 0.1136
+    },
+    {
+      "month": "2024-11",
+      "rows": 575404,
+      "date_min": "2024-11-01",
+      "date_max": "2024-11-30",
+      "distinct_flight_dates": 30,
+      "scheduled_flights": 575404,
+      "completed_flights": 571933,
+      "cancelled_flights": 2629,
+      "diverted_not_cancelled_flights": 842,
+      "arrival_delay15_eligible_flights": 571933,
+      "on_time_arrivals": 488033,
+      "arrival_delayed_15min": 83900,
+      "arrival_on_time_pct": 85.3304,
+      "arrival_delay15_pct": 14.6696,
+      "cancellation_pct_of_scheduled": 0.4569,
+      "diversion_pct_of_scheduled": 0.1463
+    },
+    {
+      "month": "2024-12",
+      "rows": 590581,
+      "date_min": "2024-12-01",
+      "date_max": "2024-12-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 590581,
+      "completed_flights": 584832,
+      "cancelled_flights": 4151,
+      "diverted_not_cancelled_flights": 1598,
+      "arrival_delay15_eligible_flights": 584832,
+      "on_time_arrivals": 461111,
+      "arrival_delayed_15min": 123721,
+      "arrival_on_time_pct": 78.845,
+      "arrival_delay15_pct": 21.155,
+      "cancellation_pct_of_scheduled": 0.7029,
+      "diversion_pct_of_scheduled": 0.2706
+    },
+    {
+      "month": "2025-01",
+      "rows": 539747,
+      "date_min": "2025-01-01",
+      "date_max": "2025-01-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 539747,
+      "completed_flights": 522269,
+      "cancelled_flights": 16312,
+      "diverted_not_cancelled_flights": 1166,
+      "arrival_delay15_eligible_flights": 522269,
+      "on_time_arrivals": 424139,
+      "arrival_delayed_15min": 98130,
+      "arrival_on_time_pct": 81.2108,
+      "arrival_delay15_pct": 18.7892,
+      "cancellation_pct_of_scheduled": 3.0222,
+      "diversion_pct_of_scheduled": 0.216
+    },
+    {
+      "month": "2025-02",
+      "rows": 504884,
+      "date_min": "2025-02-01",
+      "date_max": "2025-02-28",
+      "distinct_flight_dates": 28,
+      "scheduled_flights": 504884,
+      "completed_flights": 496476,
+      "cancelled_flights": 7405,
+      "diverted_not_cancelled_flights": 1003,
+      "arrival_delay15_eligible_flights": 496476,
+      "on_time_arrivals": 393374,
+      "arrival_delayed_15min": 103102,
+      "arrival_on_time_pct": 79.2332,
+      "arrival_delay15_pct": 20.7668,
+      "cancellation_pct_of_scheduled": 1.4667,
+      "diversion_pct_of_scheduled": 0.1987
+    },
+    {
+      "month": "2025-03",
+      "rows": 600872,
+      "date_min": "2025-03-01",
+      "date_max": "2025-03-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 600872,
+      "completed_flights": 592301,
+      "cancelled_flights": 6923,
+      "diverted_not_cancelled_flights": 1648,
+      "arrival_delay15_eligible_flights": 592301,
+      "on_time_arrivals": 476267,
+      "arrival_delayed_15min": 116034,
+      "arrival_on_time_pct": 80.4096,
+      "arrival_delay15_pct": 19.5904,
+      "cancellation_pct_of_scheduled": 1.1522,
+      "diversion_pct_of_scheduled": 0.2743
+    },
+    {
+      "month": "2025-04",
+      "rows": 583950,
+      "date_min": "2025-04-01",
+      "date_max": "2025-04-30",
+      "distinct_flight_dates": 30,
+      "scheduled_flights": 583950,
+      "completed_flights": 577730,
+      "cancelled_flights": 4914,
+      "diverted_not_cancelled_flights": 1306,
+      "arrival_delay15_eligible_flights": 577730,
+      "on_time_arrivals": 464126,
+      "arrival_delayed_15min": 113604,
+      "arrival_on_time_pct": 80.3361,
+      "arrival_delay15_pct": 19.6639,
+      "cancellation_pct_of_scheduled": 0.8415,
+      "diversion_pct_of_scheduled": 0.2236
+    },
+    {
+      "month": "2025-05",
+      "rows": 605648,
+      "date_min": "2025-05-01",
+      "date_max": "2025-05-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 605648,
+      "completed_flights": 597574,
+      "cancelled_flights": 6344,
+      "diverted_not_cancelled_flights": 1730,
+      "arrival_delay15_eligible_flights": 597574,
+      "on_time_arrivals": 456536,
+      "arrival_delayed_15min": 141038,
+      "arrival_on_time_pct": 76.3982,
+      "arrival_delay15_pct": 23.6018,
+      "cancellation_pct_of_scheduled": 1.0475,
+      "diversion_pct_of_scheduled": 0.2856
+    },
+    {
+      "month": "2025-06",
+      "rows": 611575,
+      "date_min": "2025-06-01",
+      "date_max": "2025-06-30",
+      "distinct_flight_dates": 30,
+      "scheduled_flights": 611575,
+      "completed_flights": 599472,
+      "cancelled_flights": 9736,
+      "diverted_not_cancelled_flights": 2367,
+      "arrival_delay15_eligible_flights": 599472,
+      "on_time_arrivals": 430067,
+      "arrival_delayed_15min": 169405,
+      "arrival_on_time_pct": 71.741,
+      "arrival_delay15_pct": 28.259,
+      "cancellation_pct_of_scheduled": 1.592,
+      "diversion_pct_of_scheduled": 0.387
+    },
+    {
+      "month": "2025-07",
+      "rows": 631428,
+      "date_min": "2025-07-01",
+      "date_max": "2025-07-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 631428,
+      "completed_flights": 612811,
+      "cancelled_flights": 15473,
+      "diverted_not_cancelled_flights": 3144,
+      "arrival_delay15_eligible_flights": 612811,
+      "on_time_arrivals": 435799,
+      "arrival_delayed_15min": 177012,
+      "arrival_on_time_pct": 71.1147,
+      "arrival_delay15_pct": 28.8853,
+      "cancellation_pct_of_scheduled": 2.4505,
+      "diversion_pct_of_scheduled": 0.4979
+    },
+    {
+      "month": "2025-08",
+      "rows": 602378,
+      "date_min": "2025-08-01",
+      "date_max": "2025-08-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 602378,
+      "completed_flights": 593733,
+      "cancelled_flights": 6483,
+      "diverted_not_cancelled_flights": 2162,
+      "arrival_delay15_eligible_flights": 593733,
+      "on_time_arrivals": 459813,
+      "arrival_delayed_15min": 133920,
+      "arrival_on_time_pct": 77.4444,
+      "arrival_delay15_pct": 22.5556,
+      "cancellation_pct_of_scheduled": 1.0762,
+      "diversion_pct_of_scheduled": 0.3589
+    },
+    {
+      "month": "2025-09",
+      "rows": 562439,
+      "date_min": "2025-09-01",
+      "date_max": "2025-09-30",
+      "distinct_flight_dates": 30,
+      "scheduled_flights": 562439,
+      "completed_flights": 558329,
+      "cancelled_flights": 2886,
+      "diverted_not_cancelled_flights": 1224,
+      "arrival_delay15_eligible_flights": 558328,
+      "on_time_arrivals": 465469,
+      "arrival_delayed_15min": 92859,
+      "arrival_on_time_pct": 83.3684,
+      "arrival_delay15_pct": 16.6316,
+      "cancellation_pct_of_scheduled": 0.5131,
+      "diversion_pct_of_scheduled": 0.2176
+    },
+    {
+      "month": "2025-10",
+      "rows": 605844,
+      "date_min": "2025-10-01",
+      "date_max": "2025-10-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 605844,
+      "completed_flights": 601570,
+      "cancelled_flights": 3204,
+      "diverted_not_cancelled_flights": 1070,
+      "arrival_delay15_eligible_flights": 601570,
+      "on_time_arrivals": 479319,
+      "arrival_delayed_15min": 122251,
+      "arrival_on_time_pct": 79.678,
+      "arrival_delay15_pct": 20.322,
+      "cancellation_pct_of_scheduled": 0.5288,
+      "diversion_pct_of_scheduled": 0.1766
+    },
+    {
+      "month": "2025-11",
+      "rows": 570550,
+      "date_min": "2025-11-01",
+      "date_max": "2025-11-30",
+      "distinct_flight_dates": 30,
+      "scheduled_flights": 570550,
+      "completed_flights": 555296,
+      "cancelled_flights": 14195,
+      "diverted_not_cancelled_flights": 1059,
+      "arrival_delay15_eligible_flights": 555296,
+      "on_time_arrivals": 441126,
+      "arrival_delayed_15min": 114170,
+      "arrival_on_time_pct": 79.4398,
+      "arrival_delay15_pct": 20.5602,
+      "cancellation_pct_of_scheduled": 2.488,
+      "diversion_pct_of_scheduled": 0.1856
+    },
+    {
+      "month": "2025-12",
+      "rows": 582304,
+      "date_min": "2025-12-01",
+      "date_max": "2025-12-31",
+      "distinct_flight_dates": 31,
+      "scheduled_flights": 582304,
+      "completed_flights": 571924,
+      "cancelled_flights": 9001,
+      "diverted_not_cancelled_flights": 1379,
+      "arrival_delay15_eligible_flights": 571924,
+      "on_time_arrivals": 418811,
+      "arrival_delayed_15min": 153113,
+      "arrival_on_time_pct": 73.2284,
+      "arrival_delay15_pct": 26.7716,
+      "cancellation_pct_of_scheduled": 1.5458,
+      "diversion_pct_of_scheduled": 0.2368
+    }
+  ],
+  "schema": {
+    "named_columns": 109,
+    "fields": [
+      "Year",
+      "Quarter",
+      "Month",
+      "DayofMonth",
+      "DayOfWeek",
+      "FlightDate",
+      "Reporting_Airline",
+      "DOT_ID_Reporting_Airline",
+      "IATA_CODE_Reporting_Airline",
+      "Tail_Number",
+      "Flight_Number_Reporting_Airline",
+      "OriginAirportID",
+      "OriginAirportSeqID",
+      "OriginCityMarketID",
+      "Origin",
+      "OriginCityName",
+      "OriginState",
+      "OriginStateFips",
+      "OriginStateName",
+      "OriginWac",
+      "DestAirportID",
+      "DestAirportSeqID",
+      "DestCityMarketID",
+      "Dest",
+      "DestCityName",
+      "DestState",
+      "DestStateFips",
+      "DestStateName",
+      "DestWac",
+      "CRSDepTime",
+      "DepTime",
+      "DepDelay",
+      "DepDelayMinutes",
+      "DepDel15",
+      "DepartureDelayGroups",
+      "DepTimeBlk",
+      "TaxiOut",
+      "WheelsOff",
+      "WheelsOn",
+      "TaxiIn",
+      "CRSArrTime",
+      "ArrTime",
+      "ArrDelay",
+      "ArrDelayMinutes",
+      "ArrDel15",
+      "ArrivalDelayGroups",
+      "ArrTimeBlk",
+      "Cancelled",
+      "CancellationCode",
+      "Diverted",
+      "CRSElapsedTime",
+      "ActualElapsedTime",
+      "AirTime",
+      "Flights",
+      "Distance",
+      "DistanceGroup",
+      "CarrierDelay",
+      "WeatherDelay",
+      "NASDelay",
+      "SecurityDelay",
+      "LateAircraftDelay",
+      "FirstDepTime",
+      "TotalAddGTime",
+      "LongestAddGTime",
+      "DivAirportLandings",
+      "DivReachedDest",
+      "DivActualElapsedTime",
+      "DivArrDelay",
+      "DivDistance",
+      "Div1Airport",
+      "Div1AirportID",
+      "Div1AirportSeqID",
+      "Div1WheelsOn",
+      "Div1TotalGTime",
+      "Div1LongestGTime",
+      "Div1WheelsOff",
+      "Div1TailNum",
+      "Div2Airport",
+      "Div2AirportID",
+      "Div2AirportSeqID",
+      "Div2WheelsOn",
+      "Div2TotalGTime",
+      "Div2LongestGTime",
+      "Div2WheelsOff",
+      "Div2TailNum",
+      "Div3Airport",
+      "Div3AirportID",
+      "Div3AirportSeqID",
+      "Div3WheelsOn",
+      "Div3TotalGTime",
+      "Div3LongestGTime",
+      "Div3WheelsOff",
+      "Div3TailNum",
+      "Div4Airport",
+      "Div4AirportID",
+      "Div4AirportSeqID",
+      "Div4WheelsOn",
+      "Div4TotalGTime",
+      "Div4LongestGTime",
+      "Div4WheelsOff",
+      "Div4TailNum",
+      "Div5Airport",
+      "Div5AirportID",
+      "Div5AirportSeqID",
+      "Div5WheelsOn",
+      "Div5TotalGTime",
+      "Div5LongestGTime",
+      "Div5WheelsOff",
+      "Div5TailNum"
+    ]
+  },
+  "data_quality": {
+    "anomalies": {
+      "ArrTime_2400_boundary": 7486,
+      "CRSArrTime_2400_boundary": 2,
+      "CRSDepTime_2400_boundary": 2,
+      "DepTime_2400_boundary": 1468,
+      "completed_missing_arrdel15": 1,
+      "missing_business_key_component": 1,
+      "missing_extended_key_component": 1
+    },
+    "column_missingness": [
+      {
+        "name": "ActualElapsedTime",
+        "null_count": 235949,
+        "null_pct": 1.675693
+      },
+      {
+        "name": "AirTime",
+        "null_count": 235949,
+        "null_pct": 1.675693
+      },
+      {
+        "name": "ArrDel15",
+        "null_count": 235949,
+        "null_pct": 1.675693
+      },
+      {
+        "name": "ArrDelay",
+        "null_count": 235949,
+        "null_pct": 1.675693
+      },
+      {
+        "name": "ArrDelayMinutes",
+        "null_count": 235949,
+        "null_pct": 1.675693
+      },
+      {
+        "name": "ArrTime",
+        "null_count": 202462,
+        "null_pct": 1.437871
+      },
+      {
+        "name": "ArrTimeBlk",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "ArrivalDelayGroups",
+        "null_count": 235949,
+        "null_pct": 1.675693
+      },
+      {
+        "name": "CRSArrTime",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "CRSDepTime",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "CRSElapsedTime",
+        "null_count": 3,
+        "null_pct": 2.1e-05
+      },
+      {
+        "name": "CancellationCode",
+        "null_count": 13881489,
+        "null_pct": 98.58536
+      },
+      {
+        "name": "Cancelled",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "CarrierDelay",
+        "null_count": 11096078,
+        "null_pct": 78.803566
+      },
+      {
+        "name": "DOT_ID_Reporting_Airline",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DayOfWeek",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DayofMonth",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DepDel15",
+        "null_count": 191561,
+        "null_pct": 1.360453
+      },
+      {
+        "name": "DepDelay",
+        "null_count": 191561,
+        "null_pct": 1.360453
+      },
+      {
+        "name": "DepDelayMinutes",
+        "null_count": 191561,
+        "null_pct": 1.360453
+      },
+      {
+        "name": "DepTime",
+        "null_count": 190829,
+        "null_pct": 1.355254
+      },
+      {
+        "name": "DepTimeBlk",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DepartureDelayGroups",
+        "null_count": 191561,
+        "null_pct": 1.360453
+      },
+      {
+        "name": "Dest",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DestAirportID",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DestAirportSeqID",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DestCityMarketID",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DestCityName",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DestState",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DestStateFips",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DestStateName",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DestWac",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "Distance",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "DistanceGroup",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "Div1Airport",
+        "null_count": 14042630,
+        "null_pct": 99.729772
+      },
+      {
+        "name": "Div1AirportID",
+        "null_count": 14042630,
+        "null_pct": 99.729772
+      },
+      {
+        "name": "Div1AirportSeqID",
+        "null_count": 14042630,
+        "null_pct": 99.729772
+      },
+      {
+        "name": "Div1LongestGTime",
+        "null_count": 14042630,
+        "null_pct": 99.729772
+      },
+      {
+        "name": "Div1TailNum",
+        "null_count": 14046967,
+        "null_pct": 99.760573
+      },
+      {
+        "name": "Div1TotalGTime",
+        "null_count": 14042630,
+        "null_pct": 99.729772
+      },
+      {
+        "name": "Div1WheelsOff",
+        "null_count": 14046967,
+        "null_pct": 99.760573
+      },
+      {
+        "name": "Div1WheelsOn",
+        "null_count": 14042632,
+        "null_pct": 99.729786
+      },
+      {
+        "name": "Div2Airport",
+        "null_count": 14080262,
+        "null_pct": 99.997031
+      },
+      {
+        "name": "Div2AirportID",
+        "null_count": 14080261,
+        "null_pct": 99.997024
+      },
+      {
+        "name": "Div2AirportSeqID",
+        "null_count": 14080261,
+        "null_pct": 99.997024
+      },
+      {
+        "name": "Div2LongestGTime",
+        "null_count": 14080262,
+        "null_pct": 99.997031
+      },
+      {
+        "name": "Div2TailNum",
+        "null_count": 14080469,
+        "null_pct": 99.998501
+      },
+      {
+        "name": "Div2TotalGTime",
+        "null_count": 14080262,
+        "null_pct": 99.997031
+      },
+      {
+        "name": "Div2WheelsOff",
+        "null_count": 14080469,
+        "null_pct": 99.998501
+      },
+      {
+        "name": "Div2WheelsOn",
+        "null_count": 14080262,
+        "null_pct": 99.997031
+      },
+      {
+        "name": "Div3Airport",
+        "null_count": 14080674,
+        "null_pct": 99.999957
+      },
+      {
+        "name": "Div3AirportID",
+        "null_count": 14080674,
+        "null_pct": 99.999957
+      },
+      {
+        "name": "Div3AirportSeqID",
+        "null_count": 14080674,
+        "null_pct": 99.999957
+      },
+      {
+        "name": "Div3LongestGTime",
+        "null_count": 14080674,
+        "null_pct": 99.999957
+      },
+      {
+        "name": "Div3TailNum",
+        "null_count": 14080676,
+        "null_pct": 99.999972
+      },
+      {
+        "name": "Div3TotalGTime",
+        "null_count": 14080674,
+        "null_pct": 99.999957
+      },
+      {
+        "name": "Div3WheelsOff",
+        "null_count": 14080676,
+        "null_pct": 99.999972
+      },
+      {
+        "name": "Div3WheelsOn",
+        "null_count": 14080674,
+        "null_pct": 99.999957
+      },
+      {
+        "name": "Div4Airport",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div4AirportID",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div4AirportSeqID",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div4LongestGTime",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div4TailNum",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div4TotalGTime",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div4WheelsOff",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div4WheelsOn",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div5Airport",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div5AirportID",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div5AirportSeqID",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div5LongestGTime",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div5TailNum",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div5TotalGTime",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div5WheelsOff",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "Div5WheelsOn",
+        "null_count": 14080680,
+        "null_pct": 100.0
+      },
+      {
+        "name": "DivActualElapsedTime",
+        "null_count": 14047193,
+        "null_pct": 99.762178
+      },
+      {
+        "name": "DivAirportLandings",
+        "null_count": 3,
+        "null_pct": 2.1e-05
+      },
+      {
+        "name": "DivArrDelay",
+        "null_count": 14047193,
+        "null_pct": 99.762178
+      },
+      {
+        "name": "DivDistance",
+        "null_count": 14043923,
+        "null_pct": 99.738954
+      },
+      {
+        "name": "DivReachedDest",
+        "null_count": 14043923,
+        "null_pct": 99.738954
+      },
+      {
+        "name": "Diverted",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "FirstDepTime",
+        "null_count": 13975378,
+        "null_pct": 99.252153
+      },
+      {
+        "name": "FlightDate",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "Flight_Number_Reporting_Airline",
+        "null_count": 1,
+        "null_pct": 7e-06
+      },
+      {
+        "name": "Flights",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "IATA_CODE_Reporting_Airline",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "LateAircraftDelay",
+        "null_count": 11096078,
+        "null_pct": 78.803566
+      },
+      {
+        "name": "LongestAddGTime",
+        "null_count": 13975409,
+        "null_pct": 99.252373
+      },
+      {
+        "name": "Month",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "NASDelay",
+        "null_count": 11096078,
+        "null_pct": 78.803566
+      },
+      {
+        "name": "Origin",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "OriginAirportID",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "OriginAirportSeqID",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "OriginCityMarketID",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "OriginCityName",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "OriginState",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "OriginStateFips",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "OriginStateName",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "OriginWac",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "Quarter",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "Reporting_Airline",
+        "null_count": 0,
+        "null_pct": 0.0
+      },
+      {
+        "name": "SecurityDelay",
+        "null_count": 11096078,
+        "null_pct": 78.803566
+      },
+      {
+        "name": "Tail_Number",
+        "null_count": 32653,
+        "null_pct": 0.231899
+      },
+      {
+        "name": "TaxiIn",
+        "null_count": 202464,
+        "null_pct": 1.437885
+      },
+      {
+        "name": "TaxiOut",
+        "null_count": 197917,
+        "null_pct": 1.405593
+      },
+      {
+        "name": "TotalAddGTime",
+        "null_count": 13975407,
+        "null_pct": 99.252359
+      },
+      {
+        "name": "WeatherDelay",
+        "null_count": 11096078,
+        "null_pct": 78.803566
+      },
+      {
+        "name": "WheelsOff",
+        "null_count": 197917,
+        "null_pct": 1.405593
+      },
+      {
+        "name": "WheelsOn",
+        "null_count": 202464,
+        "null_pct": 1.437885
+      },
+      {
+        "name": "Year",
+        "null_count": 0,
+        "null_pct": 0.0
+      }
+    ]
+  },
+  "top_20_origin_airports": [
+    {
+      "airport": "ATL",
+      "flights": 656343
+    },
+    {
+      "airport": "DFW",
+      "flights": 629436
+    },
+    {
+      "airport": "DEN",
+      "flights": 626331
+    },
+    {
+      "airport": "ORD",
+      "flights": 607080
+    },
+    {
+      "airport": "CLT",
+      "flights": 412980
+    },
+    {
+      "airport": "PHX",
+      "flights": 390307
+    },
+    {
+      "airport": "LAX",
+      "flights": 384525
+    },
+    {
+      "airport": "LAS",
+      "flights": 373055
+    },
+    {
+      "airport": "SEA",
+      "flights": 328559
+    },
+    {
+      "airport": "MCO",
+      "flights": 319601
+    },
+    {
+      "airport": "LGA",
+      "flights": 298157
+    },
+    {
+      "airport": "BOS",
+      "flights": 286349
+    },
+    {
+      "airport": "DCA",
+      "flights": 282522
+    },
+    {
+      "airport": "SFO",
+      "flights": 279473
+    },
+    {
+      "airport": "DTW",
+      "flights": 253900
+    },
+    {
+      "airport": "EWR",
+      "flights": 249265
+    },
+    {
+      "airport": "MSP",
+      "flights": 239710
+    },
+    {
+      "airport": "IAH",
+      "flights": 233199
+    },
+    {
+      "airport": "SLC",
+      "flights": 229545
+    },
+    {
+      "airport": "JFK",
+      "flights": 228108
+    }
+  ],
+  "top_20_destination_airports": [
+    {
+      "airport": "ATL",
+      "flights": 656264
+    },
+    {
+      "airport": "DFW",
+      "flights": 629420
+    },
+    {
+      "airport": "DEN",
+      "flights": 626284
+    },
+    {
+      "airport": "ORD",
+      "flights": 607020
+    },
+    {
+      "airport": "CLT",
+      "flights": 412973
+    },
+    {
+      "airport": "PHX",
+      "flights": 390299
+    },
+    {
+      "airport": "LAX",
+      "flights": 384543
+    },
+    {
+      "airport": "LAS",
+      "flights": 373051
+    },
+    {
+      "airport": "SEA",
+      "flights": 328541
+    },
+    {
+      "airport": "MCO",
+      "flights": 319578
+    },
+    {
+      "airport": "LGA",
+      "flights": 298176
+    },
+    {
+      "airport": "BOS",
+      "flights": 286341
+    },
+    {
+      "airport": "DCA",
+      "flights": 282569
+    },
+    {
+      "airport": "SFO",
+      "flights": 279594
+    },
+    {
+      "airport": "DTW",
+      "flights": 253892
+    },
+    {
+      "airport": "EWR",
+      "flights": 249322
+    },
+    {
+      "airport": "MSP",
+      "flights": 239725
+    },
+    {
+      "airport": "IAH",
+      "flights": 233221
+    },
+    {
+      "airport": "SLC",
+      "flights": 229346
+    },
+    {
+      "airport": "JFK",
+      "flights": 228027
+    }
+  ],
+  "top_20_reporting_airlines": [
+    {
+      "airline": "WN",
+      "flights": 2811304
+    },
+    {
+      "airline": "DL",
+      "flights": 2035506
+    },
+    {
+      "airline": "AA",
+      "flights": 1957959
+    },
+    {
+      "airline": "OO",
+      "flights": 1584479
+    },
+    {
+      "airline": "UA",
+      "flights": 1555722
+    },
+    {
+      "airline": "YX",
+      "flights": 647501
+    },
+    {
+      "airline": "MQ",
+      "flights": 579277
+    },
+    {
+      "airline": "AS",
+      "flights": 491407
+    },
+    {
+      "airline": "OH",
+      "flights": 476706
+    },
+    {
+      "airline": "B6",
+      "flights": 471695
+    },
+    {
+      "airline": "NK",
+      "flights": 455618
+    },
+    {
+      "airline": "F9",
+      "flights": 406689
+    },
+    {
+      "airline": "G4",
+      "flights": 248109
+    },
+    {
+      "airline": "9E",
+      "flights": 200094
+    },
+    {
+      "airline": "HA",
+      "flights": 158614
+    }
+  ],
+  "top_20_directed_routes": [
+    {
+      "route": "LGA|ORD",
+      "flights": 22516
+    },
+    {
+      "route": "ORD|LGA",
+      "flights": 22511
+    },
+    {
+      "route": "LAX|SFO",
+      "flights": 22366
+    },
+    {
+      "route": "OGG|HNL",
+      "flights": 22350
+    },
+    {
+      "route": "SFO|LAX",
+      "flights": 22345
+    },
+    {
+      "route": "HNL|OGG",
+      "flights": 22340
+    },
+    {
+      "route": "JFK|LAX",
+      "flights": 20183
+    },
+    {
+      "route": "LAX|JFK",
+      "flights": 20180
+    },
+    {
+      "route": "BOS|DCA",
+      "flights": 18789
+    },
+    {
+      "route": "DCA|BOS",
+      "flights": 18789
+    },
+    {
+      "route": "PHX|DEN",
+      "flights": 18569
+    },
+    {
+      "route": "DEN|PHX",
+      "flights": 18460
+    },
+    {
+      "route": "LAX|LAS",
+      "flights": 18344
+    },
+    {
+      "route": "LAS|LAX",
+      "flights": 18322
+    },
+    {
+      "route": "MCO|ATL",
+      "flights": 17107
+    },
+    {
+      "route": "ATL|MCO",
+      "flights": 17078
+    },
+    {
+      "route": "LIH|HNL",
+      "flights": 16722
+    },
+    {
+      "route": "HNL|LIH",
+      "flights": 16720
+    },
+    {
+      "route": "DEN|SLC",
+      "flights": 15860
+    },
+    {
+      "route": "ATL|LGA",
+      "flights": 15857
+    }
+  ]
+}

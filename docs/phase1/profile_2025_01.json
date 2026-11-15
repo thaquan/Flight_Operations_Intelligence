@@ -1,0 +1,887 @@
+{
+  "profile_version": "1.0",
+  "run_at_utc": "2026-11-14T15:51:53+00:00",
+  "source": {
+    "publisher": "US Department of Transportation, Bureau of Transportation Statistics",
+    "dataset": "Reporting Carrier On-Time Performance (1987-present)",
+    "source_url": "https://transtats.bts.gov/PREZIP/On_Time_Reporting_Carrier_On_Time_Performance_1987_present_2025_1.zip",
+    "zip_filename": "On_Time_Reporting_Carrier_On_Time_Performance_1987_present_2025_1.zip",
+    "zip_sha256": "868387dcedaef1b8d8392e608e642219fde50d594c3cf2094aec858167629ccf",
+    "zip_bytes": 27108664,
+    "csv_member": "On_Time_Reporting_Carrier_On_Time_Performance_(1987_present)_2025_1.csv",
+    "csv_uncompressed_bytes": 243177378
+  },
+  "dataset": {
+    "rows": 539747,
+    "original_csv_headers": 110,
+    "named_columns": 109,
+    "empty_header_positions": [
+      109
+    ],
+    "missing_required_columns": [],
+    "date_min": "2025-01-01",
+    "date_max": "2025-01-31",
+    "invalid_flight_date_count": 0,
+    "distinct_flight_dates": 31,
+    "distinct_origin_airports": 329,
+    "distinct_destination_airports": 329,
+    "distinct_reporting_airlines": 14,
+    "status_counts": {
+      "completed": 522269,
+      "diverted_not_cancelled": 1166,
+      "cancelled": 16312
+    }
+  },
+  "columns": [
+    {
+      "name": "Year",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "Quarter",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "Month",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DayofMonth",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DayOfWeek",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "FlightDate",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "Reporting_Airline",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DOT_ID_Reporting_Airline",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "IATA_CODE_Reporting_Airline",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "Tail_Number",
+      "null_count": 2530,
+      "null_pct": 0.4687
+    },
+    {
+      "name": "Flight_Number_Reporting_Airline",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "OriginAirportID",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "OriginAirportSeqID",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "OriginCityMarketID",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "Origin",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "OriginCityName",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "OriginState",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "OriginStateFips",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "OriginStateName",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "OriginWac",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DestAirportID",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DestAirportSeqID",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DestCityMarketID",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "Dest",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DestCityName",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DestState",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DestStateFips",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DestStateName",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DestWac",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "CRSDepTime",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DepTime",
+      "null_count": 15886,
+      "null_pct": 2.9432
+    },
+    {
+      "name": "DepDelay",
+      "null_count": 15923,
+      "null_pct": 2.9501
+    },
+    {
+      "name": "DepDelayMinutes",
+      "null_count": 15923,
+      "null_pct": 2.9501
+    },
+    {
+      "name": "DepDel15",
+      "null_count": 15923,
+      "null_pct": 2.9501
+    },
+    {
+      "name": "DepartureDelayGroups",
+      "null_count": 15923,
+      "null_pct": 2.9501
+    },
+    {
+      "name": "DepTimeBlk",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "TaxiOut",
+      "null_count": 16227,
+      "null_pct": 3.0064
+    },
+    {
+      "name": "WheelsOff",
+      "null_count": 16227,
+      "null_pct": 3.0064
+    },
+    {
+      "name": "WheelsOn",
+      "null_count": 16580,
+      "null_pct": 3.0718
+    },
+    {
+      "name": "TaxiIn",
+      "null_count": 16580,
+      "null_pct": 3.0718
+    },
+    {
+      "name": "CRSArrTime",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "ArrTime",
+      "null_count": 16580,
+      "null_pct": 3.0718
+    },
+    {
+      "name": "ArrDelay",
+      "null_count": 17478,
+      "null_pct": 3.2382
+    },
+    {
+      "name": "ArrDelayMinutes",
+      "null_count": 17478,
+      "null_pct": 3.2382
+    },
+    {
+      "name": "ArrDel15",
+      "null_count": 17478,
+      "null_pct": 3.2382
+    },
+    {
+      "name": "ArrivalDelayGroups",
+      "null_count": 17478,
+      "null_pct": 3.2382
+    },
+    {
+      "name": "ArrTimeBlk",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "Cancelled",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "CancellationCode",
+      "null_count": 523435,
+      "null_pct": 96.9778
+    },
+    {
+      "name": "Diverted",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "CRSElapsedTime",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "ActualElapsedTime",
+      "null_count": 17478,
+      "null_pct": 3.2382
+    },
+    {
+      "name": "AirTime",
+      "null_count": 17478,
+      "null_pct": 3.2382
+    },
+    {
+      "name": "Flights",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "Distance",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DistanceGroup",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "CarrierDelay",
+      "null_count": 441617,
+      "null_pct": 81.8193
+    },
+    {
+      "name": "WeatherDelay",
+      "null_count": 441617,
+      "null_pct": 81.8193
+    },
+    {
+      "name": "NASDelay",
+      "null_count": 441617,
+      "null_pct": 81.8193
+    },
+    {
+      "name": "SecurityDelay",
+      "null_count": 441617,
+      "null_pct": 81.8193
+    },
+    {
+      "name": "LateAircraftDelay",
+      "null_count": 441617,
+      "null_pct": 81.8193
+    },
+    {
+      "name": "FirstDepTime",
+      "null_count": 535480,
+      "null_pct": 99.2094
+    },
+    {
+      "name": "TotalAddGTime",
+      "null_count": 535480,
+      "null_pct": 99.2094
+    },
+    {
+      "name": "LongestAddGTime",
+      "null_count": 535480,
+      "null_pct": 99.2094
+    },
+    {
+      "name": "DivAirportLandings",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    {
+      "name": "DivReachedDest",
+      "null_count": 538581,
+      "null_pct": 99.784
+    },
+    {
+      "name": "DivActualElapsedTime",
+      "null_count": 538849,
+      "null_pct": 99.8336
+    },
+    {
+      "name": "DivArrDelay",
+      "null_count": 538849,
+      "null_pct": 99.8336
+    },
+    {
+      "name": "DivDistance",
+      "null_count": 538581,
+      "null_pct": 99.784
+    },
+    {
+      "name": "Div1Airport",
+      "null_count": 538495,
+      "null_pct": 99.768
+    },
+    {
+      "name": "Div1AirportID",
+      "null_count": 538495,
+      "null_pct": 99.768
+    },
+    {
+      "name": "Div1AirportSeqID",
+      "null_count": 538495,
+      "null_pct": 99.768
+    },
+    {
+      "name": "Div1WheelsOn",
+      "null_count": 538495,
+      "null_pct": 99.768
+    },
+    {
+      "name": "Div1TotalGTime",
+      "null_count": 538495,
+      "null_pct": 99.768
+    },
+    {
+      "name": "Div1LongestGTime",
+      "null_count": 538495,
+      "null_pct": 99.768
+    },
+    {
+      "name": "Div1WheelsOff",
+      "null_count": 538829,
+      "null_pct": 99.8299
+    },
+    {
+      "name": "Div1TailNum",
+      "null_count": 538829,
+      "null_pct": 99.8299
+    },
+    {
+      "name": "Div2Airport",
+      "null_count": 539724,
+      "null_pct": 99.9957
+    },
+    {
+      "name": "Div2AirportID",
+      "null_count": 539724,
+      "null_pct": 99.9957
+    },
+    {
+      "name": "Div2AirportSeqID",
+      "null_count": 539724,
+      "null_pct": 99.9957
+    },
+    {
+      "name": "Div2WheelsOn",
+      "null_count": 539724,
+      "null_pct": 99.9957
+    },
+    {
+      "name": "Div2TotalGTime",
+      "null_count": 539724,
+      "null_pct": 99.9957
+    },
+    {
+      "name": "Div2LongestGTime",
+      "null_count": 539724,
+      "null_pct": 99.9957
+    },
+    {
+      "name": "Div2WheelsOff",
+      "null_count": 539743,
+      "null_pct": 99.9993
+    },
+    {
+      "name": "Div2TailNum",
+      "null_count": 539743,
+      "null_pct": 99.9993
+    },
+    {
+      "name": "Div3Airport",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div3AirportID",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div3AirportSeqID",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div3WheelsOn",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div3TotalGTime",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div3LongestGTime",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div3WheelsOff",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div3TailNum",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div4Airport",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div4AirportID",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div4AirportSeqID",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div4WheelsOn",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div4TotalGTime",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div4LongestGTime",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div4WheelsOff",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div4TailNum",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div5Airport",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div5AirportID",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div5AirportSeqID",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div5WheelsOn",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div5TotalGTime",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div5LongestGTime",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div5WheelsOff",
+      "null_count": 539747,
+      "null_pct": 100.0
+    },
+    {
+      "name": "Div5TailNum",
+      "null_count": 539747,
+      "null_pct": 100.0
+    }
+  ],
+  "business_key": {
+    "candidate_columns": [
+      "FlightDate",
+      "DOT_ID_Reporting_Airline",
+      "Flight_Number_Reporting_Airline",
+      "OriginAirportID",
+      "DestAirportID",
+      "CRSDepTime"
+    ],
+    "extended_columns": [
+      "FlightDate",
+      "DOT_ID_Reporting_Airline",
+      "Flight_Number_Reporting_Airline",
+      "OriginAirportID",
+      "DestAirportID",
+      "CRSDepTime",
+      "CRSArrTime"
+    ],
+    "distinct_candidate_keys": 539747,
+    "distinct_extended_keys": 539747,
+    "distinct_exact_rows": 539747,
+    "duplicate_candidate_examples": [],
+    "note": "Candidate natural key is not assumed to be unique; recheck during Phase 2."
+  },
+  "kpis": {
+    "scheduled_flights": 539747,
+    "completed_flights": 522269,
+    "cancelled_flights": 16312,
+    "diverted_not_cancelled_flights": 1166,
+    "arrival_delay15_eligible_flights": 522269,
+    "on_time_arrivals": 424139,
+    "arrival_delayed_15min": 98130,
+    "arrival_on_time_pct": 81.2108,
+    "arrival_delay15_pct": 18.7892,
+    "cancellation_pct_of_scheduled": 3.0222,
+    "diversion_pct_of_scheduled": 0.216,
+    "populated_depdelay_rows": 523824,
+    "sum_positive_arrival_delay_minutes": 7426076.0
+  },
+  "anomalies": {
+    "ArrTime_2400_boundary": 245,
+    "DepTime_2400_boundary": 33
+  },
+  "top_origin_airports": [
+    {
+      "airport": "DFW",
+      "flights": 25124
+    },
+    {
+      "airport": "DEN",
+      "flights": 24732
+    },
+    {
+      "airport": "ATL",
+      "flights": 23881
+    },
+    {
+      "airport": "ORD",
+      "flights": 21643
+    },
+    {
+      "airport": "CLT",
+      "flights": 16877
+    },
+    {
+      "airport": "PHX",
+      "flights": 15956
+    },
+    {
+      "airport": "LAX",
+      "flights": 15157
+    },
+    {
+      "airport": "LAS",
+      "flights": 15007
+    },
+    {
+      "airport": "MCO",
+      "flights": 13058
+    },
+    {
+      "airport": "SEA",
+      "flights": 11882
+    },
+    {
+      "airport": "DCA",
+      "flights": 11734
+    },
+    {
+      "airport": "LGA",
+      "flights": 10905
+    },
+    {
+      "airport": "SFO",
+      "flights": 10839
+    },
+    {
+      "airport": "BOS",
+      "flights": 10624
+    },
+    {
+      "airport": "MIA",
+      "flights": 10182
+    },
+    {
+      "airport": "EWR",
+      "flights": 10144
+    },
+    {
+      "airport": "SLC",
+      "flights": 9350
+    },
+    {
+      "airport": "DTW",
+      "flights": 9253
+    },
+    {
+      "airport": "IAH",
+      "flights": 9250
+    },
+    {
+      "airport": "MSP",
+      "flights": 8483
+    },
+    {
+      "airport": "JFK",
+      "flights": 8327
+    },
+    {
+      "airport": "FLL",
+      "flights": 7892
+    },
+    {
+      "airport": "BNA",
+      "flights": 7404
+    },
+    {
+      "airport": "SAN",
+      "flights": 7189
+    },
+    {
+      "airport": "BWI",
+      "flights": 7094
+    },
+    {
+      "airport": "PHL",
+      "flights": 6688
+    },
+    {
+      "airport": "TPA",
+      "flights": 6454
+    },
+    {
+      "airport": "AUS",
+      "flights": 6142
+    },
+    {
+      "airport": "DAL",
+      "flights": 5755
+    },
+    {
+      "airport": "MDW",
+      "flights": 5189
+    }
+  ],
+  "top_destination_airports": [
+    {
+      "airport": "DFW",
+      "flights": 25125
+    },
+    {
+      "airport": "DEN",
+      "flights": 24740
+    },
+    {
+      "airport": "ATL",
+      "flights": 23881
+    },
+    {
+      "airport": "ORD",
+      "flights": 21641
+    },
+    {
+      "airport": "CLT",
+      "flights": 16883
+    },
+    {
+      "airport": "PHX",
+      "flights": 15949
+    },
+    {
+      "airport": "LAX",
+      "flights": 15143
+    },
+    {
+      "airport": "LAS",
+      "flights": 15004
+    },
+    {
+      "airport": "MCO",
+      "flights": 13052
+    },
+    {
+      "airport": "SEA",
+      "flights": 11893
+    },
+    {
+      "airport": "DCA",
+      "flights": 11740
+    },
+    {
+      "airport": "LGA",
+      "flights": 10909
+    },
+    {
+      "airport": "SFO",
+      "flights": 10832
+    },
+    {
+      "airport": "BOS",
+      "flights": 10622
+    },
+    {
+      "airport": "MIA",
+      "flights": 10184
+    },
+    {
+      "airport": "EWR",
+      "flights": 10139
+    },
+    {
+      "airport": "SLC",
+      "flights": 9347
+    },
+    {
+      "airport": "IAH",
+      "flights": 9257
+    },
+    {
+      "airport": "DTW",
+      "flights": 9254
+    },
+    {
+      "airport": "MSP",
+      "flights": 8480
+    }
+  ],
+  "top_reporting_airlines": [
+    {
+      "airline": "WN",
+      "flights": 105307
+    },
+    {
+      "airline": "DL",
+      "flights": 76306
+    },
+    {
+      "airline": "AA",
+      "flights": 75088
+    },
+    {
+      "airline": "OO",
+      "flights": 65036
+    },
+    {
+      "airline": "UA",
+      "flights": 62007
+    },
+    {
+      "airline": "YX",
+      "flights": 27833
+    },
+    {
+      "airline": "MQ",
+      "flights": 21890
+    },
+    {
+      "airline": "OH",
+      "flights": 21094
+    },
+    {
+      "airline": "AS",
+      "flights": 18163
+    },
+    {
+      "airline": "B6",
+      "flights": 17918
+    },
+    {
+      "airline": "NK",
+      "flights": 17544
+    },
+    {
+      "airline": "F9",
+      "flights": 15526
+    },
+    {
+      "airline": "G4",
+      "flights": 9345
+    },
+    {
+      "airline": "HA",
+      "flights": 6690
+    }
+  ]
+}
