@@ -40,7 +40,7 @@ The month in this filename is not zero-padded. ZIP files are stored under `data/
 5. Verifies an existing ZIP without silently replacing it.
 6. Produces `acquisition_manifest.json`, one entry per requested month.
 
-Raw ZIPs are excluded from version control and project release archives. The manifest and documented command allow reproducible reacquisition.
+Raw ZIPs are excluded from Git history. They may be distributed separately as dataset release assets, while the manifest and documented command allow reproducible reacquisition from the official source.
 
 ## Source caveats
 
