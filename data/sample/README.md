@@ -36,6 +36,7 @@ The scripts require only Python's standard library. Run from the project root.
 
 ## Full dataset
 
+- [Complete 2024–2025 dataset on GitHub Releases](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1): 24 verified official monthly ZIPs, grouped into separate 2024 and 2025 download archives. Each archive includes the monthly file checksums.
 - [Official BTS monthly downloads](https://transtats.bts.gov/PREZIP/).
 - [BTS field definitions](https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ).
 - [Source acquisition manifest](../../docs/phase1/2024_2025/acquisition_manifest.json) contains every month, URL, SHA-256 and byte count.

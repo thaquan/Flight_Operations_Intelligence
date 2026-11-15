@@ -21,12 +21,13 @@ A reproducible, local-first student portfolio project combining data engineering
 
 ## Explore the data
 
+- **[Download the complete BTS 2024–2025 dataset (GitHub Release)](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1)**: all 24 verified official monthly ZIPs, packaged into [2024](https://github.com/thaquan/Flight_Operations_Intelligence/releases/download/bts-data-2024-2025-v1/BTS_Reporting_Carrier_2024_Official_ZIPs.zip) and [2025](https://github.com/thaquan/Flight_Operations_Intelligence/releases/download/bts-data-2024-2025-v1/BTS_Reporting_Carrier_2025_Official_ZIPs.zip) archives. Each yearly archive includes a source-file checksum list.
 - [Open a compact 1,200-row BTS preview](data/sample/bts_flights_preview_1200.csv) directly on GitHub.
 - [Download the 10,000-row sample](data/sample/bts_flights_2024_2025_sample_10000.csv) for local inspection.
 - [Read the sampling method and limitations](data/sample/README.md).
 - [Inspect the verified source manifest](docs/phase1/2024_2025/acquisition_manifest.json) for all 24 official monthly downloads and SHA-256 values.
 
-Both samples contain actual BTS records from all 24 months, with a deliberate minimum number of cancellations and diversions for inspection. **They are not representative datasets and must not be used to estimate population KPIs.** The complete 2024-2025 source can always be downloaded with the Phase 1 downloader below.
+Both samples contain actual BTS records from all 24 months, with a deliberate minimum number of cancellations and diversions for inspection. **They are not representative datasets and must not be used to estimate population KPIs.** For population analysis, use the complete 2024–2025 Release archives or the Phase 1 downloader below.
 
 **Data ethics / limitations:** This project contains domestic flights reported by U.S. carriers, not all flights worldwide. The BTS feed is published monthly, **not a real-time stream**. BTS does not include flight-level ticket prices or airline profit.
 
@@ -52,7 +53,7 @@ python -m unittest discover -s tests -v
 
 These commands download official source ZIP files (approximately several hundred MB in total), verify each archive's CRC and SHA-256, profile every source row, and reconcile all 24 monthly reports. Use `python -m src.phase1.run_phase1 --resume` only when previously generated monthly profiles and matching source checksums are available.
 
-Raw ZIPs stay in `data/raw/bts/<YEAR>/` and are **never committed**. The acquisition manifest and 24 JSON profiles provide reproducible evidence without bundling the source data in the repository.
+Raw ZIPs stay in `data/raw/bts/<YEAR>/` and are **never committed to Git history**. Instead, the two verified yearly archives are downloadable as [GitHub Release assets](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1). The acquisition manifest and 24 JSON profiles provide reproducible evidence without bundling the source data in the repository.
 
 Phase 1 deliverables:
 
@@ -106,4 +107,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). The verified Phase 1 implementation is published on the `main` branch. Public raw BTS ZIPs, local databases and credentials are excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). The verified Phase 1 implementation is published on the `main` branch. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, local databases and credentials remain excluded from version control.
