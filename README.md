@@ -97,4 +97,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-There is no configured GitHub remote for this project. Source files can be committed locally once validated; no push is performed without an explicit repository target and instruction.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). The verified Phase 1 implementation is published on the `main` branch. Public raw BTS ZIPs, local databases and credentials are excluded from version control.
