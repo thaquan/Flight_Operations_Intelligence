@@ -1,6 +1,6 @@
 # BTS 2024-2025: Full-Scope Data Quality Assessment
 
-**Validation status:** PASS. Generated: 2026-11-15T03:04:51+00:00.
+**Validation status:** PASS. Source manifest timestamp: 2026-11-15T02:57:02+00:00.
 
 **Coverage:** 24/24 months.
 **Flight records:** 14,080,680 (all reporting airlines and airports).

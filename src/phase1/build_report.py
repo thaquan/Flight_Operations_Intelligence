@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, timedelta
 import json
 from pathlib import Path
 
@@ -172,7 +172,7 @@ def summarize(manifest: dict, profiles: dict[str, dict], start: str = "2024-01",
         return [{label: name, "flights": count} for name, count in sorted(counter.items(), key=lambda item: (-item[1], item[0]))[:limit]]
 
     return {
-        "generated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "source_manifest_generated_at_utc": manifest.get("generated_at_utc"),
         "period": {"start": start, "end": end, "expected_months": len(months), "verified_months": len(monthly)},
         "phase1_complete": len(monthly) == len(months) and not errors,
         "checks": {"errors": errors, "warnings": warnings},
@@ -210,7 +210,7 @@ def markdown_report(summary: dict) -> str:
     lines = [
         "# BTS 2024-2025: Full-Scope Data Quality Assessment",
         "",
-        f"**Validation status:** {status}. Generated: {summary['generated_at_utc']}.",
+        f"**Validation status:** {status}. Source manifest timestamp: {summary['source_manifest_generated_at_utc']}.",
         "",
         f"**Coverage:** {summary['period']['verified_months']}/{summary['period']['expected_months']} months.",
         f"**Flight records:** {summary['overall']['scheduled_flights']:,} (all reporting airlines and airports).",
