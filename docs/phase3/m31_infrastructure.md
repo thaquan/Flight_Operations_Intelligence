@@ -88,4 +88,4 @@ Use `docker compose restart postgres` to restart the single service. Both `stop`
 
 ## Next milestone
 
-M3.2 will implement the controlled Bronze Parquet to PostgreSQL Silver load, including schemas, row-level typing, batch loading, source lineage and reconciliation. It must preserve all 24 months and the complete BTS flight population. Subsequent milestones will build dbt staging, intermediate models, dimensional facts and marts.
+M3.2 has subsequently implemented the controlled Bronze Parquet to PostgreSQL Silver load, including typed columns, batch loading, source lineage and full-population reconciliation. See [the M3.2 pipeline guide](m32_silver_pipeline.md). Subsequent milestones will build dbt staging, intermediate models, dimensional facts and marts.

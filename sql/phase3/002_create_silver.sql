@@ -1,0 +1,90 @@
+-- Apply explicitly to existing M3.1 databases; init scripts do not rerun.
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS silver.flights (
+    source_month DATE NOT NULL,
+    source_row_number BIGINT NOT NULL,
+    flight_year SMALLINT NOT NULL,
+    quarter SMALLINT,
+    flight_month_number SMALLINT,
+    day_of_month SMALLINT,
+    day_of_week SMALLINT,
+    flight_date DATE NOT NULL,
+    reporting_airline TEXT,
+    reporting_airline_dot_id INTEGER,
+    reporting_airline_iata TEXT,
+    tail_number TEXT,
+    flight_number TEXT,
+    origin_airport_id INTEGER,
+    origin_airport_seq_id INTEGER,
+    origin_city_market_id INTEGER,
+    origin TEXT,
+    origin_city_name TEXT,
+    origin_state TEXT,
+    dest_airport_id INTEGER,
+    dest_airport_seq_id INTEGER,
+    dest_city_market_id INTEGER,
+    dest TEXT,
+    dest_city_name TEXT,
+    dest_state TEXT,
+    crs_dep_time TEXT,
+    dep_time TEXT,
+    dep_delay DOUBLE PRECISION,
+    dep_delay_minutes DOUBLE PRECISION,
+    dep_del15 NUMERIC(3, 2),
+    dep_time_block TEXT,
+    taxi_out DOUBLE PRECISION,
+    wheels_off TEXT,
+    wheels_on TEXT,
+    taxi_in DOUBLE PRECISION,
+    crs_arr_time TEXT,
+    arr_time TEXT,
+    arr_delay DOUBLE PRECISION,
+    arr_delay_minutes DOUBLE PRECISION,
+    arr_del15 NUMERIC(3, 2),
+    arr_time_block TEXT,
+    cancelled NUMERIC(3, 2),
+    cancellation_code TEXT,
+    diverted NUMERIC(3, 2),
+    crs_elapsed_time DOUBLE PRECISION,
+    actual_elapsed_time DOUBLE PRECISION,
+    air_time DOUBLE PRECISION,
+    flights DOUBLE PRECISION,
+    distance DOUBLE PRECISION,
+    distance_group SMALLINT,
+    carrier_delay DOUBLE PRECISION,
+    weather_delay DOUBLE PRECISION,
+    nas_delay DOUBLE PRECISION,
+    security_delay DOUBLE PRECISION,
+    late_aircraft_delay DOUBLE PRECISION,
+    div_airport_landings DOUBLE PRECISION,
+    div_reached_dest NUMERIC(3, 2),
+    div_arr_delay DOUBLE PRECISION,
+    div_distance DOUBLE PRECISION,
+    div1_airport TEXT,
+    source_file TEXT NOT NULL,
+    source_sha256 VARCHAR(64) NOT NULL,
+    bronze_ingested_at_utc TIMESTAMPTZ NOT NULL,
+    silver_loaded_at_utc TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT flights_pk PRIMARY KEY (source_month, source_row_number),
+    CONSTRAINT flights_month_matches_date CHECK (
+        flight_date >= source_month
+        AND flight_date < (source_month + INTERVAL '1 month')
+    ),
+    CONSTRAINT flights_cancelled_valid CHECK (cancelled IS NULL OR cancelled IN (0, 1)),
+    CONSTRAINT flights_diverted_valid CHECK (diverted IS NULL OR diverted IN (0, 1))
+);
+
+CREATE INDEX IF NOT EXISTS flights_flight_date_idx ON silver.flights (flight_date);
+
+CREATE TABLE IF NOT EXISTS audit.silver_loads (
+    source_month DATE PRIMARY KEY,
+    source_sha256 VARCHAR(64) NOT NULL,
+    parquet_sha256 VARCHAR(64) NOT NULL,
+    bronze_row_count BIGINT NOT NULL,
+    silver_row_count BIGINT NOT NULL,
+    loaded_at_utc TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT silver_loads_reconciled CHECK (bronze_row_count = silver_row_count)
+);
+
+COMMIT;

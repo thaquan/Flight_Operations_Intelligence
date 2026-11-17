@@ -4,7 +4,7 @@
 
 A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
 
-**Current status:** Phases 1–2 are complete and published (24/24 months; 14,080,680 real flight observations preserved in Bronze). Phase 3 milestone M3.1 (local PostgreSQL infrastructure and dbt connectivity) is implemented and verified locally; warehouse data loading and analytical models are still pending.
+**Current status:** Phases 1–2 are complete and published. Phase 3 milestones M3.1 and M3.2 are complete and verified locally: all 24 BTS months and 14,080,680 source observations are preserved in both Bronze and PostgreSQL Silver. dbt staging, dimensional models and Gold marts are still pending.
 
 ## Business questions
 
@@ -119,13 +119,30 @@ The bootstrap command generates a private `.env` with a random database password
 - [M3.1 infrastructure and operation guide](docs/phase3/m31_infrastructure.md)
 - [M3.1 verification record](docs/phase3/m31_validation.md)
 
+## Phase 3, M3.2: Bronze to Silver
+
+M3.2 loads the 2024–2025 Bronze population into `silver.flights` using checksum-verified Parquet inputs, bounded Arrow batches and PostgreSQL `COPY`. Each monthly load is transactional and recorded in `audit.silver_loads`. Unchanged months are skipped; an explicit `--reprocess` is required for a replacement.
+
+```powershell
+.\.venv\Scripts\python.exe -m src.phase3.load_silver --start 2024-01 --end 2025-12 --dry-run
+.\.venv\Scripts\python.exe -m src.phase3.load_silver --start 2024-01 --end 2025-12
+.\.venv\Scripts\python.exe -m src.phase3.validate_silver --report docs/phase3/m32_reconciliation.json
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+**Verified local result:** all **24/24 months and 14,080,680/14,080,680 rows** reconciled between Bronze and Silver. All 24 partitions were skipped on an unchanged rerun. Silver maps 62 Bronze fields into typed columns, adds the source month and a load timestamp, and preserves the complete source population. The local PostgreSQL table and indexes occupied **7,536 MB** at verification. The full Python suite passed **45 tests**.
+
+- [M3.2 pipeline architecture and runbook](docs/phase3/m32_silver_pipeline.md)
+- [M3.2 source-to-Silver reconciliation](docs/phase3/m32_reconciliation.json)
+- [M3.2 validation record](docs/phase3/m32_validation.md)
+
 ## Planned stack and scope
 
 | Layer | Planned technology | Status |
 | --- | --- | --- |
 | Source acquisition / profiling | Python | Phase 1 |
 | Bronze storage | Python, PyArrow, Polars and partitioned Parquet | Phase 2 complete |
-| Silver warehouse | PostgreSQL + Docker Compose | M3.1 infrastructure verified; data load pending |
+| Silver warehouse | PostgreSQL + Docker Compose | M3.2 complete; 24 months loaded and reconciled |
 | Transformations | dbt Core | M3.1 connection verified; models pending |
 | Tests and CI | pytest tests implemented; dbt tests and GitHub Actions planned | Phase 2 / Phase 4 |
 | BI | Power BI Desktop (Import) | Phase 5 |
@@ -156,4 +173,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 are published on `main`. M3.1 is implemented and verified locally; Phase 3 publication is separate. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 are published on `main`. M3.1 and M3.2 are implemented and verified locally; Phase 3 publication is separate. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.

@@ -1,0 +1,180 @@
+{
+  "status": "pass",
+  "verified_at_utc": "2026-11-17T13:31:48+00:00",
+  "period": "2024-01 to 2025-12",
+  "expected_months": 24,
+  "actual_months": 24,
+  "bronze_rows": 14080680,
+  "silver_rows": 14080680,
+  "unexpected_months": [],
+  "monthly": [
+    {
+      "month": "2024-01",
+      "bronze_rows": 547271,
+      "silver_rows": 547271,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-02",
+      "bronze_rows": 519221,
+      "silver_rows": 519221,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-03",
+      "bronze_rows": 591767,
+      "silver_rows": 591767,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-04",
+      "bronze_rows": 582185,
+      "silver_rows": 582185,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-05",
+      "bronze_rows": 609743,
+      "silver_rows": 609743,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-06",
+      "bronze_rows": 611132,
+      "silver_rows": 611132,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-07",
+      "bronze_rows": 634613,
+      "silver_rows": 634613,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-08",
+      "bronze_rows": 619025,
+      "silver_rows": 619025,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-09",
+      "bronze_rows": 582622,
+      "silver_rows": 582622,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-10",
+      "bronze_rows": 615497,
+      "silver_rows": 615497,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-11",
+      "bronze_rows": 575404,
+      "silver_rows": 575404,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2024-12",
+      "bronze_rows": 590581,
+      "silver_rows": 590581,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-01",
+      "bronze_rows": 539747,
+      "silver_rows": 539747,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-02",
+      "bronze_rows": 504884,
+      "silver_rows": 504884,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-03",
+      "bronze_rows": 600872,
+      "silver_rows": 600872,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-04",
+      "bronze_rows": 583950,
+      "silver_rows": 583950,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-05",
+      "bronze_rows": 605648,
+      "silver_rows": 605648,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-06",
+      "bronze_rows": 611575,
+      "silver_rows": 611575,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-07",
+      "bronze_rows": 631428,
+      "silver_rows": 631428,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-08",
+      "bronze_rows": 602378,
+      "silver_rows": 602378,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-09",
+      "bronze_rows": 562439,
+      "silver_rows": 562439,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-10",
+      "bronze_rows": 605844,
+      "silver_rows": 605844,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-11",
+      "bronze_rows": 570550,
+      "silver_rows": 570550,
+      "status": "pass",
+      "issues": []
+    },
+    {
+      "month": "2025-12",
+      "bronze_rows": 582304,
+      "silver_rows": 582304,
+      "status": "pass",
+      "issues": []
+    }
+  ]
+}
