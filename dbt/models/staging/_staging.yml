@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: stg_flights
+    description: >
+      Typed, unfiltered, one-to-one Silver flight staging view. All source fields,
+      HHMM values and physical lineage survive. Airline and airport codes are
+      normalized into additional fields for later dimension joins.
+    columns:
+      - name: source_month
+        description: "First day of the BTS source month; composite lineage key."
+        data_tests:
+          - not_null
+      - name: source_row_number
+        description: "Original row position within the source ZIP; composite lineage key."
+        data_tests:
+          - not_null
+      - name: airline_code
+        description: "Trimmed uppercase BTS reporting carrier code; NULL if blank."
+      - name: origin_airport_code
+        description: "Trimmed uppercase origin IATA code; NULL if blank."
+      - name: destination_airport_code
+        description: "Trimmed uppercase destination IATA code; NULL if blank."
+
+  - name: stg_flight_outcomes
+    description: >
+      One-to-one flight staging view with outcome classifications and additive
+      numerators/denominators based on the Phase 1 KPI dictionary.
+    columns:
+      - name: flight_status
+        description: "cancelled, diverted, completed or unknown; cancellations take precedence."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['cancelled', 'diverted', 'completed', 'unknown']
+      - name: scheduled_flight_count
+        description: "Exactly 1 per original BTS observation, including cancellations."
+      - name: eligible_arrival_count
+        description: "1 only for completed flights with ArrDel15 equal to 0 or 1."
+      - name: arrival_delayed_15_count
+        description: "1 only for eligible arrivals reported 15+ minutes late."
+      - name: arrival_on_time_count
+        description: "1 only for eligible arrivals reported not 15+ minutes late."

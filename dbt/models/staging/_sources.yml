@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: silver
+    description: "Typed BTS flight observations loaded and audited in M3.2."
+    schema: silver
+    tables:
+      - name: flights
+        description: "One row per official BTS observation; no source outcomes removed."
+        columns:
+          - name: source_month
+            description: "First day of the official BTS source month; part of the physical source key."
+            data_tests:
+              - not_null
+          - name: source_row_number
+            description: "Original row position in the monthly source ZIP; unique together with source_month."
+            data_tests:
+              - not_null
+          - name: flight_date
+            description: "Reported local flight date."
+            data_tests:
+              - not_null

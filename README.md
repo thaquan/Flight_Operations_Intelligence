@@ -4,7 +4,7 @@
 
 A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
 
-**Current status:** Phases 1–2 are complete and published. Phase 3 milestones M3.1 and M3.2 are complete and verified locally: all 24 BTS months and 14,080,680 source observations are preserved in both Bronze and PostgreSQL Silver. dbt staging, dimensional models and Gold marts are still pending.
+**Current status:** Phases 1–2 and Phase 3 milestones M3.1–M3.3 are implemented and verified. All 24 BTS months and 14,080,680 observations are reconciled through PostgreSQL Silver and dbt staging. Dimensional models and Gold marts are still pending.
 
 ## Business questions
 
@@ -136,6 +136,29 @@ M3.2 loads the 2024–2025 Bronze population into `silver.flights` using checksu
 - [M3.2 source-to-Silver reconciliation](docs/phase3/m32_reconciliation.json)
 - [M3.2 validation record](docs/phase3/m32_validation.md)
 
+## Phase 3, M3.3: dbt Source and Staging Models
+
+M3.3 declares `silver.flights` as a dbt source and builds two PostgreSQL views:
+`staging.stg_flights` (all typed Silver fields plus normalized airline/airport
+codes) and `staging.stg_flight_outcomes` (mutually exclusive flight statuses
+and additive KPI numerators/denominators). Neither view filters, deduplicates,
+or physically copies source flights.
+
+```powershell
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli parse
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli build
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+**Verified local result:** dbt built 2 views and passed 9 data tests
+(**11/11 PASS**; no warnings or errors). All monthly Silver-to-staging row
+counts matched. The Python suite passed **48 tests**. Annual dbt staging
+arrival delay rates match Phase 1: **20.82% in 2024** and **22.31% in 2025**,
+using completed flights with a valid `ArrDel15` as the denominator.
+
+- [M3.3 staging design and runbook](docs/phase3/m33_staging_models.md)
+- [M3.3 verification record](docs/phase3/m33_validation.md)
+
 ## Planned stack and scope
 
 | Layer | Planned technology | Status |
@@ -143,8 +166,8 @@ M3.2 loads the 2024–2025 Bronze population into `silver.flights` using checksu
 | Source acquisition / profiling | Python | Phase 1 |
 | Bronze storage | Python, PyArrow, Polars and partitioned Parquet | Phase 2 complete |
 | Silver warehouse | PostgreSQL + Docker Compose | M3.2 complete; 24 months loaded and reconciled |
-| Transformations | dbt Core | M3.1 connection verified; models pending |
-| Tests and CI | pytest tests implemented; dbt tests and GitHub Actions planned | Phase 2 / Phase 4 |
+| Transformations | dbt Core | M3.3 source and staging views complete; dimensional/Gold models pending |
+| Tests and CI | pytest and 9 dbt data tests implemented; GitHub Actions planned | M3.3 / Phase 4 |
 | BI | Power BI Desktop (Import) | Phase 5 |
 | Weather integration | NOAA GHCNh, station mapping, IANA time zones | Phase 6 |
 | Orchestration | Dagster OSS | Phase 7 |
@@ -173,4 +196,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 are published on `main`. M3.1 and M3.2 are implemented and verified locally; Phase 3 publication is separate. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 plus M3.1–M3.3 are published on `main`; Phase 3 continues with dimensional and Gold modeling. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
