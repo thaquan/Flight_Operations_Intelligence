@@ -11,6 +11,10 @@ data/tmp/
 # Local environment / secrets
 .env
 .venv/
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/.user.yml
 __pycache__/
 *.py[cod]
 .pytest_cache/

@@ -4,7 +4,7 @@
 
 A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
 
-**Current status:** Phases 1–2 complete and verified locally (24/24 months; 14,080,680 real flight observations preserved in Bronze). Phases 3–8 are planned, not implemented.
+**Current status:** Phases 1–2 are complete and published (24/24 months; 14,080,680 real flight observations preserved in Bronze). Phase 3 milestone M3.1 (local PostgreSQL infrastructure and dbt connectivity) is implemented and verified locally; warehouse data loading and analytical models are still pending.
 
 ## Business questions
 
@@ -100,14 +100,33 @@ python -m pytest -q
 
 The generated `data/bronze/` tree and its ingestion manifest are deliberately Git-ignored. Reproduce them locally from the official raw ZIPs; PostgreSQL and dbt modeling begin in Phase 3.
 
+## Phase 3, M3.1: local PostgreSQL foundation
+
+M3.1 provides a containerized PostgreSQL 17 warehouse, persistent Docker storage, versioned schema initialization, environment-based credentials and a dbt Core connection. It **does not yet load Bronze data** or publish Silver/Gold models; those belong to subsequent Phase 3 milestones.
+
+Install Phase 3 dependencies into the existing virtual environment:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-phase3.txt
+.\.venv\Scripts\python.exe -m src.phase3.bootstrap_env
+docker compose up -d --wait
+.\.venv\Scripts\python.exe -m src.phase3.check_database
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli debug
+```
+
+The bootstrap command generates a private `.env` with a random database password and refuses to overwrite an existing one. Docker publishes PostgreSQL to **127.0.0.1:5433** by default; the database is kept in a named volume. Start Docker Desktop before running Compose. To stop the service without removing data, run `docker compose stop`.
+
+- [M3.1 infrastructure and operation guide](docs/phase3/m31_infrastructure.md)
+- [M3.1 verification record](docs/phase3/m31_validation.md)
+
 ## Planned stack and scope
 
 | Layer | Planned technology | Status |
 | --- | --- | --- |
 | Source acquisition / profiling | Python | Phase 1 |
 | Bronze storage | Python, PyArrow, Polars and partitioned Parquet | Phase 2 complete |
-| Silver warehouse | PostgreSQL + Docker Compose | Phase 3 |
-| Transformations | dbt Core | Phase 3 |
+| Silver warehouse | PostgreSQL + Docker Compose | M3.1 infrastructure verified; data load pending |
+| Transformations | dbt Core | M3.1 connection verified; models pending |
 | Tests and CI | pytest tests implemented; dbt tests and GitHub Actions planned | Phase 2 / Phase 4 |
 | BI | Power BI Desktop (Import) | Phase 5 |
 | Weather integration | NOAA GHCNh, station mapping, IANA time zones | Phase 6 |
@@ -137,4 +156,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phase 1 is published on `main`; Phase 2 has been verified in the local working tree and is awaiting a separate push. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 are published on `main`. M3.1 is implemented and verified locally; Phase 3 publication is separate. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.

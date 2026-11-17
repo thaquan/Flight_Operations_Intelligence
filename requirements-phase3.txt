@@ -1,0 +1,4 @@
+# Install after requirements-phase2.txt in the project .venv.
+dbt-core==1.11.17
+dbt-postgres==1.11.0
+psycopg[binary]==3.3.9
