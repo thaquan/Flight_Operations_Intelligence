@@ -4,7 +4,7 @@
 
 A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
 
-**Current status:** Phases 1–2 and Phase 3 milestones M3.1–M3.4 are implemented and verified. All 24 BTS months and 14,080,680 observations reconcile from PostgreSQL Silver through dbt staging to the Gold flight fact. Aggregate data marts and Power BI are still pending.
+**Current status:** Phases 1–2 and Phase 3 milestones **M3.1–M3.5** are implemented and verified. All 24 BTS months and 14,080,680 observations reconcile from PostgreSQL Silver through dbt staging, the Gold fact and five analytics marts. Power BI is planned for Phase 5.
 
 ## Business questions
 
@@ -167,8 +167,8 @@ dimension is used for both origin and destination roles. Stable numeric
 keys, unknown members and source lineage preserve every observation.
 
 ```powershell
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli run --select path:models/marts
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli test --select path:models/marts
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli run --select path:models/marts/dimensions path:models/marts/facts
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli test --select path:models/marts/dimensions path:models/marts/facts
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
@@ -183,6 +183,36 @@ The fact is currently a fully rebuilt table, not an incremental merge.
 - [M3.4 Star Schema ERD](docs/phase3/m34_erd.md)
 - [M3.4 validation record](docs/phase3/m34_validation.md)
 
+## Phase 3, M3.5: Gold Analytics Data Marts
+
+M3.5 materializes five BI-ready aggregate tables from the complete Gold
+flight fact: `mart_network_monthly`, `mart_airline_monthly`,
+`mart_airport_daily`, `mart_route_monthly`, and `mart_delay_causes`.
+The airport mart retains separate origin/destination roles, routes are
+directed, and the cause mart distinguishes non-NULL observations from
+positive reported minutes. All flight-rate KPIs reuse a shared dbt macro.
+
+```powershell
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli parse
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli run --select path:models/marts/analytics --threads 2
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli test --select path:models/marts/analytics tag:m35 --threads 2
+.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
+```
+
+**Verified local result:** **24** network-month rows, **348** airline-months,
+**481,262** airport/role/days, **139,287** directed route-months and **1,740**
+airline/month/cause groups. An unchanged rebuild and a final indexed rebuild
+reproduced all row counts. **32/32 selected dbt tests** and **57/57 Python
+tests** passed; the full dbt regression suite passed **65/65 data tests**.
+Network delay 15+ rates remain **20.82% (2024)** and **22.31% (2025)**.
+PostgreSQL aggregate tables are currently full-rebuild, not incremental.
+
+- [M3.5 Gold marts design and SQL examples](docs/phase3/m35_gold_marts_design.md)
+- [M3.5 KPI and dimension mapping](docs/phase3/m35_kpi_mapping.md)
+- [M3.5 source-to-mart reconciliation](docs/phase3/m35_reconciliation.md)
+- [M3.5 measured performance](docs/phase3/m35_performance.md)
+- [M3.5 validation record](docs/phase3/m35_validation.md)
+
 ## Planned stack and scope
 
 | Layer | Planned technology | Status |
@@ -190,8 +220,8 @@ The fact is currently a fully rebuilt table, not an incremental merge.
 | Source acquisition / profiling | Python | Phase 1 |
 | Bronze storage | Python, PyArrow, Polars and partitioned Parquet | Phase 2 complete |
 | Silver warehouse | PostgreSQL + Docker Compose | M3.2 complete; 24 months loaded and reconciled |
-| Transformations | dbt Core | M3.4 Star Schema complete; aggregate Gold marts pending |
-| Tests and CI | pytest and 33 dbt data tests implemented; GitHub Actions planned | M3.4 / Phase 4 |
+| Transformations | dbt Core | M3.5 Gold fact, dimensions and five aggregate marts complete |
+| Tests and CI | pytest and 65 dbt data tests defined; GitHub Actions planned | M3.5 / Phase 4 |
 | BI | Power BI Desktop (Import) | Phase 5 |
 | Weather integration | NOAA GHCNh, station mapping, IANA time zones | Phase 6 |
 | Orchestration | Dagster OSS | Phase 7 |
@@ -220,4 +250,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 plus M3.1–M3.4 are published on `main`; Phase 3 continues with aggregate Gold marts. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 plus M3.1–M3.5 are completed on `main`; Phase 4 adds CI and data-quality automation. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.

@@ -1,0 +1,102 @@
+version: 2
+
+models:
+  - name: mart_network_monthly
+    description: "One network-wide BTS reporting month; rates use additive fact denominators."
+    columns:
+      - name: source_month
+        data_tests: [not_null, unique]
+      - name: scheduled_flights
+        data_tests: [not_null]
+      - name: eligible_arrivals
+        data_tests: [not_null]
+
+  - name: mart_airline_monthly
+    description: "One reporting airline per source month, including the Unknown airline member."
+    columns:
+      - name: airline_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_airline') }}"
+                field: airline_sk
+      - name: source_month
+        data_tests: [not_null]
+
+  - name: mart_airport_daily
+    description: >
+      Daily airport performance by explicit origin/destination role. Every fact
+      contributes to one row of each role; never sum both roles for network totals.
+    columns:
+      - name: airport_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_airport') }}"
+                field: airport_sk
+      - name: airport_role
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['origin', 'destination']
+      - name: flight_date
+        data_tests: [not_null]
+      - name: flight_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_date') }}"
+                field: date_key
+
+  - name: mart_route_monthly
+    description: "Directed origin-to-destination route by reporting month, with no top-N cut."
+    columns:
+      - name: origin_airport_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_airport') }}"
+                field: airport_sk
+      - name: dest_airport_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_airport') }}"
+                field: airport_sk
+      - name: source_month
+        data_tests: [not_null]
+
+  - name: mart_delay_causes
+    description: >
+      Airline/month/BTS reported delay cause; retains only non-NULL source
+      observations and does not imply an independent meteorological measurement.
+    columns:
+      - name: airline_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_airline') }}"
+                field: airline_sk
+      - name: source_month
+        data_tests: [not_null]
+      - name: cause_type
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['carrier', 'weather', 'nas', 'security', 'late_aircraft']
+      - name: reported_observations
+        description: "Non-NULL BTS source entries, including explicit zero-minute causes."
+        data_tests: [not_null]
+      - name: positive_delay_observations
+        description: "Number of those entries strictly greater than zero minutes."
+        data_tests: [not_null]
+      - name: reported_delay_minutes
+        data_tests: [not_null]

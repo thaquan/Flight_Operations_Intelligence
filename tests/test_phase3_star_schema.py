@@ -16,7 +16,7 @@ def test_marts_use_explicit_gold_schema_and_materialized_tables() -> None:
         encoding="utf-8"
     )
     assert "+schema: gold" in project
-    assert project.count("+materialized: table") == 2
+    assert project.count("+materialized: table") == 3
     assert "custom_schema_name | trim" in schema_macro
     for path in (
         MARTS / "dimensions/dim_airline.sql",
