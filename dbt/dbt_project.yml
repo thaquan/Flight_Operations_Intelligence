@@ -10,3 +10,9 @@ macro-paths: ["macros"]
 models:
   flight_operations_intelligence:
     +materialized: view
+    marts:
+      +schema: gold
+      dimensions:
+        +materialized: table
+      facts:
+        +materialized: table

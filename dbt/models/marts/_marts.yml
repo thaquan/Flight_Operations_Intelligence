@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: dim_airline
+    description: >
+      One row per BTS DOT reporting-airline ID plus an unknown member (-1).
+      The most frequently observed code tuple is chosen deterministically;
+      labels are BTS codes, not externally inferred airline names.
+    columns:
+      - name: airline_sk
+        description: "Stable warehouse key: DOT ID + 1,000,000; -1 for unknown."
+        data_tests: [not_null, unique]
+      - name: airline_dot_id
+        description: "Original BTS DOT reporting-airline ID, NULL for unknown."
+      - name: airline_code
+        description: "Most frequently observed reporting carrier code."
+
+  - name: dim_airport
+    description: >
+      Role-playing airport dimension, derived from both origin and destination
+      observations; each BTS airport ID appears once plus unknown (-1).
+    columns:
+      - name: airport_sk
+        description: "Stable warehouse key: BTS AirportID + 1,000,000; -1 for unknown."
+        data_tests: [not_null, unique]
+      - name: airport_id
+        description: "Original BTS airport ID, NULL for unknown."
+      - name: airport_code
+        description: "Most frequently observed airport code for this AirportID."
+
+  - name: dim_date
+    description: "Continuous source-range calendar; dates are local flight dates, not UTC."
+    columns:
+      - name: date_key
+        description: "Calendar key in YYYYMMDD form."
+        data_tests: [not_null, unique]
+      - name: flight_date
+        description: "One date per row, including leap day."
+        data_tests: [not_null, unique]
+
+  - name: fct_flights
+    description: >
+      One materialized row per original BTS source observation, preserving
+      cancelled/diverted flights, KPI counters and source lineage.
+    columns:
+      - name: flight_sk
+        description: >
+          Stable BIGINT: YYYYMM of source month * 10,000,000 + source_row_number.
+          It is not a candidate flight business key.
+        data_tests: [not_null, unique]
+      - name: source_month
+        description: "First day of the source month (lineage composite key)."
+        data_tests: [not_null]
+      - name: source_row_number
+        description: "Row position in original monthly BTS ZIP."
+        data_tests: [not_null]
+      - name: flight_date_key
+        description: "Local flight date in YYYYMMDD; joins dim_date."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_date') }}"
+                field: date_key
+      - name: airline_sk
+        description: "Reporting-airline role to dim_airline, including unknown."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_airline') }}"
+                field: airline_sk
+      - name: origin_airport_sk
+        description: "Origin airport role to dim_airport, including unknown."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_airport') }}"
+                field: airport_sk
+      - name: dest_airport_sk
+        description: "Destination airport role to the SAME dim_airport."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: "{{ ref('dim_airport') }}"
+                field: airport_sk

@@ -4,7 +4,7 @@
 
 A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
 
-**Current status:** Phases 1–2 and Phase 3 milestones M3.1–M3.3 are implemented and verified. All 24 BTS months and 14,080,680 observations are reconciled through PostgreSQL Silver and dbt staging. Dimensional models and Gold marts are still pending.
+**Current status:** Phases 1–2 and Phase 3 milestones M3.1–M3.4 are implemented and verified. All 24 BTS months and 14,080,680 observations reconcile from PostgreSQL Silver through dbt staging to the Gold flight fact. Aggregate data marts and Power BI are still pending.
 
 ## Business questions
 
@@ -159,6 +159,30 @@ using completed flights with a valid `ArrDel15` as the denominator.
 - [M3.3 staging design and runbook](docs/phase3/m33_staging_models.md)
 - [M3.3 verification record](docs/phase3/m33_validation.md)
 
+## Phase 3, M3.4: Dimensional Modeling
+
+M3.4 builds the physical PostgreSQL Star Schema in `gold` using dbt:
+`fct_flights`, `dim_airline`, `dim_airport` and `dim_date`. The airport
+dimension is used for both origin and destination roles. Stable numeric
+keys, unknown members and source lineage preserve every observation.
+
+```powershell
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli run --select path:models/marts
+.\.venv\Scripts\python.exe -m src.phase3.dbt_cli test --select path:models/marts
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+**Verified local result:** 15 airlines plus Unknown, 358 airports plus
+Unknown, 731 calendar dates, and **14,080,680 fact rows**. All **24
+M3.4 dbt tests passed**, including fact-to-dimension relationships,
+monthly Silver-to-Fact reconciliation and annual KPI consistency.
+The materialized fact and indexes occupied approximately **6,307 MB**.
+The fact is currently a fully rebuilt table, not an incremental merge.
+
+- [M3.4 dimensional design and runbook](docs/phase3/m34_dimensional_model.md)
+- [M3.4 Star Schema ERD](docs/phase3/m34_erd.md)
+- [M3.4 validation record](docs/phase3/m34_validation.md)
+
 ## Planned stack and scope
 
 | Layer | Planned technology | Status |
@@ -166,8 +190,8 @@ using completed flights with a valid `ArrDel15` as the denominator.
 | Source acquisition / profiling | Python | Phase 1 |
 | Bronze storage | Python, PyArrow, Polars and partitioned Parquet | Phase 2 complete |
 | Silver warehouse | PostgreSQL + Docker Compose | M3.2 complete; 24 months loaded and reconciled |
-| Transformations | dbt Core | M3.3 source and staging views complete; dimensional/Gold models pending |
-| Tests and CI | pytest and 9 dbt data tests implemented; GitHub Actions planned | M3.3 / Phase 4 |
+| Transformations | dbt Core | M3.4 Star Schema complete; aggregate Gold marts pending |
+| Tests and CI | pytest and 33 dbt data tests implemented; GitHub Actions planned | M3.4 / Phase 4 |
 | BI | Power BI Desktop (Import) | Phase 5 |
 | Weather integration | NOAA GHCNh, station mapping, IANA time zones | Phase 6 |
 | Orchestration | Dagster OSS | Phase 7 |
@@ -196,4 +220,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 plus M3.1–M3.3 are published on `main`; Phase 3 continues with dimensional and Gold modeling. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1 and 2 plus M3.1–M3.4 are published on `main`; Phase 3 continues with aggregate Gold marts. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
