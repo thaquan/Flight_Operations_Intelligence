@@ -1,0 +1,61 @@
+{
+  "checked_at_utc": "2026-11-18T15:30:50.422926+00:00",
+  "status": "REVIEW",
+  "summary": {
+    "PASS": 6,
+    "REVIEW": 2,
+    "FAIL": 0
+  },
+  "monthly_count": 24,
+  "totals": {
+    "scheduled_flights": 14080680,
+    "completed_flights": 13844732,
+    "cancelled_flights": 199191,
+    "diverted_flights": 36757,
+    "eligible_arrivals": 13844731,
+    "late_arrivals_15": 2984604,
+    "on_time_arrivals": 10860127
+  },
+  "checks": [
+    {
+      "name": "source_month_coverage",
+      "status": "PASS",
+      "detail": "Expected 24 months; actual: network=24, fact=24, silver=24, audit=24"
+    },
+    {
+      "name": "source_to_fact_monthly_counts",
+      "status": "PASS",
+      "detail": "All monthly row counts reconcile"
+    },
+    {
+      "name": "bronze_silver_audit_and_hashes",
+      "status": "PASS",
+      "detail": "Load audit counts and source SHA-256 values match"
+    },
+    {
+      "name": "segment_kpi_reconciliation",
+      "status": "PASS",
+      "detail": "Airline, route, origin and destination reconcile independently"
+    },
+    {
+      "name": "arrival_kpi_denominators",
+      "status": "PASS",
+      "detail": "Valid completed/eligible arrival counters"
+    },
+    {
+      "name": "phase1_population_baseline",
+      "status": "PASS",
+      "detail": "All seven additive metrics match the verified Phase 1 population"
+    },
+    {
+      "name": "documented_source_exception",
+      "status": "REVIEW",
+      "detail": "2024-08: flight record missing a candidate business-key component; preserve source-row lineage"
+    },
+    {
+      "name": "documented_source_exception",
+      "status": "REVIEW",
+      "detail": "2025-09: completed flight missing ArrDel15; excluded from arrival punctuality denominator"
+    }
+  ]
+}

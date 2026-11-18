@@ -1,0 +1,2 @@
+# Install after requirements-phase2.txt and requirements-phase3.txt.
+ruff==0.17.5
