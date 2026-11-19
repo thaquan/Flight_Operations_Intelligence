@@ -2,9 +2,11 @@
 
 **End-to-End Aviation Data Engineering & Analytics Platform**
 
+[![Data quality CI](https://github.com/thaquan/Flight_Operations_Intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/thaquan/Flight_Operations_Intelligence/actions/workflows/ci.yml)
+
 A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
 
-**Current status:** Phases 1-3 and Phase 4 local data-quality/CI verification are complete. All 24 BTS months and 14,080,680 observations reconcile from PostgreSQL Silver through dbt staging, the Gold fact and five analytics marts. GitHub-hosted CI awaits the next push; Power BI is planned for Phase 5.
+**Current status:** **Phases 1–4 are complete and published on `main`**, including Data Quality & CI/CD. All 24 BTS months and 14,080,680 flight records reconcile from PostgreSQL Silver through dbt staging, the Gold fact and five analytics marts. [GitHub Actions passed](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773) for Phase 4; **Phase 5 (Power BI Analytics) is next**.
 
 ## Business questions
 
@@ -223,7 +225,7 @@ Phase 4 checks the complete two-year source-to-mart lineage using a read-only qu
 .\.venv\Scripts\python.exe -m src.phase4.quality_gates --mode full --report docs/phase4/quality_report.json
 ```
 
-**Verified locally:** **70/70 Python tests**, Ruff lint, and **76/76 dbt nodes** (11 models, 65 tests) on a throwaway PostgreSQL 17 fixture. Full 24-month quality gates returned **6 PASS, 2 REVIEW, 0 FAIL**; the two REVIEW findings are transparent BTS source exceptions. The Actions workflow is committed locally but **has not yet been executed on GitHub**.
+**Verified locally:** **70/70 Python tests**, Ruff lint, and **76/76 dbt nodes** (11 models, 65 tests) on a throwaway PostgreSQL 17 fixture. Full 24-month quality gates returned **6 PASS, 2 REVIEW, 0 FAIL**; the two REVIEW findings are transparent BTS source exceptions. **Verified on GitHub:** the [Data quality CI workflow](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773) passed on commit `09d3b1a`, including lint, Python tests, the synthetic PostgreSQL/dbt build, rollback checks and fixture quality gates.
 
 - [Phase 4 scope and findings](docs/phase4/README.md)
 - [CI and recovery runbook](docs/phase4/ci_runbook.md)
@@ -238,7 +240,7 @@ Phase 4 checks the complete two-year source-to-mart lineage using a read-only qu
 | Bronze storage | Python, PyArrow, Polars and partitioned Parquet | Phase 2 complete |
 | Silver warehouse | PostgreSQL + Docker Compose | M3.2 complete; 24 months loaded and reconciled |
 | Transformations | dbt Core | M3.5 Gold fact, dimensions and five aggregate marts complete |
-| Tests and CI | pytest, Ruff, 65 dbt data tests, synthetic PostgreSQL fixture and GitHub Actions | Phase 4 locally verified; hosted run pending push |
+| Tests and CI | pytest, Ruff, 65 dbt data tests, synthetic PostgreSQL fixture and GitHub Actions | Phase 4 complete; GitHub Actions passed |
 | BI | Power BI Desktop (Import) | Phase 5 |
 | Weather integration | NOAA GHCNh, station mapping, IANA time zones | Phase 6 |
 | Orchestration | Dagster OSS | Phase 7 |
@@ -267,4 +269,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). Phases 1-3 are published on `main`; Phase 4 has been verified locally and will appear on GitHub after the next push. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). **Phases 1–4 are completed and published on `main`**, with [Phase 4 CI passing on GitHub](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773); Phase 5 Power BI work is next. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.

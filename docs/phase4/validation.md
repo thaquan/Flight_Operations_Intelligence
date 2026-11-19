@@ -1,6 +1,6 @@
 # Phase 4 validation record
 
-Date: November 18, 2026 (local verification). GitHub-hosted run: **pending push**.
+Date: November 18, 2026 (local and hosted verification). GitHub-hosted run: **[passed](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773)** for commit `09d3b1a`.
 
 ## Full-size data quality
 
@@ -42,4 +42,4 @@ An explicit **FAIL** makes the quality command exit nonzero; source exceptions c
 - `python -m src.phase4.quality_gates --mode fixture`: **6 PASS / 0 REVIEW / 0 FAIL**.
 - Re-running the seed kept the synthetic Silver population at exactly **10 rows** (idempotent).
 
-The local fixture runs against its own isolated database/port and never replaces the real warehouse. Hosted Actions should be checked after the next push; no green hosted badge is claimed here.
+The local fixture runs against its own isolated database/port and never replaces the real warehouse. The GitHub-hosted workflow independently passed its Python lint/tests, synthetic PostgreSQL seed, dbt DAG, rollback checks and fixture quality gates. The **full 24-month reconciliation remains a separate local warehouse check**, not part of the lightweight hosted CI job.

@@ -22,7 +22,7 @@ On November 18, 2026, the local full dataset check returned **6 PASS / 2 REVIEW 
 
 Python tests: **70 passed**. The isolated PostgreSQL fixture successfully completed **76 dbt nodes** (11 models, 65 data tests), recovered from four intentionally invalid transactions, and passed the fixture quality gates. Ruff lint passed.
 
-These are **local results**; GitHub-hosted workflow execution remains unverified until this commit is pushed. See [validation](validation.md), [CI runbook](ci_runbook.md) and [machine-readable report](quality_report.json).
+The full two-year reconciliation was verified **locally** against the existing warehouse. The independent [GitHub-hosted Data quality CI run](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773) **passed** for commit `09d3b1a` using the synthetic fixture (Python tests, Ruff, full dbt build, transaction recovery and quality gates). See [validation](validation.md), [CI runbook](ci_runbook.md) and [machine-readable report](quality_report.json).
 
 ## Exit criteria
 
