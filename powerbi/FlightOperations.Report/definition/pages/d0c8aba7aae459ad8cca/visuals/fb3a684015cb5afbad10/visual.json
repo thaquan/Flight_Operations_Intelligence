@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "fb3a684015cb5afbad10",
+  "position": {
+    "x": 860,
+    "y": 263,
+    "z": 24,
+    "height": 387,
+    "width": 392,
+    "tabOrder": 24
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_delay_causes"
+                    }
+                  },
+                  "Property": "cause_type"
+                }
+              },
+              "queryRef": "mart_delay_causes.cause_type",
+              "nativeQueryRef": "cause_type",
+              "active": true,
+              "displayName": "Delay cause"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_delay_causes"
+                    }
+                  },
+                  "Property": "Reported Cause Minutes"
+                }
+              },
+              "queryRef": "mart_delay_causes.Reported Cause Minutes",
+              "nativeQueryRef": "Reported Cause Minutes"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

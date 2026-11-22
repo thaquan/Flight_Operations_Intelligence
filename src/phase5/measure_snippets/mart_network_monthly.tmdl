@@ -1,0 +1,65 @@
+	/// Number of scheduled flight records in selected months.
+	measure 'Scheduled Flights' = SUM('mart_network_monthly'[scheduled_flights])
+		formatString: #,0
+		displayFolder: 01 Network KPIs
+		lineageTag: fc3d139a-b02c-418e-b037-ae3bd77f67ec
+
+	/// Completed flights; includes one record with unknown arrival delay status.
+	measure 'Completed Flights' = SUM('mart_network_monthly'[completed_flights])
+		formatString: #,0
+		displayFolder: 01 Network KPIs
+		lineageTag: 05cf7d01-6ed2-43a4-82af-750eb442e4d7
+
+	/// Completed arrivals with known 15 minute arrival-delay indicator.
+	measure 'Eligible Arrivals' = SUM('mart_network_monthly'[eligible_arrivals])
+		formatString: #,0
+		displayFolder: 01 Network KPIs
+		lineageTag: d79967bc-7ffb-48f9-ae25-7d83c31f39b1
+
+	/// Eligible arrivals at least 15 minutes late.
+	measure 'Late Arrivals 15+' = SUM('mart_network_monthly'[late_arrivals_15])
+		formatString: #,0
+		displayFolder: 01 Network KPIs
+		lineageTag: 4f5e9cf2-8ee9-4ad2-ae2b-8872c1e8df25
+
+	/// Eligible arrivals less than 15 minutes late.
+	measure 'On-Time Arrivals' = SUM('mart_network_monthly'[on_time_arrivals])
+		formatString: #,0
+		displayFolder: 01 Network KPIs
+		lineageTag: c4bb6a00-0a88-4542-a3fa-ddfb221eaf44
+
+	/// Cancelled scheduled flights.
+	measure 'Cancelled Flights' = SUM('mart_network_monthly'[cancelled_flights])
+		formatString: #,0
+		displayFolder: 01 Network KPIs
+		lineageTag: 8aae9575-8a4a-4b92-90ab-7d1d430502e2
+
+	/// Diverted scheduled flights.
+	measure 'Diverted Flights' = SUM('mart_network_monthly'[diverted_flights])
+		formatString: #,0
+		displayFolder: 01 Network KPIs
+		lineageTag: 234f6963-5fe1-4ea3-b79f-ce522da16ffe
+
+	/// Late arrivals over eligible arrivals, not scheduled flights.
+	measure 'Arrival Delay 15+ Rate' = DIVIDE([Late Arrivals 15+], [Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 01 Network KPIs
+		lineageTag: 08344fa0-79d1-4ba7-bd6a-6e3b4914446b
+
+	/// On-time arrivals over eligible arrivals.
+	measure 'Arrival On-Time Rate' = DIVIDE([On-Time Arrivals], [Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 01 Network KPIs
+		lineageTag: 24b87108-13dc-4756-a337-950dc1469281
+
+	/// Cancelled flights over scheduled flights.
+	measure 'Cancellation Rate' = DIVIDE([Cancelled Flights], [Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 01 Network KPIs
+		lineageTag: 0abac2cc-a5fb-4349-bc60-6976d95d8b98
+
+	/// Diverted flights over scheduled flights.
+	measure 'Diversion Rate' = DIVIDE([Diverted Flights], [Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 01 Network KPIs
+		lineageTag: 14c64fbb-1bac-4631-bb5f-e04d58672073

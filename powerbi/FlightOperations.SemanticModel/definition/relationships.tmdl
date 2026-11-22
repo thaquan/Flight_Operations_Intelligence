@@ -1,0 +1,44 @@
+relationship 04b1a431-a597-5650-bb59-0d2efed38c9f
+	fromColumn: mart_network_monthly.source_month
+	toColumn: dim_month.source_month
+
+relationship 663e6a05-bad3-5582-9d44-fc9b9b5af0de
+	fromColumn: mart_airline_monthly.source_month
+	toColumn: dim_month.source_month
+
+relationship 2d95bd5c-e2ff-5938-a86e-a3e41beaf17e
+	fromColumn: mart_airport_daily.source_month
+	toColumn: dim_month.source_month
+
+relationship 664b4878-b882-5b79-a834-33a4454db4b7
+	fromColumn: mart_route_monthly.source_month
+	toColumn: dim_month.source_month
+
+relationship dccb34cf-77e0-54f9-9707-5e97cb0ee886
+	fromColumn: mart_delay_causes.source_month
+	toColumn: dim_month.source_month
+
+relationship 0dae8b8f-ab26-5f3f-99bd-4b2c4a273af7
+	fromColumn: mart_airline_monthly.airline_sk
+	toColumn: dim_airline.airline_sk
+
+relationship ae676a2a-c7d5-527e-bdc1-08e3c9d7d582
+	fromColumn: mart_delay_causes.airline_sk
+	toColumn: dim_airline.airline_sk
+
+relationship 6f27bdae-abbd-56fd-b0f3-f452ff0537c0
+	fromColumn: mart_airport_daily.airport_sk
+	toColumn: dim_airport.airport_sk
+
+relationship 1efc58be-61e3-55f1-b028-c52cad028d5f
+	fromColumn: mart_airport_daily.flight_date_key
+	toColumn: dim_date.date_key
+
+relationship 4cd48ab4-d39c-51ea-9118-e6e9b09abab4
+	fromColumn: mart_route_monthly.origin_airport_sk
+	toColumn: dim_origin_airport.airport_sk
+
+relationship 93ac339e-8a87-5255-9bc1-8ef1c58117bc
+	fromColumn: mart_route_monthly.dest_airport_sk
+	toColumn: dim_dest_airport.airport_sk
+

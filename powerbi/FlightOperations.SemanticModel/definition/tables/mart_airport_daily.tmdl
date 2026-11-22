@@ -1,0 +1,179 @@
+table mart_airport_daily
+	lineageTag: e376ffa5-534f-4f0c-a0e3-dc04b5b1132b
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Scheduled Flights' = CALCULATE(SUM('mart_airport_daily'[scheduled_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: 49c3326e-42da-4d41-8f93-1530fe166793
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Eligible Arrivals' = CALCULATE(SUM('mart_airport_daily'[eligible_arrivals]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: 193fd479-4f6f-484c-9117-aaae312352e8
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Late Arrivals 15+' = CALCULATE(SUM('mart_airport_daily'[late_arrivals_15]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: 6fde19f1-72b2-4e2c-80ee-8658c5a153fb
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Cancelled Flights' = CALCULATE(SUM('mart_airport_daily'[cancelled_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: c3d9e472-28d0-4cb5-b8e9-f8081251a577
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Diverted Flights' = CALCULATE(SUM('mart_airport_daily'[diverted_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: 63b07e84-1813-4cbe-9eb5-4221741981f2
+
+	measure 'Origin Delay 15+ Rate' = DIVIDE([Origin Late Arrivals 15+], [Origin Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 03 Airport Origin
+		lineageTag: d2720630-f3aa-4180-8551-45fbacf19cf7
+
+	measure 'Origin Cancellation Rate' = DIVIDE([Origin Cancelled Flights], [Origin Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 03 Airport Origin
+		lineageTag: eb7629d0-ed86-4f78-8b22-3f75a6f82c28
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Scheduled Flights' = CALCULATE(SUM('mart_airport_daily'[scheduled_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: 7e6243d2-6ec2-455b-9b9a-fa7f85d86d5b
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Eligible Arrivals' = CALCULATE(SUM('mart_airport_daily'[eligible_arrivals]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: 333a9abd-8c89-44d1-87f6-fcbd34d6a81f
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Late Arrivals 15+' = CALCULATE(SUM('mart_airport_daily'[late_arrivals_15]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: 55c82814-83ee-472d-b54d-da30fedfeb9b
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Cancelled Flights' = CALCULATE(SUM('mart_airport_daily'[cancelled_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: cc133180-ae16-4fad-82f9-721345a981a1
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Diverted Flights' = CALCULATE(SUM('mart_airport_daily'[diverted_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: de1f658c-4087-420d-8606-605f4ef7eb8a
+
+	measure 'Destination Delay 15+ Rate' = DIVIDE([Destination Late Arrivals 15+], [Destination Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 03 Airport Destination
+		lineageTag: e0e87b1c-dbe0-4626-8f57-10ac023ce9fa
+
+	measure 'Destination Cancellation Rate' = DIVIDE([Destination Cancelled Flights], [Destination Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 03 Airport Destination
+		lineageTag: 59f16671-e64f-4c0f-9355-9785b87cc768
+
+	column airport_sk
+		dataType: int64
+		isHidden
+		lineageTag: 7d816e07-4185-4100-8aee-4ca3a2e8a3d0
+		summarizeBy: none
+		sourceColumn: airport_sk
+
+	column airport_role
+		dataType: string
+		lineageTag: c1a801a2-460c-4df6-8ca0-1233f64613e5
+		summarizeBy: none
+		sourceColumn: airport_role
+
+	column flight_date_key
+		dataType: int64
+		isHidden
+		lineageTag: 00e5ef16-eb5b-4458-adb8-918deda4d9f6
+		summarizeBy: none
+		sourceColumn: flight_date_key
+
+	column flight_date
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		lineageTag: bdf19714-5665-4f79-b997-bc3dcacaf0d9
+		summarizeBy: none
+		sourceColumn: flight_date
+
+	column source_month
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-MM-dd
+		lineageTag: ac8bd9cb-8ac4-443b-a894-65d36e6767de
+		summarizeBy: none
+		sourceColumn: source_month
+
+	column scheduled_flights
+		dataType: int64
+		isHidden
+		lineageTag: edc0c432-022f-4408-b4a9-9018641ebffc
+		summarizeBy: none
+		sourceColumn: scheduled_flights
+
+	column completed_flights
+		dataType: int64
+		isHidden
+		lineageTag: 7a21d4ed-3928-41bc-802d-139c881d1a29
+		summarizeBy: none
+		sourceColumn: completed_flights
+
+	column cancelled_flights
+		dataType: int64
+		isHidden
+		lineageTag: 2cbaa9f5-6051-4e59-a79a-4d189597110b
+		summarizeBy: none
+		sourceColumn: cancelled_flights
+
+	column diverted_flights
+		dataType: int64
+		isHidden
+		lineageTag: b37d7a74-27a3-449d-b153-45197bb219c5
+		summarizeBy: none
+		sourceColumn: diverted_flights
+
+	column eligible_arrivals
+		dataType: int64
+		isHidden
+		lineageTag: 2ce86ce5-235c-4bd8-a551-602879afdbb2
+		summarizeBy: none
+		sourceColumn: eligible_arrivals
+
+	column late_arrivals_15
+		dataType: int64
+		isHidden
+		lineageTag: 871e2bce-ab6c-449b-8d22-8285d7c488f2
+		summarizeBy: none
+		sourceColumn: late_arrivals_15
+
+	column on_time_arrivals
+		dataType: int64
+		isHidden
+		lineageTag: d665754d-0f9c-4795-8ac0-9dadedc2ee93
+		summarizeBy: none
+		sourceColumn: on_time_arrivals
+
+	partition mart_airport_daily = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(pPgServer, pPgDatabase, [CreateNavigationProperties=false]),
+				    Raw = Source{[Schema="gold", Item="mart_airport_daily"]}[Data],
+				    Selected = Table.SelectColumns(Raw, {"airport_sk", "airport_role", "flight_date_key", "flight_date", "scheduled_flights", "completed_flights", "cancelled_flights", "diverted_flights", "eligible_arrivals", "late_arrivals_15", "on_time_arrivals"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"airport_sk", Int64.Type}, {"airport_role", type text}, {"flight_date_key", Int64.Type}, {"flight_date", type date}, {"scheduled_flights", Int64.Type}, {"completed_flights", Int64.Type}, {"cancelled_flights", Int64.Type}, {"diverted_flights", Int64.Type}, {"eligible_arrivals", Int64.Type}, {"late_arrivals_15", Int64.Type}, {"on_time_arrivals", Int64.Type}}),
+				    WithMonth = Table.AddColumn(Typed, "source_month", each Date.StartOfMonth([flight_date]), type date)
+				in
+				    WithMonth
+

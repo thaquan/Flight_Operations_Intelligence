@@ -1,0 +1,10 @@
+expression pPgServer = "127.0.0.1:5433" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d395f343-a176-4273-8e1f-5debf84afa3d
+
+	annotation PBI_ResultType = Text
+
+expression pPgDatabase = "flight_warehouse" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 8487b5ac-5a2b-4a57-9b0f-36654eb967bf
+
+	annotation PBI_ResultType = Text
+

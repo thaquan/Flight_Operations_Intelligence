@@ -6,7 +6,37 @@
 
 A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
 
-**Current status:** **Phases 1–4 are complete and published on `main`**, including Data Quality & CI/CD. All 24 BTS months and 14,080,680 flight records reconcile from PostgreSQL Silver through dbt staging, the Gold fact and five analytics marts. [GitHub Actions passed](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773) for Phase 4; **Phase 5 (Power BI Analytics) is next**.
+**Project status:** Data ingestion, warehouse modeling and quality
+validation (Phases 1-4) are complete. The Phase 5 Power BI dashboard is
+available as a source-controlled PBIP project. The 2024-2025 dataset covers
+24 monthly BTS extracts and **14,080,680 scheduled flights**.
+
+## Power BI dashboard (Phase 5)
+
+Open **`powerbi/FlightOperations.pbip`** in Power BI Desktop. The PBIP
+contains a PostgreSQL Import semantic model with 11 tables, 43 DAX measures
+and a five-page Flight Deck report:
+
+- **Executive Overview:** Network punctuality over 24 months, with
+  cancellation and diversion rates by year.
+- **Airline Performance:** Delay-rate and traffic-volume comparisons
+  across reporting carriers.
+- **Airports & Routes:** High-volume origin airports and directed flight
+  corridors, with contextual delay metrics.
+- **Delay Causes:** BTS-reported delay minutes by category and their share
+  of reported minutes.
+- **Seasonal Trends:** Month-by-month 2024 versus 2025 comparisons of delay
+  rates and scheduled flight volume.
+
+A synchronized YEAR / PERIOD filter appears on each page. The Home icon
+returns to Executive Overview. In Power BI Desktop Edit mode, use
+**Ctrl+click** to follow page-navigation buttons; in Reading view, click
+normally. The dashboard uses historical BTS data, not live flight tracking.
+A geographic route map is not included pending verified airport coordinates.
+
+See the [Power BI setup and reporting guide](docs/phase5/README.md),
+[KPI definitions](docs/phase5/kpi_catalog.md) and
+[report requirements](docs/phase5/report_requirements.md).
 
 ## Business questions
 
@@ -269,4 +299,4 @@ The MVP includes **two complete years (2024–2025)** for year-over-year and sea
 
 ## Repository status
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). **Phases 1–4 are completed and published on `main`**, with [Phase 4 CI passing on GitHub](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773); Phase 5 Power BI work is next. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
+GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). **Phases 1–4 are completed and published on `main`**, with [Phase 4 CI passing on GitHub](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773); The Phase 5 Power BI dashboard is available in `powerbi/FlightOperations.pbip`. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.

@@ -1,0 +1,74 @@
+table mart_delay_causes
+	lineageTag: bbc0c2bf-0dba-48d6-8472-a7ec9d4431f4
+
+	/// Sum of BTS-reported delay minutes across cause categories.
+	measure 'Reported Cause Minutes' = SUM('mart_delay_causes'[reported_delay_minutes])
+		formatString: #,0
+		displayFolder: 05 BTS Delay Causes
+		lineageTag: 0e09ba13-64b2-4591-bdff-64542d6224a9
+
+	/// Counts category-specific positive observations, not distinct delayed flights.
+	measure 'Positive Cause Observations' = SUM('mart_delay_causes'[positive_delay_observations])
+		formatString: #,0
+		displayFolder: 05 BTS Delay Causes
+		lineageTag: ad0d4b3c-4d4e-4233-a92b-656825652ca5
+
+	/// Share of total selected cause minutes, keeping month/airline filters.
+	measure 'Cause Minute Share' = DIVIDE([Reported Cause Minutes], CALCULATE([Reported Cause Minutes], REMOVEFILTERS('mart_delay_causes'[cause_type])))
+		formatString: 0.00%
+		displayFolder: 05 BTS Delay Causes
+		lineageTag: 2224a48f-d1ac-4e6b-bb73-999e8bbb297c
+
+	column airline_sk
+		dataType: int64
+		isHidden
+		lineageTag: 51d9e496-1b01-4a79-a2dc-953987bf7bee
+		summarizeBy: none
+		sourceColumn: airline_sk
+
+	column source_month
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-MM-dd
+		lineageTag: e9b831b8-2def-4676-8938-6b8aeb74fb10
+		summarizeBy: none
+		sourceColumn: source_month
+
+	column cause_type
+		dataType: string
+		lineageTag: 77546692-0af3-4c13-9ef6-602cf92e1441
+		summarizeBy: none
+		sourceColumn: cause_type
+
+	column reported_observations
+		dataType: int64
+		isHidden
+		lineageTag: 3dd86c8d-a3bf-4556-b883-ee37c23282d9
+		summarizeBy: none
+		sourceColumn: reported_observations
+
+	column positive_delay_observations
+		dataType: int64
+		isHidden
+		lineageTag: 7c19e49a-756a-4f0d-b4d0-a3b66368b3bb
+		summarizeBy: none
+		sourceColumn: positive_delay_observations
+
+	column reported_delay_minutes
+		dataType: decimal
+		isHidden
+		lineageTag: f3f1d381-b648-4d78-96c9-d60a753a56b3
+		summarizeBy: none
+		sourceColumn: reported_delay_minutes
+
+	partition mart_delay_causes = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(pPgServer, pPgDatabase, [CreateNavigationProperties=false]),
+				    Raw = Source{[Schema="gold", Item="mart_delay_causes"]}[Data],
+				    Selected = Table.SelectColumns(Raw, {"airline_sk", "source_month", "cause_type", "reported_observations", "positive_delay_observations", "reported_delay_minutes"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"airline_sk", Int64.Type}, {"source_month", type date}, {"cause_type", type text}, {"reported_observations", Int64.Type}, {"positive_delay_observations", Int64.Type}, {"reported_delay_minutes", type number}})
+				in
+				    Typed
+

@@ -1,0 +1,79 @@
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Scheduled Flights' = CALCULATE(SUM('mart_airport_daily'[scheduled_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: 49c3326e-42da-4d41-8f93-1530fe166793
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Eligible Arrivals' = CALCULATE(SUM('mart_airport_daily'[eligible_arrivals]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: 193fd479-4f6f-484c-9117-aaae312352e8
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Late Arrivals 15+' = CALCULATE(SUM('mart_airport_daily'[late_arrivals_15]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: 6fde19f1-72b2-4e2c-80ee-8658c5a153fb
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Cancelled Flights' = CALCULATE(SUM('mart_airport_daily'[cancelled_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: c3d9e472-28d0-4cb5-b8e9-f8081251a577
+
+	/// Role-safe origin airport flight metric; do not sum both roles.
+	measure 'Origin Diverted Flights' = CALCULATE(SUM('mart_airport_daily'[diverted_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "origin"))
+		formatString: #,0
+		displayFolder: 03 Airport Origin
+		lineageTag: 63b07e84-1813-4cbe-9eb5-4221741981f2
+
+	measure 'Origin Delay 15+ Rate' = DIVIDE([Origin Late Arrivals 15+], [Origin Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 03 Airport Origin
+		lineageTag: d2720630-f3aa-4180-8551-45fbacf19cf7
+
+	measure 'Origin Cancellation Rate' = DIVIDE([Origin Cancelled Flights], [Origin Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 03 Airport Origin
+		lineageTag: eb7629d0-ed86-4f78-8b22-3f75a6f82c28
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Scheduled Flights' = CALCULATE(SUM('mart_airport_daily'[scheduled_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: 7e6243d2-6ec2-455b-9b9a-fa7f85d86d5b
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Eligible Arrivals' = CALCULATE(SUM('mart_airport_daily'[eligible_arrivals]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: 333a9abd-8c89-44d1-87f6-fcbd34d6a81f
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Late Arrivals 15+' = CALCULATE(SUM('mart_airport_daily'[late_arrivals_15]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: 55c82814-83ee-472d-b54d-da30fedfeb9b
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Cancelled Flights' = CALCULATE(SUM('mart_airport_daily'[cancelled_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: cc133180-ae16-4fad-82f9-721345a981a1
+
+	/// Role-safe destination airport flight metric; do not sum both roles.
+	measure 'Destination Diverted Flights' = CALCULATE(SUM('mart_airport_daily'[diverted_flights]), KEEPFILTERS('mart_airport_daily'[airport_role] = "destination"))
+		formatString: #,0
+		displayFolder: 03 Airport Destination
+		lineageTag: de1f658c-4087-420d-8606-605f4ef7eb8a
+
+	measure 'Destination Delay 15+ Rate' = DIVIDE([Destination Late Arrivals 15+], [Destination Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 03 Airport Destination
+		lineageTag: e0e87b1c-dbe0-4626-8f57-10ac023ce9fa
+
+	measure 'Destination Cancellation Rate' = DIVIDE([Destination Cancelled Flights], [Destination Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 03 Airport Destination
+		lineageTag: 59f16671-e64f-4c0f-9355-9785b87cc768

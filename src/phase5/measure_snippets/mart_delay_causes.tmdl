@@ -1,0 +1,17 @@
+	/// Sum of BTS-reported delay minutes across cause categories.
+	measure 'Reported Cause Minutes' = SUM('mart_delay_causes'[reported_delay_minutes])
+		formatString: #,0
+		displayFolder: 05 BTS Delay Causes
+		lineageTag: 0e09ba13-64b2-4591-bdff-64542d6224a9
+
+	/// Counts category-specific positive observations, not distinct delayed flights.
+	measure 'Positive Cause Observations' = SUM('mart_delay_causes'[positive_delay_observations])
+		formatString: #,0
+		displayFolder: 05 BTS Delay Causes
+		lineageTag: ad0d4b3c-4d4e-4233-a92b-656825652ca5
+
+	/// Share of total selected cause minutes, keeping month/airline filters.
+	measure 'Cause Minute Share' = DIVIDE([Reported Cause Minutes], CALCULATE([Reported Cause Minutes], REMOVEFILTERS('mart_delay_causes'[cause_type])))
+		formatString: 0.00%
+		displayFolder: 05 BTS Delay Causes
+		lineageTag: 2224a48f-d1ac-4e6b-bb73-999e8bbb297c

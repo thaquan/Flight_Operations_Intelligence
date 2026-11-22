@@ -1,0 +1,50 @@
+table dim_month
+	lineageTag: 6612fbe6-d883-4f56-b844-70e826d3e987
+
+	column source_month
+		dataType: dateTime
+		isKey
+		formatString: yyyy-MM-dd
+		lineageTag: 50bd39dc-1313-4506-98fe-c4878ec2069b
+		summarizeBy: none
+		sourceColumn: source_month
+
+	column calendar_year
+		dataType: int64
+		lineageTag: 0b331f86-56d9-4d39-8451-942ae663b0af
+		summarizeBy: none
+		sourceColumn: calendar_year
+
+	column calendar_month
+		dataType: int64
+		lineageTag: bb922bad-b840-4b67-8445-8023593a0d2d
+		summarizeBy: none
+		sourceColumn: calendar_month
+
+	column month_label
+		dataType: string
+		lineageTag: f1b16bc1-ec04-45b9-8c42-d49b642d9c82
+		summarizeBy: none
+		sourceColumn: month_label
+		sortByColumn: month_sort
+
+	column month_sort
+		dataType: int64
+		isHidden
+		lineageTag: f0fb3c19-fc49-4e82-9469-b8ebd4384747
+		summarizeBy: none
+		sourceColumn: month_sort
+
+	partition dim_month = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(pPgServer, pPgDatabase, [CreateNavigationProperties=false]),
+				    Raw = Source{[Schema="gold", Item="mart_network_monthly"]}[Data],
+				    Selected = Table.SelectColumns(Raw, {"source_month", "calendar_year", "calendar_month"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"source_month", type date}, {"calendar_year", Int64.Type}, {"calendar_month", Int64.Type}}),
+				    WithLabel = Table.AddColumn(Typed, "month_label", each Date.ToText([source_month], "MMM yyyy", "en-US"), type text),
+				    WithSort = Table.AddColumn(WithLabel, "month_sort", each [calendar_year] * 100 + [calendar_month], Int64.Type)
+				in
+				    WithSort
+

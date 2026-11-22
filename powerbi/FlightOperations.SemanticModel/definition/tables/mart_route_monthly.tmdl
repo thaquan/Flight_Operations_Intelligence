@@ -1,0 +1,125 @@
+table mart_route_monthly
+	lineageTag: dae26ec9-937e-4c12-b5bf-3be96fbc57bd
+
+	/// Direction-sensitive A-to-B route-month value; no airline dimension.
+	measure 'Route Scheduled Flights' = SUM('mart_route_monthly'[scheduled_flights])
+		formatString: #,0
+		displayFolder: 04 Directed Routes
+		lineageTag: 83e3e765-7123-4e08-a20a-5955c18be24c
+
+	/// Direction-sensitive A-to-B route-month value; no airline dimension.
+	measure 'Route Eligible Arrivals' = SUM('mart_route_monthly'[eligible_arrivals])
+		formatString: #,0
+		displayFolder: 04 Directed Routes
+		lineageTag: b73d0760-6a14-4084-b877-d9ef699bf4eb
+
+	/// Direction-sensitive A-to-B route-month value; no airline dimension.
+	measure 'Route Late Arrivals 15+' = SUM('mart_route_monthly'[late_arrivals_15])
+		formatString: #,0
+		displayFolder: 04 Directed Routes
+		lineageTag: 93a3c74c-1629-453c-bb06-c69b4f0456d8
+
+	/// Direction-sensitive A-to-B route-month value; no airline dimension.
+	measure 'Route Cancelled Flights' = SUM('mart_route_monthly'[cancelled_flights])
+		formatString: #,0
+		displayFolder: 04 Directed Routes
+		lineageTag: 54c7bd55-b295-4635-adcc-fccba47fdcca
+
+	/// Direction-sensitive A-to-B route-month value; no airline dimension.
+	measure 'Route Diverted Flights' = SUM('mart_route_monthly'[diverted_flights])
+		formatString: #,0
+		displayFolder: 04 Directed Routes
+		lineageTag: 95a91763-732c-43ac-a66e-06c272d4931c
+
+	measure 'Route Delay 15+ Rate' = DIVIDE([Route Late Arrivals 15+], [Route Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 04 Directed Routes
+		lineageTag: 0f2adff0-8ecb-4e1e-9ff3-2f4165bccd5a
+
+	measure 'Route Cancellation Rate' = DIVIDE([Route Cancelled Flights], [Route Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 04 Directed Routes
+		lineageTag: a3d6e010-05c6-41a8-b60e-c07d4ae762d0
+
+	column origin_airport_sk
+		dataType: int64
+		isHidden
+		lineageTag: 3fc93c2c-74b5-4544-b067-1fd1401c4a4e
+		summarizeBy: none
+		sourceColumn: origin_airport_sk
+
+	column dest_airport_sk
+		dataType: int64
+		isHidden
+		lineageTag: 60463aae-4c5f-4fa0-93de-d2ab97c215e2
+		summarizeBy: none
+		sourceColumn: dest_airport_sk
+
+	column source_month
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-MM-dd
+		lineageTag: d6e4e7d7-8aa9-4c68-b1fe-f3f7c5e4c69f
+		summarizeBy: none
+		sourceColumn: source_month
+
+	column scheduled_flights
+		dataType: int64
+		isHidden
+		lineageTag: faccca06-6887-4494-b072-cdfe04c731d0
+		summarizeBy: none
+		sourceColumn: scheduled_flights
+
+	column completed_flights
+		dataType: int64
+		isHidden
+		lineageTag: ec55e6ad-4565-4e29-a919-061f165fd061
+		summarizeBy: none
+		sourceColumn: completed_flights
+
+	column cancelled_flights
+		dataType: int64
+		isHidden
+		lineageTag: 6d4bb747-3559-412e-870e-447bd4784253
+		summarizeBy: none
+		sourceColumn: cancelled_flights
+
+	column diverted_flights
+		dataType: int64
+		isHidden
+		lineageTag: 2565dcaf-db93-4e88-af5f-dcc805997f6a
+		summarizeBy: none
+		sourceColumn: diverted_flights
+
+	column eligible_arrivals
+		dataType: int64
+		isHidden
+		lineageTag: 9bd168c5-964b-414d-bfd2-1cbde9259c59
+		summarizeBy: none
+		sourceColumn: eligible_arrivals
+
+	column late_arrivals_15
+		dataType: int64
+		isHidden
+		lineageTag: 7a674805-3c02-4db9-8e9c-b2d43126811c
+		summarizeBy: none
+		sourceColumn: late_arrivals_15
+
+	column on_time_arrivals
+		dataType: int64
+		isHidden
+		lineageTag: ca3cb5cc-e2a5-4f98-ab05-846fd053a8f1
+		summarizeBy: none
+		sourceColumn: on_time_arrivals
+
+	partition mart_route_monthly = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(pPgServer, pPgDatabase, [CreateNavigationProperties=false]),
+				    Raw = Source{[Schema="gold", Item="mart_route_monthly"]}[Data],
+				    Selected = Table.SelectColumns(Raw, {"origin_airport_sk", "dest_airport_sk", "source_month", "scheduled_flights", "completed_flights", "cancelled_flights", "diverted_flights", "eligible_arrivals", "late_arrivals_15", "on_time_arrivals"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"origin_airport_sk", Int64.Type}, {"dest_airport_sk", Int64.Type}, {"source_month", type date}, {"scheduled_flights", Int64.Type}, {"completed_flights", Int64.Type}, {"cancelled_flights", Int64.Type}, {"diverted_flights", Int64.Type}, {"eligible_arrivals", Int64.Type}, {"late_arrivals_15", Int64.Type}, {"on_time_arrivals", Int64.Type}})
+				in
+				    Typed
+

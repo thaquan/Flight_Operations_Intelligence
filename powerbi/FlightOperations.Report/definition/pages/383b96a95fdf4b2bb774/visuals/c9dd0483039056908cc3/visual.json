@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "c9dd0483039056908cc3",
+  "position": {
+    "x": 860,
+    "y": 263,
+    "z": 24,
+    "height": 387,
+    "width": 392,
+    "tabOrder": 24
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_month"
+                    }
+                  },
+                  "Property": "calendar_year"
+                }
+              },
+              "queryRef": "dim_month.calendar_year",
+              "nativeQueryRef": "calendar_year",
+              "active": true,
+              "displayName": "Year"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_network_monthly"
+                    }
+                  },
+                  "Property": "Cancellation Rate"
+                }
+              },
+              "queryRef": "mart_network_monthly.Cancellation Rate",
+              "nativeQueryRef": "Cancellation Rate"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_network_monthly"
+                    }
+                  },
+                  "Property": "Diversion Rate"
+                }
+              },
+              "queryRef": "mart_network_monthly.Diversion Rate",
+              "nativeQueryRef": "Diversion Rate"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "93ef6b2b90a558068728",
+  "position": {
+    "x": 860,
+    "y": 263,
+    "z": 24,
+    "height": 387,
+    "width": 392,
+    "tabOrder": 24
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_airline"
+                    }
+                  },
+                  "Property": "airline_code"
+                }
+              },
+              "queryRef": "dim_airline.airline_code",
+              "nativeQueryRef": "airline_code",
+              "active": true,
+              "displayName": "Airline"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_airline_monthly"
+                    }
+                  },
+                  "Property": "Airline Scheduled Flights"
+                }
+              },
+              "queryRef": "mart_airline_monthly.Airline Scheduled Flights",
+              "nativeQueryRef": "Airline Scheduled Flights"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "mart_airline_monthly"
+                  }
+                },
+                "Property": "Airline Scheduled Flights"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "defaultColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1665ED'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

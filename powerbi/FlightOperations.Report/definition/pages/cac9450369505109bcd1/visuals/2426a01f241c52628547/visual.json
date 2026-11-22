@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "2426a01f241c52628547",
+  "position": {
+    "x": 700,
+    "y": 263,
+    "z": 24,
+    "height": 387,
+    "width": 552,
+    "tabOrder": 24
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_origin_airport"
+                    }
+                  },
+                  "Property": "airport_code"
+                }
+              },
+              "queryRef": "dim_origin_airport.airport_code",
+              "nativeQueryRef": "airport_code",
+              "displayName": "Origin"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_dest_airport"
+                    }
+                  },
+                  "Property": "airport_code"
+                }
+              },
+              "queryRef": "dim_dest_airport.airport_code",
+              "nativeQueryRef": "airport_code1",
+              "displayName": "Destination"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_route_monthly"
+                    }
+                  },
+                  "Property": "Route Scheduled Flights"
+                }
+              },
+              "queryRef": "mart_route_monthly.Route Scheduled Flights",
+              "nativeQueryRef": "Route Scheduled Flights",
+              "displayName": "Flights"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_route_monthly"
+                    }
+                  },
+                  "Property": "Route Delay 15+ Rate"
+                }
+              },
+              "queryRef": "mart_route_monthly.Route Delay 15+ Rate",
+              "nativeQueryRef": "Route Delay 15+ Rate",
+              "displayName": "Delay 15+ %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "mart_route_monthly"
+                  }
+                },
+                "Property": "Route Scheduled Flights"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

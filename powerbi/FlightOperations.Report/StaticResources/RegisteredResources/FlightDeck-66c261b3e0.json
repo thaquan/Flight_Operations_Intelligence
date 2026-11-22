@@ -1,0 +1,51 @@
+{
+  "name": "FlightDeck-66c261b3e0.json",
+  "dataColors": [
+    "#1665ED",
+    "#F26852",
+    "#00B9C8",
+    "#FDB847",
+    "#8B5BE7",
+    "#1175A7",
+    "#D44D8B",
+    "#526D99"
+  ],
+  "background": "#E6EDF5",
+  "foreground": "#102238",
+  "tableAccent": "#1665ED",
+  "good": "#00B59C",
+  "neutral": "#FDB847",
+  "bad": "#F26852",
+  "minimum": "#E9F2FD",
+  "center": "#FFFFFF",
+  "maximum": "#1665ED",
+  "null": "#8CA1B5",
+  "firstLevelElements": "#102238",
+  "secondLevelElements": "#50667E",
+  "thirdLevelElements": "#CAD8E7",
+  "fourthLevelElements": "#8BA3B9",
+  "backgroundLight": "#FFFFFF",
+  "backgroundNeutral": "#E6EDF5",
+  "textClasses": {
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#102238"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#102238"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#102238"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 30,
+      "color": "#102238"
+    }
+  }
+}

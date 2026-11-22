@@ -1,0 +1,59 @@
+table dim_date
+	lineageTag: 2b04463b-a755-4da2-9979-b295637ef711
+
+	column date_key
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: c3726411-423c-494a-b253-43efcccc8520
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column flight_date
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		lineageTag: be7ee3e4-e61e-44d1-aade-e30a43eef7b8
+		summarizeBy: none
+		sourceColumn: flight_date
+
+	column calendar_year
+		dataType: int64
+		lineageTag: b0c687f3-7a0a-409a-bdf1-78d8ea19498c
+		summarizeBy: none
+		sourceColumn: calendar_year
+
+	column calendar_quarter
+		dataType: int64
+		lineageTag: 8b8c2ed3-77da-49ca-a6b8-cad9d2318e2d
+		summarizeBy: none
+		sourceColumn: calendar_quarter
+
+	column calendar_month
+		dataType: int64
+		lineageTag: 3877e5c8-9444-490c-bf2e-1e93c34d0c48
+		summarizeBy: none
+		sourceColumn: calendar_month
+
+	column iso_day_of_week
+		dataType: int64
+		lineageTag: edd49f37-886a-49d4-996b-99594924567b
+		summarizeBy: none
+		sourceColumn: iso_day_of_week
+
+	column is_weekend
+		dataType: boolean
+		lineageTag: 6315c5eb-8b1e-4f95-ba1d-52b590589854
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(pPgServer, pPgDatabase, [CreateNavigationProperties=false]),
+				    Raw = Source{[Schema="gold", Item="dim_date"]}[Data],
+				    Selected = Table.SelectColumns(Raw, {"date_key", "flight_date", "calendar_year", "calendar_quarter", "calendar_month", "iso_day_of_week", "is_weekend"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"date_key", Int64.Type}, {"flight_date", type date}, {"calendar_year", Int64.Type}, {"calendar_quarter", Int64.Type}, {"calendar_month", Int64.Type}, {"iso_day_of_week", Int64.Type}, {"is_weekend", type logical}})
+				in
+				    Typed
+

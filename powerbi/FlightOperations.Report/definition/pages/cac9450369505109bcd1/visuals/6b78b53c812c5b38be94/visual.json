@@ -1,0 +1,111 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "6b78b53c812c5b38be94",
+  "position": {
+    "x": 28,
+    "y": 263,
+    "z": 23,
+    "height": 387,
+    "width": 650,
+    "tabOrder": 23
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_airport"
+                    }
+                  },
+                  "Property": "airport_code"
+                }
+              },
+              "queryRef": "dim_airport.airport_code",
+              "nativeQueryRef": "airport_code",
+              "active": true,
+              "displayName": "Origin airport"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_airport_daily"
+                    }
+                  },
+                  "Property": "Origin Delay 15+ Rate"
+                }
+              },
+              "queryRef": "mart_airport_daily.Origin Delay 15+ Rate",
+              "nativeQueryRef": "Origin Delay 15+ Rate"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_airport_daily"
+                    }
+                  },
+                  "Property": "Origin Scheduled Flights"
+                }
+              },
+              "queryRef": "mart_airport_daily.Origin Scheduled Flights",
+              "nativeQueryRef": "Origin Scheduled Flights"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "mart_airport_daily"
+                  }
+                },
+                "Property": "Origin Scheduled Flights"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "defaultColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1665ED'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

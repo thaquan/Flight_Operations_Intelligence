@@ -24,3 +24,12 @@ __pycache__/
 # Power BI transient files
 *.pbix
 *.pbit
+
+# Power BI Desktop local caches (keep TMDL source files)
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/
+
+# Local developer tooling
+.agents/
+.vscode/

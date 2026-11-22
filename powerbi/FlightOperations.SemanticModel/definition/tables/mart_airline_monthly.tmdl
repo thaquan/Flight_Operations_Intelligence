@@ -1,0 +1,124 @@
+table mart_airline_monthly
+	lineageTag: 5b2d3a3c-8441-4a56-b86d-ac504fa71c0e
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Scheduled Flights' = SUM('mart_airline_monthly'[scheduled_flights])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: a6c04d39-a51b-485a-a2cb-8f156282dab9
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Eligible Arrivals' = SUM('mart_airline_monthly'[eligible_arrivals])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: 794c504c-8254-4cd0-8fda-92aa4f6e03b0
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Late Arrivals 15+' = SUM('mart_airline_monthly'[late_arrivals_15])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: 674b230e-26bf-4e44-875a-e2bbc677d50f
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Cancelled Flights' = SUM('mart_airline_monthly'[cancelled_flights])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: e018f49e-e004-4be9-8210-5a2d62064a36
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Diverted Flights' = SUM('mart_airline_monthly'[diverted_flights])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: 41ffed50-1186-4d2c-a69c-d37f8ae3bee9
+
+	/// Weighted ratio of eligible arrivals, not mean of carrier rates.
+	measure 'Airline Delay 15+ Rate' = DIVIDE([Airline Late Arrivals 15+], [Airline Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 02 Airline KPIs
+		lineageTag: f1e82e36-85b0-4579-adb6-529eda27a0d6
+
+	measure 'Airline Cancellation Rate' = DIVIDE([Airline Cancelled Flights], [Airline Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 02 Airline KPIs
+		lineageTag: c033d66b-c207-47ab-bd52-bbd416d6b91a
+
+	measure 'Airline Diversion Rate' = DIVIDE([Airline Diverted Flights], [Airline Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 02 Airline KPIs
+		lineageTag: 04706b4a-e3bf-4ede-9613-8b3ce941bf3a
+
+	column airline_sk
+		dataType: int64
+		isHidden
+		lineageTag: 02c5403e-3a56-43ed-8bae-c45566727130
+		summarizeBy: none
+		sourceColumn: airline_sk
+
+	column source_month
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-MM-dd
+		lineageTag: 40932578-1400-4b98-8552-73c66f962855
+		summarizeBy: none
+		sourceColumn: source_month
+
+	column scheduled_flights
+		dataType: int64
+		isHidden
+		lineageTag: b3f67591-2f25-4a95-91c1-73edda7003fa
+		summarizeBy: none
+		sourceColumn: scheduled_flights
+
+	column completed_flights
+		dataType: int64
+		isHidden
+		lineageTag: 3c3a0ba9-3301-4594-8bdb-0bf47317216c
+		summarizeBy: none
+		sourceColumn: completed_flights
+
+	column cancelled_flights
+		dataType: int64
+		isHidden
+		lineageTag: e7d693a4-eff2-43a7-af7f-dd4eff853164
+		summarizeBy: none
+		sourceColumn: cancelled_flights
+
+	column diverted_flights
+		dataType: int64
+		isHidden
+		lineageTag: 95eedba6-4bcc-41de-bb0f-880574555385
+		summarizeBy: none
+		sourceColumn: diverted_flights
+
+	column eligible_arrivals
+		dataType: int64
+		isHidden
+		lineageTag: 85503a23-3f6d-43fa-a8e5-c6194d4f015a
+		summarizeBy: none
+		sourceColumn: eligible_arrivals
+
+	column late_arrivals_15
+		dataType: int64
+		isHidden
+		lineageTag: 4dd8b917-82f2-4f82-87f3-55362c264b55
+		summarizeBy: none
+		sourceColumn: late_arrivals_15
+
+	column on_time_arrivals
+		dataType: int64
+		isHidden
+		lineageTag: be73ad8e-16e6-49e7-864d-6cbc498a3a81
+		summarizeBy: none
+		sourceColumn: on_time_arrivals
+
+	partition mart_airline_monthly = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(pPgServer, pPgDatabase, [CreateNavigationProperties=false]),
+				    Raw = Source{[Schema="gold", Item="mart_airline_monthly"]}[Data],
+				    Selected = Table.SelectColumns(Raw, {"airline_sk", "source_month", "scheduled_flights", "completed_flights", "cancelled_flights", "diverted_flights", "eligible_arrivals", "late_arrivals_15", "on_time_arrivals"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"airline_sk", Int64.Type}, {"source_month", type date}, {"scheduled_flights", Int64.Type}, {"completed_flights", Int64.Type}, {"cancelled_flights", Int64.Type}, {"diverted_flights", Int64.Type}, {"eligible_arrivals", Int64.Type}, {"late_arrivals_15", Int64.Type}, {"on_time_arrivals", Int64.Type}})
+				in
+				    Typed
+

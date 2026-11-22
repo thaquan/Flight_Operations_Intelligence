@@ -1,0 +1,45 @@
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Scheduled Flights' = SUM('mart_airline_monthly'[scheduled_flights])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: a6c04d39-a51b-485a-a2cb-8f156282dab9
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Eligible Arrivals' = SUM('mart_airline_monthly'[eligible_arrivals])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: 794c504c-8254-4cd0-8fda-92aa4f6e03b0
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Late Arrivals 15+' = SUM('mart_airline_monthly'[late_arrivals_15])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: 674b230e-26bf-4e44-875a-e2bbc677d50f
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Cancelled Flights' = SUM('mart_airline_monthly'[cancelled_flights])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: e018f49e-e004-4be9-8210-5a2d62064a36
+
+	/// Airline-month grain, filtered by reporting carrier and month.
+	measure 'Airline Diverted Flights' = SUM('mart_airline_monthly'[diverted_flights])
+		formatString: #,0
+		displayFolder: 02 Airline KPIs
+		lineageTag: 41ffed50-1186-4d2c-a69c-d37f8ae3bee9
+
+	/// Weighted ratio of eligible arrivals, not mean of carrier rates.
+	measure 'Airline Delay 15+ Rate' = DIVIDE([Airline Late Arrivals 15+], [Airline Eligible Arrivals])
+		formatString: 0.00%
+		displayFolder: 02 Airline KPIs
+		lineageTag: f1e82e36-85b0-4579-adb6-529eda27a0d6
+
+	measure 'Airline Cancellation Rate' = DIVIDE([Airline Cancelled Flights], [Airline Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 02 Airline KPIs
+		lineageTag: c033d66b-c207-47ab-bd52-bbd416d6b91a
+
+	measure 'Airline Diversion Rate' = DIVIDE([Airline Diverted Flights], [Airline Scheduled Flights])
+		formatString: 0.00%
+		displayFolder: 02 Airline KPIs
+		lineageTag: 04706b4a-e3bf-4ede-9613-8b3ce941bf3a

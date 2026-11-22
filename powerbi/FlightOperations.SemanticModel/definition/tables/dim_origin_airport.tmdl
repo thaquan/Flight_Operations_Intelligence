@@ -1,0 +1,54 @@
+table dim_origin_airport
+	lineageTag: fc358a4b-629c-432a-a1b0-d0d0328b6c66
+
+	column airport_sk
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: e78973f4-0b25-48ec-87c7-23d2682e90be
+		summarizeBy: none
+		sourceColumn: airport_sk
+
+	column airport_id
+		dataType: int64
+		isHidden
+		lineageTag: b442bc41-d0d7-45ac-be9d-c22a3f0b2a4b
+		summarizeBy: none
+		sourceColumn: airport_id
+
+	column airport_code
+		dataType: string
+		lineageTag: cce70343-8927-43fe-9b71-559586f5f2e6
+		summarizeBy: none
+		sourceColumn: airport_code
+
+	column city_name
+		dataType: string
+		lineageTag: dc09da03-cb74-4598-87e4-b886cf1b5b95
+		summarizeBy: none
+		sourceColumn: city_name
+
+	column state_code
+		dataType: string
+		lineageTag: 07cf05ae-4479-4d46-b25e-18ec500e40fb
+		summarizeBy: none
+		sourceColumn: state_code
+
+	column is_unknown
+		dataType: boolean
+		isHidden
+		lineageTag: 16fd55fc-6abf-4b80-8108-91c143aad731
+		summarizeBy: none
+		sourceColumn: is_unknown
+
+	partition dim_origin_airport = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database(pPgServer, pPgDatabase, [CreateNavigationProperties=false]),
+				    Raw = Source{[Schema="gold", Item="dim_airport"]}[Data],
+				    Selected = Table.SelectColumns(Raw, {"airport_sk", "airport_id", "airport_code", "city_name", "state_code", "is_unknown"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"airport_sk", Int64.Type}, {"airport_id", Int64.Type}, {"airport_code", type text}, {"city_name", type text}, {"state_code", type text}, {"is_unknown", type logical}})
+				in
+				    Typed
+
