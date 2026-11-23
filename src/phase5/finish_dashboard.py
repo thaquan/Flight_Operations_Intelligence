@@ -1,4 +1,4 @@
-﻿"""Finish the saved Power BI dashboard without re-scaffolding its pages.
+"""Finish the saved Power BI dashboard without re-scaffolding its pages.
 
 Only adds native page navigation and improves known fields / seasonality.
 Refuses to replace any unexpected Desktop edits.
@@ -75,10 +75,50 @@ def plan_finish(pages: Path = PAGES) -> dict[Path, dict]:
             path = _visual(pages, page_id, role)
             content = _load(path)
             kind = content["visual"]["visualType"]
+            if spec["key"] == "executive" and role == "right-chart" and kind == "cardVisual":
+                refs = [x["queryRef"] for x in
+                        content["visual"]["query"]["queryState"]["Data"]["projections"]]
+                if refs != ["mart_network_monthly.Executive Arrival Risk YoY"]:
+                    raise ValueError(f"Executive comparison source changed: {path}")
+                continue
+            if spec["key"] == "seasonal" and role == "left-chart" and kind == "pivotTable":
+                q = content["visual"]["query"]["queryState"]
+                rows = [x["queryRef"] for x in q["Rows"]["projections"]]
+                vals = [x["queryRef"] for x in q["Values"]["projections"]]
+                if rows != ["dim_month.calendar_month"] or vals != [
+                        "mart_network_monthly.Delay Rate 2024 Fixed",
+                        "mart_network_monthly.Delay Rate 2025 Fixed"]:
+                    raise ValueError(f"Seasonal year matrix source changed: {path}")
+                continue
+            if spec["key"] == "seasonal" and role == "right-chart" and kind == "clusteredBarChart":
+                q = content["visual"]["query"]["queryState"]
+                if ([x["queryRef"] for x in q["Category"]["projections"]] !=
+                        ["dim_month.calendar_month"] or
+                    [x["queryRef"] for x in q["Y"]["projections"]] !=
+                        ["mart_network_monthly.Delay Rate YoY pp"]):
+                    raise ValueError(f"Seasonal YoY bar source changed: {path}")
+                continue
             if kind not in ("clusteredColumnChart", "clusteredBarChart",
-                            "lineChart", "tableEx", "donutChart"):
+                            "lineChart", "tableEx", "donutChart",
+                            "scatterChart", "treemap", "stackedAreaChart"):
                 raise ValueError(f"Unexpected chart type: {path}")
             projections = content["visual"]["query"]["queryState"]
+            if (spec["key"] == "airline"
+                    and ((role == "left-chart" and kind == "scatterChart")
+                         or (role == "right-chart" and kind == "treemap"))):
+                continue
+            if (spec["key"] == "causes" and role == "left-chart"
+                    and kind == "stackedAreaChart"):
+                continue
+            if (spec["key"] == "airports" and role == "left-chart"
+                    and kind == "clusteredBarChart"
+                    and len(projections["Category"]["projections"]) == 2):
+                refs = [p["queryRef"] for p in
+                        projections["Category"]["projections"]]
+                if refs != ["dim_origin_airport.state_code",
+                            "dim_origin_airport.airport_code"]:
+                    raise ValueError(f"Unexpected airport drill levels: {path}")
+                continue
             if kind == "tableEx":
                 items = projections["Values"]["projections"]
                 refs = [v["queryRef"] for v in items]

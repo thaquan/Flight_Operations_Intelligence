@@ -1,0 +1,51 @@
+{
+  "name": "Flight Operations Intelligence - Aviation Command",
+  "dataColors": [
+    "#087F8C",
+    "#3C7BB6",
+    "#E6A04B",
+    "#D95F65",
+    "#6B7FA8",
+    "#5FAF98",
+    "#9A7CC7",
+    "#61758A"
+  ],
+  "background": "#F5F7FB",
+  "foreground": "#172B4D",
+  "tableAccent": "#087F8C",
+  "good": "#087F8C",
+  "neutral": "#E6A04B",
+  "bad": "#D95F65",
+  "minimum": "#E4F4F2",
+  "center": "#FFFFFF",
+  "maximum": "#087F8C",
+  "null": "#94A3B8",
+  "firstLevelElements": "#172B4D",
+  "secondLevelElements": "#61758A",
+  "thirdLevelElements": "#E6ECF3",
+  "fourthLevelElements": "#9BAAC0",
+  "backgroundLight": "#FFFFFF",
+  "backgroundNeutral": "#F5F7FB",
+  "textClasses": {
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#172B4D"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 13,
+      "color": "#172B4D"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#172B4D"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 32,
+      "color": "#172B4D"
+    }
+  }
+}

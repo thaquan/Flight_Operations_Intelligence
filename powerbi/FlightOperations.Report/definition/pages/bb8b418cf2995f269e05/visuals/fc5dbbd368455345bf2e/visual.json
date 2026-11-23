@@ -6,7 +6,7 @@
     "y": 226,
     "z": 21,
     "height": 28,
-    "width": 790,
+    "width": 650,
     "tabOrder": 21
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "DELAY RATE  ·  2024 VS 2025 / SAME CALENDAR MONTH",
+                    "value": "MONTHLY DELAY HEATMAP / SAME 10-35% SCALE",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "13px",

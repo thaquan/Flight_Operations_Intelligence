@@ -19,11 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "BTS cause observations may overlap; they are not counts of distinct delayed flights or observed weather.",
+                    "value": "Causes can overlap; observations are not unique delayed flights. Raw minutes are not normalized for traffic.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "11px",
-                      "color": "#586D80"
+                      "fontSize": "12px",
+                      "color": "#34516A"
                     }
                   }
                 ],

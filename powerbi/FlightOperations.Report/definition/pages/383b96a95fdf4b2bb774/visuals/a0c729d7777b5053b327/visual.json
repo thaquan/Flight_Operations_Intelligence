@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "a0c729d7777b5053b327",
   "position": {
-    "x": 864,
-    "y": 226,
+    "x": 28,
+    "y": 220,
     "z": 22,
     "height": 28,
-    "width": 385,
+    "width": 1218,
     "tabOrder": 22
   },
   "visual": {
@@ -19,11 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "RELIABILITY / CANCELLATIONS VS DIVERSIONS",
+                    "value": "2025 VS 2024  /  CHANGE IN RISK (PERCENTAGE POINTS)",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "13px",
-                      "color": "#15283A"
+                      "color": "#173E59"
                     }
                   }
                 ],

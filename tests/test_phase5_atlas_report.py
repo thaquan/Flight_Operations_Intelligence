@@ -6,7 +6,13 @@ import json
 import re
 from pathlib import Path
 
-from src.phase5.build_atlas_report import PAGES, PAGES_SPEC, REPORT, uid
+from src.phase5.build_atlas_report import (
+    PAGES,
+    PAGES_SPEC,
+    REPORT,
+    page_chart_visuals,
+    uid,
+)
 from src.phase5.build_semantic_model import DEFINITION
 
 
@@ -14,7 +20,7 @@ def _json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def test_atlas_has_five_approved_pages_and_ninety_five_visuals():
+def test_atlas_has_five_pages_and_ninety_seven_visuals():
     pages = _json(PAGES / "pages.json")
     assert len(PAGES_SPEC) == len(pages["pageOrder"]) == 5
     all_ids = set()
@@ -23,7 +29,7 @@ def test_atlas_has_five_approved_pages_and_ninety_five_visuals():
         assert page["displayName"] == PAGES_SPEC[idx]["title"]
         assert (page["width"], page["height"]) == (1280, 720)
         visual_files = list((PAGES / page_id / "visuals").rglob("visual.json"))
-        assert len(visual_files) == 19
+        assert len(visual_files) == (21 if idx == 0 else 19)
         for file in visual_files:
             visual = _json(file)
             visual_id = visual["name"]
@@ -35,7 +41,24 @@ def test_atlas_has_five_approved_pages_and_ninety_five_visuals():
             assert 0 <= position["y"]
             assert position["x"] + position["width"] <= 1280
             assert position["y"] + position["height"] <= 720
-    assert len(all_ids) == 95
+    assert len(all_ids) == 97
+
+
+def test_new_report_generator_matches_the_approved_visual_grammars():
+    expected = {
+        "executive": ["lineChart", "cardVisual", "cardVisual", "cardVisual"],
+        "airline": ["scatterChart", "treemap"],
+        "airports": ["clusteredBarChart", "tableEx"],
+        "causes": ["stackedAreaChart", "donutChart"],
+        "seasonal": ["pivotTable", "clusteredBarChart"],
+    }
+    for spec in PAGES_SPEC:
+        page_id = uid("page", spec["key"])
+        actual = page_chart_visuals(page_id, spec)
+        assert [v["visual"]["visualType"] for v in actual] == expected[spec["key"]]
+        assert len({v["name"] for v in actual}) == len(actual)
+        assert all(v["position"]["x"] + v["position"]["width"] <= 1280
+                   for v in actual)
 
 
 def test_atlas_theme_registered_from_approved_palette():
@@ -72,18 +95,18 @@ def test_all_chart_measures_exist_in_m53_tmdl_source():
                     references.append((table, name))
                     assert table in table_text
                     assert f"measure '{name}' =" in table_text[table], (table, name)
-    assert len(references) == 32
+    assert len(references) == 40
 
 
-def test_43_measures_from_the_live_mcp_export_are_retained():
+def test_49_measures_including_year_comparison_are_retained():
     counts = {
-        "mart_network_monthly": 11,
+        "mart_network_monthly": 17,
         "mart_airline_monthly": 8,
         "mart_airport_daily": 14,
         "mart_route_monthly": 7,
         "mart_delay_causes": 3,
     }
-    assert sum(counts.values()) == 43
+    assert sum(counts.values()) == 49
     for name, n in counts.items():
         path = DEFINITION / "tables" / f"{name}.tmdl"
         assert path.read_text(encoding="utf-8-sig").count("\tmeasure ") == n

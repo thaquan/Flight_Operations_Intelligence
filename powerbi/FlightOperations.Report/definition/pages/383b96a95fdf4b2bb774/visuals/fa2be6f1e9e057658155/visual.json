@@ -3,10 +3,10 @@
   "name": "fa2be6f1e9e057658155",
   "position": {
     "x": 28,
-    "y": 226,
+    "y": 345,
     "z": 21,
     "height": 28,
-    "width": 790,
+    "width": 1218,
     "tabOrder": 21
   },
   "visual": {
@@ -19,11 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "ARRIVAL DELAY RATE  ·  MONTHLY TREND",
+                    "value": "MONTHLY TREND / RESPONDS TO YEAR SELECTION",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "13px",
-                      "color": "#15283A"
+                      "color": "#173E59"
                     }
                   }
                 ],

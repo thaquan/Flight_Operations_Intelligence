@@ -67,6 +67,51 @@ table mart_network_monthly
 		displayFolder: 01 Network KPIs
 		lineageTag: 14c64fbb-1bac-4631-bb5f-e04d58672073
 
+	/// Fixed 2024/2025 comparison used by Overview and Seasonal Trends.
+	measure 'Delay Rate 2024 Fixed' = CALCULATE([Arrival Delay 15+ Rate], REMOVEFILTERS('dim_month'[calendar_year]), 'dim_month'[calendar_year] = 2024)
+		formatString: 0.00%
+		displayFolder: 06 Year Comparison
+		lineageTag: 8ad77d34-58c4-46ae-9368-e4a71c0d68b5
+
+	/// Fixed 2024/2025 comparison used by Overview and Seasonal Trends.
+	measure 'Delay Rate 2025 Fixed' = CALCULATE([Arrival Delay 15+ Rate], REMOVEFILTERS('dim_month'[calendar_year]), 'dim_month'[calendar_year] = 2025)
+		formatString: 0.00%
+		displayFolder: 06 Year Comparison
+		lineageTag: 32691f7c-0cf3-4c3f-bf79-586d75ea86cc
+
+	/// Fixed 2024/2025 comparison used by Overview and Seasonal Trends.
+	measure 'Delay Rate YoY pp' = ([Delay Rate 2025 Fixed] - [Delay Rate 2024 Fixed]) * 100
+		formatString: +0.00;-0.00;0.00
+		displayFolder: 06 Year Comparison
+		lineageTag: 117ab174-7473-4348-85b7-368c4a19a94a
+
+	/// Fixed 2024/2025 comparison used by Overview and Seasonal Trends.
+	measure 'Executive Arrival Risk YoY' =
+			VAR Rate2024 = CALCULATE([Arrival Delay 15+ Rate], REMOVEFILTERS('dim_month'), 'dim_month'[calendar_year] = 2024)
+			VAR Rate2025 = CALCULATE([Arrival Delay 15+ Rate], REMOVEFILTERS('dim_month'), 'dim_month'[calendar_year] = 2025)
+			VAR ChangePP = (Rate2025 - Rate2024) * 100
+			RETURN FORMAT(ChangePP, "+0.00;-0.00;0.00") & " pp"
+		displayFolder: 06 Year Comparison
+		lineageTag: 747f5936-c2f5-4c89-89f3-e306c37b0122
+
+	/// Fixed 2024/2025 comparison used by Overview and Seasonal Trends.
+	measure 'Executive Cancellation Risk YoY' =
+			VAR Rate2024 = CALCULATE([Cancellation Rate], REMOVEFILTERS('dim_month'), 'dim_month'[calendar_year] = 2024)
+			VAR Rate2025 = CALCULATE([Cancellation Rate], REMOVEFILTERS('dim_month'), 'dim_month'[calendar_year] = 2025)
+			VAR ChangePP = (Rate2025 - Rate2024) * 100
+			RETURN FORMAT(ChangePP, "+0.00;-0.00;0.00") & " pp"
+		displayFolder: 06 Year Comparison
+		lineageTag: f902f862-3161-40f0-bc29-941a3dbae1af
+
+	/// Fixed 2024/2025 comparison used by Overview and Seasonal Trends.
+	measure 'Executive Diversion Risk YoY' =
+			VAR Rate2024 = CALCULATE([Diversion Rate], REMOVEFILTERS('dim_month'), 'dim_month'[calendar_year] = 2024)
+			VAR Rate2025 = CALCULATE([Diversion Rate], REMOVEFILTERS('dim_month'), 'dim_month'[calendar_year] = 2025)
+			VAR ChangePP = (Rate2025 - Rate2024) * 100
+			RETURN FORMAT(ChangePP, "+0.00;-0.00;0.00") & " pp"
+		displayFolder: 06 Year Comparison
+		lineageTag: 69d6e455-93f5-4528-bdc6-da00b7c09ac7
+
 	column source_month
 		dataType: dateTime
 		isHidden

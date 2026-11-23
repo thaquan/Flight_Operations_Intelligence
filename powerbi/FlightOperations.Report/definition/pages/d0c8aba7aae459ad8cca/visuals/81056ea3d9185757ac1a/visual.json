@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "DELAY MINUTES / CAUSE MIX",
+                    "value": "CAUSE SHARE / MINUTES, NOT FLIGHTS",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "13px",

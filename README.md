@@ -14,19 +14,32 @@ available as a source-controlled PBIP project. The 2024-2025 dataset covers
 ## Power BI dashboard (Phase 5)
 
 Open **`powerbi/FlightOperations.pbip`** in Power BI Desktop. The PBIP
-contains a PostgreSQL Import semantic model with 11 tables, 43 DAX measures
+contains a PostgreSQL Import semantic model with 11 tables, 49 DAX measures
 and a five-page Flight Deck report:
 
-- **Executive Overview:** Network punctuality over 24 months, with
-  cancellation and diversion rates by year.
-- **Airline Performance:** Delay-rate and traffic-volume comparisons
-  across reporting carriers.
-- **Airports & Routes:** High-volume origin airports and directed flight
-  corridors, with contextual delay metrics.
-- **Delay Causes:** BTS-reported delay minutes by category and their share
-  of reported minutes.
-- **Seasonal Trends:** Month-by-month 2024 versus 2025 comparisons of delay
-  rates and scheduled flight volume.
+- **Executive Overview:** A full-width 24-month delayed-arrival trend with
+  actual monthly markers, paired with a compact risk-change strip for
+  delayed arrivals, cancellations and diversions (2025 vs. 2024, in pp).
+- **Airline Performance:** Carrier volume versus delayed-arrival rate
+  in a bubble chart, paired with a traffic-share treemap.
+- **Airports & Routes:** Origin traffic with a state-to-airport drill,
+  filtering a table of directed routes and delay rates.
+- **Delay Causes:** A 24-month stacked area of BTS delay-minute causes,
+  paired with a donut of reported-minute shares.
+- **Seasonal Trends:** A month-by-year delayed-arrival heatmap and diverging
+  bars for the 2025 minus 2024 rate change in percentage points.
+
+The Seasonal heatmap, YoY bars and Executive risk-change strip
+intentionally compare full 2024 with 2025 even when YEAR is selected.
+The headline KPI cards and 24-month trend still respond to YEAR.
+
+The final visual-quality pass adds AA-contrast text on selected navigation
+tabs, two-decimal precision for flight-volume and cause-minute KPIs, clearer
+carrier bubble tooltips without overlapping code labels, delay-rate shading
+in the directed-route table, a continuous time axis for cause trends, and a
+shared 10-35% heatmap scale across both years. Native visual descriptions
+support screen-reader users. Risk colors indicate delay magnitude or a
+worsening year-over-year rate; treemap colors identify airlines only.
 
 A synchronized YEAR / PERIOD filter appears on each page. The Home icon
 returns to Executive Overview. In Power BI Desktop Edit mode, use

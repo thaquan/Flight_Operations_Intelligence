@@ -10,7 +10,7 @@
     "tabOrder": 24
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "clusteredBarChart",
     "query": {
       "queryState": {
         "Category": {
@@ -33,22 +33,35 @@
             }
           ]
         },
-        "Series": {
+        "Tooltips": {
           "projections": [
             {
               "field": {
-                "Column": {
+                "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_month"
+                      "Entity": "mart_network_monthly"
                     }
                   },
-                  "Property": "calendar_year"
+                  "Property": "Delay Rate 2024 Fixed"
                 }
               },
-              "queryRef": "dim_month.calendar_year",
-              "nativeQueryRef": "calendar_year",
-              "displayName": "Year"
+              "queryRef": "mart_network_monthly.Delay Rate 2024 Fixed",
+              "nativeQueryRef": "Delay Rate 2024 Fixed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_network_monthly"
+                    }
+                  },
+                  "Property": "Delay Rate 2025 Fixed"
+                }
+              },
+              "queryRef": "mart_network_monthly.Delay Rate 2025 Fixed",
+              "nativeQueryRef": "Delay Rate 2025 Fixed"
             }
           ]
         },
@@ -62,17 +75,116 @@
                       "Entity": "mart_network_monthly"
                     }
                   },
-                  "Property": "Scheduled Flights"
+                  "Property": "Delay Rate YoY pp"
                 }
               },
-              "queryRef": "mart_network_monthly.Scheduled Flights",
-              "nativeQueryRef": "Scheduled Flights"
+              "queryRef": "mart_network_monthly.Delay Rate YoY pp",
+              "nativeQueryRef": "Delay Rate YoY pp",
+              "displayName": "2025 - 2024 (pp)"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dim_month"
+                  }
+                },
+                "Property": "calendar_month"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Conditional": {
+                      "Cases": [
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 2,
+                              "Left": {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "mart_network_monthly"
+                                    }
+                                  },
+                                  "Property": "Delay Rate YoY pp"
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "0D"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#E75E4E'"
+                            }
+                          }
+                        },
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 3,
+                              "Left": {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "mart_network_monthly"
+                                    }
+                                  },
+                                  "Property": "Delay Rate YoY pp"
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "0D"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#0098AE'"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
+          }
+        }
+      ],
       "categoryAxis": [
         {
           "properties": {
@@ -80,6 +192,91 @@
               "expr": {
                 "Literal": {
                   "Value": "'Categorical'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#193954'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Monthly 2025 minus 2024 arrival delay rate in percentage points. Coral is worse; cyan is better.'"
                 }
               }
             }

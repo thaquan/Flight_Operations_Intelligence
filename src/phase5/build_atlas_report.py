@@ -30,14 +30,15 @@ PAGES_SPEC = [
             ("mart_network_monthly", "Cancellation Rate"),
             ("mart_network_monthly", "Diversion Rate"),
         ],
-        "left_title": "ARRIVAL DELAY RATE  ·  MONTHLY TREND",
-        "left": ("lineChart", [("dim_month", "month_label")],
+        "left_title": "MONTHLY TREND / RESPONDS TO YEAR SELECTION",
+        "left": ("lineChart", [("dim_month", "source_month")],
                  [("mart_network_monthly", "Arrival Delay 15+ Rate")]),
-        "right_title": "RELIABILITY / CANCELLATIONS VS DIVERSIONS",
-        "right": ("clusteredColumnChart", [("dim_month", "calendar_year")],
-                  [("mart_network_monthly", "Cancellation Rate"),
-                   ("mart_network_monthly", "Diversion Rate")]),
-        "footer": "Historical BTS records, not real-time flight monitoring. Rates use eligible arrivals or scheduled flights as defined.",
+        "right_title": "2025 VS 2024  /  CHANGE IN RISK (PERCENTAGE POINTS)",
+        "right": ("cardVisual", [],
+                  [("mart_network_monthly", "Executive Arrival Risk YoY"),
+                   ("mart_network_monthly", "Executive Cancellation Risk YoY"),
+                   ("mart_network_monthly", "Executive Diversion Risk YoY")]),
+        "footer": "Headline KPIs and trend follow YEAR. YoY deltas compare full 2024 vs 2025. Delay % uses eligible arrivals.",
     },
     {
         "key": "airline", "title": "Airline Performance",
@@ -48,13 +49,16 @@ PAGES_SPEC = [
             ("mart_airline_monthly", "Airline Cancellation Rate"),
             ("mart_airline_monthly", "Airline Diversion Rate"),
         ],
-        "left_title": "ARRIVAL DELAY RATE  ·  REPORTING CARRIER",
-        "left": ("clusteredBarChart", [("dim_airline", "airline_code")],
-                 [("mart_airline_monthly", "Airline Delay 15+ Rate")]),
-        "right_title": "SCHEDULED VOLUME  ·  CARRIER",
-        "right": ("clusteredColumnChart", [("dim_airline", "airline_code")],
-                  [("mart_airline_monthly", "Airline Scheduled Flights")]),
-        "footer": "Compare rates together with volume; low-sample carriers require interpretation.",
+        "left_title": "CARRIER RISK / HOVER BUBBLES FOR DETAILS",
+        "left": ("scatterChart", [("dim_airline", "airline_code")],
+                 [("mart_airline_monthly", "Airline Scheduled Flights"),
+                  ("mart_airline_monthly", "Airline Delay 15+ Rate"),
+                  ("mart_airline_monthly", "Airline Cancelled Flights")]),
+        "right_title": "FLIGHT SHARE / COLORS IDENTIFY CARRIERS",
+        "right": ("treemap", [("dim_airline", "airline_code")],
+                  [("mart_airline_monthly", "Airline Scheduled Flights"),
+                   ("mart_airline_monthly", "Airline Delay 15+ Rate")]),
+        "footer": "Bubbles: X = flights, Y = delay %, size = cancelled flights. Hover for airline; treemap colors do not represent risk.",
     },
     {
         "key": "airports", "title": "Airports & Routes",
@@ -65,16 +69,18 @@ PAGES_SPEC = [
             ("mart_route_monthly", "Route Cancelled Flights"),
             ("mart_route_monthly", "Route Diverted Flights"),
         ],
-        "left_title": "BUSIEST ORIGIN AIRPORTS / FLIGHT VOLUME",
-        "left": ("clusteredBarChart", [("dim_airport", "airport_code")],
-                 [("mart_airport_daily", "Origin Scheduled Flights")]),
-        "right_title": "DIRECTED ROUTE  ·  VOLUME & DELAY",
+        "left_title": "ORIGIN TRAFFIC / DRILL STATE TO AIRPORT",
+        "left": ("clusteredBarChart",
+                 [("dim_origin_airport", "state_code"),
+                  ("dim_origin_airport", "airport_code")],
+                 [("mart_route_monthly", "Route Scheduled Flights")]),
+        "right_title": "ROUTES BY VOLUME / SHADED DELAY RISK",
         "right": ("tableEx",
                   [("dim_origin_airport", "airport_code"),
                    ("dim_dest_airport", "airport_code")],
                   [("mart_route_monthly", "Route Scheduled Flights"),
                    ("mart_route_monthly", "Route Delay 15+ Rate")]),
-        "footer": "Route map pending validated airport geocodes. Origin and destination counts are never added together.",
+        "footer": "Select a state to filter routes; use drill controls for airports. Route table sorts by flights; warmer cells = more delay.",
     },
     {
         "key": "causes", "title": "Delay Causes",
@@ -83,13 +89,13 @@ PAGES_SPEC = [
             ("mart_delay_causes", "Reported Cause Minutes"),
             ("mart_delay_causes", "Positive Cause Observations"),
         ],
-        "left_title": "REPORTED CAUSE MINUTES  ·  BY TYPE",
-        "left": ("clusteredBarChart", [("mart_delay_causes", "cause_type")],
+        "left_title": "ATTRIBUTED MINUTES / MONTHLY HISTORY",
+        "left": ("stackedAreaChart", [("dim_month", "source_month")],
                  [("mart_delay_causes", "Reported Cause Minutes")]),
-        "right_title": "DELAY MINUTES / CAUSE MIX",
+        "right_title": "CAUSE SHARE / MINUTES, NOT FLIGHTS",
         "right": ("donutChart", [("mart_delay_causes", "cause_type")],
                   [("mart_delay_causes", "Reported Cause Minutes")]),
-        "footer": "BTS cause observations may overlap; they are not counts of distinct delayed flights or observed weather.",
+        "footer": "Causes can overlap; observations are not unique delayed flights. Raw minutes are not normalized for traffic.",
     },
     {
         "key": "seasonal", "title": "Seasonal Trends",
@@ -100,13 +106,14 @@ PAGES_SPEC = [
             ("mart_network_monthly", "Late Arrivals 15+"),
             ("mart_network_monthly", "Arrival Delay 15+ Rate"),
         ],
-        "left_title": "DELAY RATE  ·  2024 VS 2025 / SAME CALENDAR MONTH",
-        "left": ("lineChart", [("dim_month", "calendar_month")],
-                 [("mart_network_monthly", "Arrival Delay 15+ Rate")]),
-        "right_title": "MONTHLY DEMAND / 2024 VS 2025",
-        "right": ("clusteredColumnChart", [("dim_month", "calendar_month")],
-                  [("mart_network_monthly", "Scheduled Flights")]),
-        "footer": "Ratios are recomputed from counts in the current filter context; no averaging of monthly percentages.",
+        "left_title": "MONTHLY DELAY HEATMAP / SAME 10-35% SCALE",
+        "left": ("pivotTable", [("dim_month", "calendar_month")],
+                 [("mart_network_monthly", "Delay Rate 2024 Fixed"),
+                  ("mart_network_monthly", "Delay Rate 2025 Fixed")]),
+        "right_title": "2025 - 2024 (PP) / CORAL WORSE, CYAN BETTER",
+        "right": ("clusteredBarChart", [("dim_month", "calendar_month")],
+                  [("mart_network_monthly", "Delay Rate YoY pp")]),
+        "footer": "Top KPIs follow YEAR; comparison charts always show both years. Shared heatmap scale 10-35%; warmer means worse.",
     },
 ]
 
@@ -306,7 +313,7 @@ def navigation_button(page: str, key: str, label: str, target: str,
             {"properties": {
                 "text": expression_literal("'" + label + "'"),
                 "fontSize": expression_literal("11D"),
-                "fontColor": color("#FFFFFF" if selected else "#DCEBF4"),
+                "fontColor": color("#073049" if selected else "#DCEBF4"),
                 "horizontalAlignment": expression_literal("'center'"),
             }, "selector": {"id": "default"}},
         ],
@@ -430,10 +437,59 @@ def chart(page: str, role: str, chart_type: str, categories: list,
                 "autoSizeColumnWidth": expression_literal("true"),
             }}]
         }
-    else:
-        assert len(categories) == 1
+    elif chart_type == "scatterChart":
+        assert len(categories) == 1 and len(measures) == 3
         query_state = {
-            "Category": {"projections": [field(t, c, "Column") for t, c in categories]},
+            "Category": {"projections": [
+                {**field(*categories[0], "Column"), "displayName": "Carrier"},
+            ]},
+            "X": {"projections": [field(*measures[0], "Measure")]},
+            "Y": {"projections": [field(*measures[1], "Measure")]},
+            "Size": {"projections": [field(*measures[2], "Measure")]},
+            "Tooltips": {"projections": [
+                field("mart_airline_monthly", "Airline Cancellation Rate", "Measure"),
+            ]},
+        }
+        out["visual"]["objects"] = {
+            "categoryLabels": [{"properties": {
+                "show": expression_literal("true"),
+                "fontSize": expression_literal("10D"),
+                "color": color("#102238"),
+            }}],
+            "bubbles": [{"properties": {
+                "markerShape": expression_literal("'circle'"),
+                "preventOverflow": expression_literal("true"),
+            }}],
+        }
+    elif chart_type == "treemap":
+        assert len(categories) == 1 and len(measures) == 2
+        query_state = {
+            "Group": {"projections": [
+                {**field(*categories[0], "Column"), "displayName": "Carrier"},
+            ]},
+            "Values": {"projections": [field(*measures[0], "Measure")]},
+            "Tooltips": {"projections": [field(*measures[1], "Measure")]},
+        }
+        out["visual"]["objects"] = {
+            "categoryLabels": [{"properties": {
+                "show": expression_literal("true"),
+                "fontSize": expression_literal("12D"),
+                "color": color("#102238"),
+            }}],
+        }
+    else:
+        assert len(categories) in (1, 2)
+        category_projections = [field(t, c, "Column") for t, c in categories]
+        if len(category_projections) == 2:
+            assert chart_type == "clusteredBarChart"
+            assert page == uid("page", "airports")
+            category_projections[0].update({"displayName": "State", "active": True})
+            category_projections[1].update({
+                "displayName": "Origin airport", "active": False,
+            })
+            out["visual"]["drillFilterOtherVisuals"] = True
+        query_state = {
+            "Category": {"projections": category_projections},
             "Y": {"projections": [field(t, m, "Measure") for t, m in measures]},
         }
         friendly_labels = {
@@ -445,8 +501,24 @@ def chart(page: str, role: str, chart_type: str, categories: list,
             "cause_type": "Delay cause",
         }
         category = query_state["Category"]["projections"][0]
-        if categories[0][1] in friendly_labels:
+        if len(categories) == 1 and categories[0][1] in friendly_labels:
             category["displayName"] = friendly_labels[categories[0][1]]
+        if chart_type == "stackedAreaChart":
+            assert page == uid("page", "causes")
+            query_state["Series"] = {"projections": [{
+                **field("mart_delay_causes", "cause_type", "Column"),
+                "displayName": "Cause",
+            }]}
+            out["visual"]["objects"] = {
+                "legend": [{"properties": {
+                    "show": expression_literal("true"),
+                    "position": expression_literal("'Top'"),
+                    "fontSize": expression_literal("10D"),
+                }}],
+                "categoryAxis": [{"properties": {
+                    "axisType": expression_literal("'Categorical'"),
+                }}],
+            }
     if chart_type == "clusteredColumnChart" and page == uid("page", "seasonal") and role == "right-chart":
         query_state["Series"] = {
             "projections": [{**field("dim_month", "calendar_year", "Column"),
@@ -474,8 +546,33 @@ def chart(page: str, role: str, chart_type: str, categories: list,
         }
     if (page == uid("page", "airports") and role == "left-chart"):
         query_state["Tooltips"] = {"projections": [
-            field("mart_airport_daily", "Origin Delay 15+ Rate", "Measure"),
+            field("mart_route_monthly", "Route Delay 15+ Rate", "Measure"),
         ]}
+    if (page == uid("page", "causes") and role == "left-chart"):
+        out["visual"]["query"]["sortDefinition"] = {
+            "sort": [{"field": field("dim_month", "month_label", "Column")["field"],
+                      "direction": "Ascending"}],
+        }
+    chart_titles = {
+        (uid("page", "airline"), "left-chart"): "Carrier risk by traffic and delay",
+        (uid("page", "airline"), "right-chart"): "Carrier share of flight volume",
+        (uid("page", "airports"), "left-chart"): "Origin traffic by state",
+        (uid("page", "causes"), "left-chart"): "Attributed delay minutes over time",
+        (uid("page", "causes"), "right-chart"): "Delay minutes by cause",
+    }
+    label = chart_titles.get((page, role))
+    if label:
+        container = out["visual"].setdefault("visualContainerObjects", {})
+        container["title"] = [{"properties": {
+            "show": expression_literal("true"),
+            "text": expression_literal("'" + label + "'"),
+            "fontSize": expression_literal("15D"),
+            "fontColor": color("#102238"),
+            "bold": expression_literal("true"),
+        }}]
+        container["subTitle"] = [{"properties": {
+            "show": expression_literal("false"),
+        }}]
     return out
 
 
@@ -504,6 +601,43 @@ def save_theme() -> None:
     dump(report_path, report)
 
 
+def page_chart_visuals(page_id: str, spec: dict) -> list[dict]:
+    """Build the charts for a new report without overwriting an edited PBIP."""
+    if spec["key"] == "executive":
+        from src.phase5.polish_executive import (
+            DELTA_METRICS,
+            style_delta_card,
+            style_trend,
+        )
+        from src.phase5.rework_overview_seasonal import scorecard_item
+
+        line = chart(page_id, "left-chart", *spec["left"], 28, 808, 23)
+        result = [style_trend(line)]
+        for index, (role, measure, title, x, width, size) in enumerate(
+                DELTA_METRICS):
+            original = scorecard_item(page_id, role, measure, title, index, None)
+            result.append(style_delta_card(original, measure, title,
+                                           x, width, size))
+        return result
+    if spec["key"] == "seasonal":
+        from src.phase5.rework_overview_seasonal import diverging_bar, heatmap
+
+        return [
+            heatmap(page_id, visual(page_id, "left-chart", 28, 263, 650, 387,
+                                    "pivotTable", 23)),
+            diverging_bar(page_id, visual(page_id, "right-chart", 700, 263,
+                                          552, 387, "clusteredBarChart", 24)),
+        ]
+
+    is_routes = spec["key"] == "airports"
+    left_width = 650 if is_routes else 808
+    right_x, right_width = (700, 552) if is_routes else (860, 392)
+    return [
+        chart(page_id, "left-chart", *spec["left"], 28, left_width, 23),
+        chart(page_id, "right-chart", *spec["right"], right_x, right_width, 24),
+    ]
+
+
 def make_pages() -> None:
     pages_meta_path = PAGES / "pages.json"
     meta = json.loads(pages_meta_path.read_text(encoding="utf-8"))
@@ -527,10 +661,9 @@ def make_pages() -> None:
             },
         }
         dump(PAGES / page_id / "page.json", page_json)
-        is_routes = spec["key"] == "airports"
-        left_chart_width = 650 if is_routes else 808
-        right_chart_x = 700 if is_routes else 860
-        right_chart_width = 552 if is_routes else 392
+        is_wide_right = spec["key"] in ("airports", "seasonal")
+        right_chart_x = 700 if is_wide_right else 860
+        right_chart_width = 552 if is_wide_right else 392
         visuals = [
             rectangle(page_id, "navy-header", 0, 0, 1280, 96, NAVY, 0),
             rectangle(page_id, "teal-accent", 0, 93, 1280, 3, TEAL, 1),
@@ -550,19 +683,34 @@ def make_pages() -> None:
                      28, 226, 790, 28, 13, INK, 21),
             text_box(page_id, "right-label", spec["right_title"],
                      right_chart_x, 226, right_chart_width, 28, 13, INK, 22),
-            chart(page_id, "left-chart", spec["left"][0], spec["left"][1],
-                  spec["left"][2], 28, left_chart_width, 23),
-            chart(page_id, "right-chart", spec["right"][0], spec["right"][1],
-                  spec["right"][2], right_chart_x, right_chart_width, 24),
+            *page_chart_visuals(page_id, spec),
             rectangle(page_id, "footer-rule", 28, 665, 1224, 1, "#DAE5EF", 25),
             text_box(page_id, "footer", spec["footer"], 29, 674,
                      1210, 28, 11, MUTED, 26),
         ]
-        if spec["key"] == "seasonal":
-            seasonal_overlay_chart(visuals[-4])
+        if spec["key"] == "executive":
+            from src.phase5.polish_executive import (
+                LABEL_TEXT,
+                style_label,
+                style_network_kpis,
+            )
+            for index, content in enumerate(visuals):
+                if content["name"] == uid(page_id, "metrics"):
+                    visuals[index] = style_network_kpis(content)
+                else:
+                    role = next((key for key in LABEL_TEXT
+                                 if content["name"] == uid(page_id, key)), None)
+                    if role:
+                        visuals[index] = style_label(content, role)
+        from src.phase5.final_quality_pass import enhance
+        named_roles = ("metrics", "left-label", "right-label", "footer",
+                       "left-chart", "right-chart", "risk-cancellation",
+                       "risk-diversion", *("nav-" + tab for tab, _ in NAV_TABS))
+        role_lookup = {uid(page_id, role): role for role in named_roles}
         for content in visuals:
             role = content["name"]
-            dump(PAGES / page_id / "visuals" / role / "visual.json", content)
+            refined = enhance(spec["key"], role_lookup.get(role, ""), content)
+            dump(PAGES / page_id / "visuals" / role / "visual.json", refined)
         print(spec["title"], "->", len(visuals), "visuals")
 
 

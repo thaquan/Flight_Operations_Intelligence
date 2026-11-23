@@ -20,15 +20,31 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_airport"
+                      "Entity": "dim_origin_airport"
+                    }
+                  },
+                  "Property": "state_code"
+                }
+              },
+              "queryRef": "dim_origin_airport.state_code",
+              "nativeQueryRef": "state_code",
+              "active": true,
+              "displayName": "State"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_origin_airport"
                     }
                   },
                   "Property": "airport_code"
                 }
               },
-              "queryRef": "dim_airport.airport_code",
+              "queryRef": "dim_origin_airport.airport_code",
               "nativeQueryRef": "airport_code",
-              "active": true,
+              "active": false,
               "displayName": "Origin airport"
             }
           ]
@@ -40,14 +56,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "mart_airport_daily"
+                      "Entity": "mart_route_monthly"
                     }
                   },
-                  "Property": "Origin Delay 15+ Rate"
+                  "Property": "Route Delay 15+ Rate"
                 }
               },
-              "queryRef": "mart_airport_daily.Origin Delay 15+ Rate",
-              "nativeQueryRef": "Origin Delay 15+ Rate"
+              "queryRef": "mart_route_monthly.Route Delay 15+ Rate",
+              "nativeQueryRef": "Route Delay 15+ Rate"
             }
           ]
         },
@@ -58,14 +74,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "mart_airport_daily"
+                      "Entity": "mart_route_monthly"
                     }
                   },
-                  "Property": "Origin Scheduled Flights"
+                  "Property": "Route Scheduled Flights"
                 }
               },
-              "queryRef": "mart_airport_daily.Origin Scheduled Flights",
-              "nativeQueryRef": "Origin Scheduled Flights"
+              "queryRef": "mart_route_monthly.Route Scheduled Flights",
+              "nativeQueryRef": "Route Scheduled Flights"
             }
           ]
         }
@@ -77,10 +93,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "mart_airport_daily"
+                    "Entity": "mart_route_monthly"
                   }
                 },
-                "Property": "Origin Scheduled Flights"
+                "Property": "Route Scheduled Flights"
               }
             },
             "direction": "Descending"
@@ -100,6 +116,80 @@
                       "Value": "'#1665ED'"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Origin traffic by state'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#102238'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Origin traffic by state, with drill from state to airport and selection filtering the route table.'"
                 }
               }
             }

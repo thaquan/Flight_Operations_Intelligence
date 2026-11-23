@@ -72,7 +72,8 @@ def _preserve_desktop_active(current: dict, desired: dict) -> None:
 
 def _style_chart(visual: dict, page_key: str, role: str) -> None:
     theme = PALETTE_BY_ROLE.get((page_key, role))
-    if not theme:
+    if not theme or visual["visual"]["visualType"] not in (
+            "clusteredBarChart", "clusteredColumnChart"):
         return
     obj = visual["visual"].setdefault("objects", {})
     obj["dataPoint"] = [{"properties": {"defaultColor": color(theme)}}]
@@ -185,16 +186,41 @@ def plan_redesign(pages: Path = PAGES, report: Path = REPORT,
         for role in ("left-chart", "right-chart"):
             path = _visual(pages, page_id, role)
             v = _load(path)
+            if (key, role) in {
+                    ("executive", "right-chart"),
+                    ("seasonal", "left-chart"),
+                    ("seasonal", "right-chart")}:
+                expected = {
+                    ("executive", "right-chart"): (
+                        "cardVisual", "Data",
+                        ["mart_network_monthly.Executive Arrival Risk YoY"]),
+                    ("seasonal", "left-chart"): (
+                        "pivotTable", "Values",
+                        ["mart_network_monthly.Delay Rate 2024 Fixed",
+                         "mart_network_monthly.Delay Rate 2025 Fixed"]),
+                    ("seasonal", "right-chart"): (
+                        "clusteredBarChart", "Y",
+                        ["mart_network_monthly.Delay Rate YoY pp"]),
+                }[(key, role)]
+                kind, slot, expected_refs = expected
+                if v["visual"]["visualType"] != kind:
+                    raise ValueError(f"Unexpected new comparison chart: {path}")
+                projections = v["visual"]["query"]["queryState"][slot]["projections"]
+                if [item["queryRef"] for item in projections] != expected_refs:
+                    raise ValueError(f"Unexpected comparison measures: {path}")
+                continue
             if key == "causes" and role == "right-chart":
                 if v["visual"]["visualType"] not in ("clusteredColumnChart", "donutChart"):
                     raise ValueError("Delay cause right chart customized")
                 desired = chart(page_id, role, "donutChart", spec["right"][1],
                                 spec["right"][2], 860, 392, 24)
+                old_type = v["visual"]["visualType"]
                 v["visual"]["visualType"] = "donutChart"
                 _preserve_desktop_active(v["visual"]["query"],
                                          desired["visual"]["query"])
                 v["visual"]["query"] = desired["visual"]["query"]
-                v["visual"].pop("objects", None)
+                if old_type != "donutChart":
+                    v["visual"].pop("objects", None)
             elif ((key in ("executive", "seasonal")) and role == "right-chart"):
                 if v["visual"]["visualType"] != "clusteredColumnChart":
                     raise ValueError(f"Comparison visual customized: {path}")
@@ -211,7 +237,8 @@ def plan_redesign(pages: Path = PAGES, report: Path = REPORT,
             else:
                 if v["visual"]["visualType"] not in (
                         "clusteredColumnChart", "clusteredBarChart",
-                        "lineChart", "tableEx"):
+                        "lineChart", "tableEx", "scatterChart",
+                        "treemap", "stackedAreaChart"):
                     raise ValueError(f"Unexpected chart type: {path}")
                 if v["visual"]["visualType"] == "clusteredBarChart":
                     query = v["visual"]["query"]
@@ -219,7 +246,8 @@ def plan_redesign(pages: Path = PAGES, report: Path = REPORT,
                     query["sortDefinition"] = {
                         "sort": [{"field": y, "direction": "Descending"}],
                     }
-                if key == "airline" and role == "right-chart":
+                if (key == "airline" and role == "right-chart"
+                        and v["visual"]["visualType"] == "clusteredColumnChart"):
                     query = v["visual"]["query"]
                     y = query["queryState"]["Y"]["projections"][0]["field"]
                     query["sortDefinition"] = {
@@ -229,16 +257,29 @@ def plan_redesign(pages: Path = PAGES, report: Path = REPORT,
                     from src.phase5.build_atlas_report import field
                     state = v["visual"]["query"]["queryState"]
                     current = state["Y"]["projections"][0]["queryRef"]
-                    if current not in (
+                    if current == "mart_route_monthly.Route Scheduled Flights":
+                        actual = [x["queryRef"] for x in
+                                  state["Category"]["projections"]]
+                        if actual != ["dim_origin_airport.state_code",
+                                      "dim_origin_airport.airport_code"]:
+                            raise ValueError(f"Unexpected origin drill path: {path}")
+                        tooltip = state.get("Tooltips", {}).get("projections", [])
+                        if [x["queryRef"] for x in tooltip] != [
+                                "mart_route_monthly.Route Delay 15+ Rate"]:
+                            raise ValueError(f"Unexpected route tooltip: {path}")
+                    elif current in (
                             "mart_airport_daily.Origin Delay 15+ Rate",
                             "mart_airport_daily.Origin Scheduled Flights"):
+                        state["Y"] = {"projections": [
+                            field("mart_airport_daily", "Origin Scheduled Flights",
+                                  "Measure")
+                        ]}
+                        state["Tooltips"] = {"projections": [
+                            field("mart_airport_daily", "Origin Delay 15+ Rate",
+                                  "Measure")
+                        ]}
+                    else:
                         raise ValueError(f"Unexpected origin chart metric: {path}")
-                    state["Y"] = {"projections": [
-                        field("mart_airport_daily", "Origin Scheduled Flights", "Measure")
-                    ]}
-                    state["Tooltips"] = {"projections": [
-                        field("mart_airport_daily", "Origin Delay 15+ Rate", "Measure")
-                    ]}
                     metric = state["Y"]["projections"][0]["field"]
                     v["visual"]["query"]["sortDefinition"] = {
                         "sort": [{"field": metric, "direction": "Descending"}],
@@ -266,7 +307,9 @@ def plan_redesign(pages: Path = PAGES, report: Path = REPORT,
             existing = run["value"]
             desired = spec["right_title"]
             if existing != desired:
-                if OLD_RIGHT_PREFIX[key] not in existing:
+                if (OLD_RIGHT_PREFIX[key] not in existing
+                        and not (key == "causes"
+                                 and existing == "DELAY MINUTES / CAUSE MIX")):
                     raise ValueError(f"Right label changed by user: {path}")
                 run["value"] = desired
             if key == "seasonal":
@@ -278,10 +321,13 @@ def plan_redesign(pages: Path = PAGES, report: Path = REPORT,
             v = _load(path)
             run = (v["visual"]["objects"]["general"][0]["properties"]
                    ["paragraphs"][0]["textRuns"][0])
-            desired_label = "BUSIEST ORIGIN AIRPORTS / FLIGHT VOLUME"
+            desired_label = (spec["left_title"]
+                             if len(spec["left"][1]) > 1
+                             else "BUSIEST ORIGIN AIRPORTS / FLIGHT VOLUME")
             if run["value"] != desired_label:
                 if ("ORIGIN AIRPORT" not in run["value"]
-                        and "AIRPORT ARRIVAL DELAY RATE" not in run["value"]):
+                        and "AIRPORT ARRIVAL DELAY RATE" not in run["value"]
+                        and "BUSIEST ORIGIN AIRPORTS" not in run["value"]):
                     raise ValueError(f"Airport chart title modified: {path}")
                 run["value"] = desired_label
             _save_if_changed(changes, path, v)

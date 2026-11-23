@@ -10,7 +10,7 @@
     "tabOrder": 23
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "scatterChart",
     "query": {
       "queryState": {
         "Category": {
@@ -29,7 +29,62 @@
               "queryRef": "dim_airline.airline_code",
               "nativeQueryRef": "airline_code",
               "active": true,
-              "displayName": "Airline"
+              "displayName": "Carrier"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_airline_monthly"
+                    }
+                  },
+                  "Property": "Airline Cancelled Flights"
+                }
+              },
+              "queryRef": "mart_airline_monthly.Airline Cancelled Flights",
+              "nativeQueryRef": "Airline Cancelled Flights"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_airline_monthly"
+                    }
+                  },
+                  "Property": "Airline Cancellation Rate"
+                }
+              },
+              "queryRef": "mart_airline_monthly.Airline Cancellation Rate",
+              "nativeQueryRef": "Airline Cancellation Rate"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_airline_monthly"
+                    }
+                  },
+                  "Property": "Airline Scheduled Flights"
+                }
+              },
+              "queryRef": "mart_airline_monthly.Airline Scheduled Flights",
+              "nativeQueryRef": "Airline Scheduled Flights",
+              "active": true
             }
           ]
         },
@@ -51,37 +106,127 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "mart_airline_monthly"
-                  }
-                },
-                "Property": "Airline Delay 15+ Rate"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "objects": {
-      "dataPoint": [
+      "categoryLabels": [
         {
           "properties": {
-            "defaultColor": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "color": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F26852'"
+                      "Value": "'#102238'"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "bubbles": [
+        {
+          "properties": {
+            "markerShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'circle'"
+                }
+              }
+            },
+            "preventOverflow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Carrier risk by traffic and delay'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#102238'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Carrier scatterplot: horizontal axis flights, vertical axis delayed-arrival rate, bubble size cancelled flights. Hover for carrier details.'"
                 }
               }
             }

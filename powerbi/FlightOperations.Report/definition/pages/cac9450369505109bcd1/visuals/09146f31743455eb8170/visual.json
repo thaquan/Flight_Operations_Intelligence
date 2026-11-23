@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "DIRECTED ROUTE  ·  VOLUME & DELAY",
+                    "value": "ROUTES BY VOLUME / SHADED DELAY RISK",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "13px",

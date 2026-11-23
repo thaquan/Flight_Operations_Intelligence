@@ -10,10 +10,30 @@
     "tabOrder": 23
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "stackedAreaChart",
     "query": {
       "queryState": {
         "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_month"
+                    }
+                  },
+                  "Property": "source_month"
+                }
+              },
+              "queryRef": "dim_month.source_month",
+              "nativeQueryRef": "source_month",
+              "active": true,
+              "displayName": "Month"
+            }
+          ]
+        },
+        "Series": {
           "projections": [
             {
               "field": {
@@ -28,8 +48,7 @@
               },
               "queryRef": "mart_delay_causes.cause_type",
               "nativeQueryRef": "cause_type",
-              "active": true,
-              "displayName": "Delay cause"
+              "displayName": "Cause"
             }
           ]
         },
@@ -56,32 +75,135 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "mart_delay_causes"
+                    "Entity": "dim_month"
                   }
                 },
-                "Property": "Reported Cause Minutes"
+                "Property": "source_month"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ]
       }
     },
     "objects": {
-      "dataPoint": [
+      "legend": [
         {
           "properties": {
-            "defaultColor": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
+            "axisType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Scalar'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Attributed delay minutes over time'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1665ED'"
+                      "Value": "'#102238'"
                     }
                   }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Stacked area over time of reported delay minutes attributed to carrier, late aircraft, NAS, security and weather causes.'"
                 }
               }
             }

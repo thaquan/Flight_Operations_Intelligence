@@ -12,19 +12,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "calendar_year"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Year": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_month.month_label": {
 			      "Definition": {
@@ -33,19 +21,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "month_label"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Month": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_month.calendar_month": {
 			      "Definition": {
@@ -78,7 +54,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Airline": {
+			          "Carrier": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -100,6 +76,16 @@ cultureInfo en-US
 			      "Terms": [
 			        {
 			          "Origin": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Origin airport": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -180,19 +166,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "airport_code"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Origin airport": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "mart_delay_causes.cause_type": {
 			      "Definition": {
@@ -204,7 +178,185 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
+			          "Cause": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
 			          "Delay cause": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_origin_airport.state_code": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_origin_airport",
+			          "ConceptualProperty": "state_code"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "State": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mart_network_monthly.executive_cancellation_risk_yoy": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mart_network_monthly",
+			          "ConceptualProperty": "Executive Cancellation Risk YoY"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "CANCELLATION RISK": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mart_network_monthly.executive_diversion_risk_yoy": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mart_network_monthly",
+			          "ConceptualProperty": "Executive Diversion Risk YoY"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "DIVERSION RISK": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mart_network_monthly.executive_arrival_risk_yoy": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mart_network_monthly",
+			          "ConceptualProperty": "Executive Arrival Risk YoY"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ARRIVAL DELAY RISK": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mart_network_monthly.delay_rate_yoy_pp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mart_network_monthly",
+			          "ConceptualProperty": "Delay Rate YoY pp"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "2025 - 2024 (pp)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mart_network_monthly.delay_rate_2024_fixed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mart_network_monthly",
+			          "ConceptualProperty": "Delay Rate 2024 Fixed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "2024": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "mart_network_monthly.delay_rate_2025_fixed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "mart_network_monthly",
+			          "ConceptualProperty": "Delay Rate 2025 Fixed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "2025": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_month.source_month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_month",
+			          "ConceptualProperty": "source_month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
