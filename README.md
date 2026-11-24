@@ -1,315 +1,263 @@
 # Flight Operations Intelligence
 
-**End-to-End Aviation Data Engineering & Analytics Platform**
+**End-to-end aviation data engineering and analytics platform**
 
 [![Data quality CI](https://github.com/thaquan/Flight_Operations_Intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/thaquan/Flight_Operations_Intelligence/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1)
+![dbt](https://img.shields.io/badge/dbt-Core-FF694B)
+![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-F2C811)
 
-A reproducible, local-first student portfolio project combining data engineering and business intelligence with real U.S. Department of Transportation flight records. The target audience is Data Engineer Intern and Data Analyst Intern positions.
+A reproducible, local-first platform that transforms two years of official U.S. Department of Transportation flight records into a validated PostgreSQL warehouse, business-ready analytics marts and an interactive Power BI report. This Data Engineering / Analytics portfolio project emphasizes source lineage, reliable KPI definitions, repeatable processing and evidence-based operational insights.
 
-**Project status:** Data ingestion, warehouse modeling and quality
-validation (Phases 1-4) are complete. The Phase 5 Power BI dashboard is
-available as a source-controlled PBIP project. The 2024-2025 dataset covers
-24 monthly BTS extracts and **14,080,680 scheduled flights**.
+**Status:** Phases 1-4 and the five-page Flight Performance dashboard (Phase 5A) are complete at the [accepted baseline 93cf3dd](https://github.com/thaquan/Flight_Operations_Intelligence/commit/93cf3ddd00691337e5204cc5b49aaad33b748b32). Operational Risk (5B) is proposed; weather integration and orchestration are planned.
 
-## Power BI dashboard (Phase 5)
+[Dashboard](#power-bi-dashboard) | [Architecture](#system-architecture) | [Insights](#key-business-insights) | [Getting started](#getting-started) | [Roadmap](#roadmap)
 
-Open **`powerbi/FlightOperations.pbip`** in Power BI Desktop. The PBIP
-contains a PostgreSQL Import semantic model with 11 tables, 49 DAX measures
-and a five-page Flight Deck report:
+## Project at a glance
 
-- **Executive Overview:** A full-width 24-month delayed-arrival trend with
-  actual monthly markers, paired with a compact risk-change strip for
-  delayed arrivals, cancellations and diversions (2025 vs. 2024, in pp).
-- **Airline Performance:** Carrier volume versus delayed-arrival rate
-  in a bubble chart, paired with a traffic-share treemap.
-- **Airports & Routes:** Origin traffic with a state-to-airport drill,
-  filtering a table of directed routes and delay rates.
-- **Delay Causes:** A 24-month stacked area of BTS delay-minute causes,
-  paired with a donut of reported-minute shares.
-- **Seasonal Trends:** A month-by-year delayed-arrival heatmap and diverging
-  bars for the 2025 minus 2024 rate change in percentage points.
+| Dataset & engineering | Analytics & quality |
+| --- | --- |
+| **14,080,680** scheduled flights | **5** interactive report pages |
+| **24** monthly BTS extracts (2024-2025) | **11** semantic tables, **11** relationships |
+| **15** reporting carriers, **358** airports (excluding Unknown) | **49** DAX measures |
+| **5** Gold analytics marts | **103** Python tests passed at acceptance |
+| **445 MB** Bronze Parquet (decimal MB) | **65** dbt data tests passed at Phase 4 |
 
-The Seasonal heatmap, YoY bars and Executive risk-change strip
-intentionally compare full 2024 with 2025 even when YEAR is selected.
-The headline KPI cards and 24-month trend still respond to YEAR.
+Evidence: [dataset validation](docs/phase1/2024_2025/phase1_validation.md), [star schema](docs/phase3/m34_validation.md), [Bronze benchmark](docs/phase2/performance_benchmark.md) and [BI acceptance](docs/phase5/m55_acceptance.md).
 
-The final visual-quality pass adds AA-contrast text on selected navigation
-tabs, two-decimal precision for flight-volume and cause-minute KPIs, clearer
-carrier bubble tooltips without overlapping code labels, delay-rate shading
-in the directed-route table, a continuous time axis for cause trends, and a
-shared 10-35% heatmap scale across both years. Native visual descriptions
-support screen-reader users. Risk colors indicate delay magnitude or a
-worsening year-over-year rate; treemap colors identify airlines only.
+## Business objectives
 
-A synchronized YEAR / PERIOD filter appears on each page. The Home icon
-returns to Executive Overview. In Power BI Desktop Edit mode, use
-**Ctrl+click** to follow page-navigation buttons; in Reading view, click
-normally. The dashboard uses historical BTS data, not live flight tracking.
-A geographic route map is not included pending verified airport coordinates.
+- Measure network reliability: late arrivals, cancellations and diversions.
+- Identify carrier, airport, directed-route and seasonal performance patterns.
+- Compare operational exposure (flight volume) against delay rates and examine the time trend and composition of reported delay causes.
+- Establish an analytical foundation for future operational risk prioritization and weather analysis, without claiming causality or real-time prediction.
 
-See the [Power BI setup and reporting guide](docs/phase5/README.md),
-[KPI definitions](docs/phase5/kpi_catalog.md) and
-[report requirements](docs/phase5/report_requirements.md).
+## Power BI dashboard
 
-## Business questions
+**Flight Deck | Flight Performance (Phase 5A)**
 
-1. How often do reported domestic flights arrive at least 15 minutes late?
-2. Which airlines, origin airports, routes and time periods have the highest arrival delay rates?
-3. How often are flights cancelled or diverted, and how do those rates differ by segment?
-4. How do measured weather conditions relate to delays? *(Planned for Phase 6; association is not causation.)*
-5. Is there evidence of downstream delay propagation across successive flights of the same aircraft? *(Optional extension.)*
+Open [`powerbi/FlightOperations.pbip`](powerbi/FlightOperations.pbip), the single canonical project, in Power BI Desktop. The report imports PostgreSQL Gold marts.
 
-## Data sources
-
-- **BTS Reporting Carrier On-Time Performance (1987–present)**, official U.S. DOT dataset. [Download](https://transtats.bts.gov/DL_SelectFields.aspx?QO_fu146_anzr=&gnoyr_VQ=FGJ), [pre-zipped monthly files](https://transtats.bts.gov/PREZIP/), [field descriptions](https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ).
-- **NOAA GHCNh hourly meteorological observations**, planned for Phase 6. [Dataset and bulk-download guidance](https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly).
-
-## Explore the data
-
-- **[Download the complete BTS 2024–2025 dataset (GitHub Release)](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1)**: all 24 verified official monthly ZIPs, packaged into [2024](https://github.com/thaquan/Flight_Operations_Intelligence/releases/download/bts-data-2024-2025-v1/BTS_Reporting_Carrier_2024_Official_ZIPs.zip) and [2025](https://github.com/thaquan/Flight_Operations_Intelligence/releases/download/bts-data-2024-2025-v1/BTS_Reporting_Carrier_2025_Official_ZIPs.zip) archives. Each yearly archive includes a source-file checksum list.
-- [Open a compact 1,200-row BTS preview](data/sample/bts_flights_preview_1200.csv) directly on GitHub.
-- [Download the 10,000-row sample](data/sample/bts_flights_2024_2025_sample_10000.csv) for local inspection.
-- [Read the sampling method and limitations](data/sample/README.md).
-- [Inspect the verified source manifest](docs/phase1/2024_2025/acquisition_manifest.json) for all 24 official monthly downloads and SHA-256 values.
-
-Both samples contain actual BTS records from all 24 months, with a deliberate minimum number of cancellations and diversions for inspection. **They are not representative datasets and must not be used to estimate population KPIs.** For population analysis, use the complete 2024–2025 Release archives or the Phase 1 downloader below.
-
-**Data ethics / limitations:** This project contains domestic flights reported by U.S. carriers, not all flights worldwide. The BTS feed is published monthly, **not a real-time stream**. BTS does not include flight-level ticket prices or airline profit.
-
-## Dataset scope
-
-- **Primary:** BTS Reporting Carrier On-Time Performance, all 24 complete calendar months from January 2024 through December 2025.
-- **Population:** all reporting carriers, airports and flight outcomes in the official monthly files; no source-level top-airport filtering.
-- **BI focus:** approximately 20 highest-volume origin airports, ranked over the entire two-year period.
-- **Secondary (Phase 6):** NOAA GHCNh hourly weather records, joined with validated airport/station and timezone mappings.
-
-The original January 2025-only pilot is preserved under `docs/phase1/` for historical reference. It is **not** accepted as evidence of 24-month coverage.
-
-## Phase 1: reproduce the full assessment
-
-Requires Python 3.10+. The Phase 1 acquisition, profiler and tests use the Python standard library.
-
-```bash
-python -m src.phase1.download_bts --start 2024-01 --end 2025-12 --workers 3
-python -m src.phase1.run_phase1 --workers 4
-python -m src.phase1.build_report
-python -m unittest discover -s tests -v
-```
-
-These commands download official source ZIP files (approximately several hundred MB in total), verify each archive's CRC and SHA-256, profile every source row, and reconcile all 24 monthly reports. Use `python -m src.phase1.run_phase1 --resume` only when previously generated monthly profiles and matching source checksums are available.
-
-Raw ZIPs stay in `data/raw/bts/<YEAR>/` and are **never committed to Git history**. Instead, the two verified yearly archives are downloadable as [GitHub Release assets](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1). The acquisition manifest and 24 JSON profiles provide reproducible evidence without bundling the source data in the repository.
-
-Phase 1 deliverables:
-
-- [Source, scope and acquisition](docs/phase1/2024_2025/source_and_scope.md)
-- [Business requirements](docs/phase1/2024_2025/business_requirements.md)
-- [Business data dictionary](docs/phase1/2024_2025/data_dictionary.md)
-- [KPI definitions](docs/phase1/2024_2025/kpi_definitions.md)
-- [Preliminary data model](docs/phase1/2024_2025/preliminary_data_model.md)
-- [Measured full-period data-quality report](docs/phase1/2024_2025/data_quality_assessment.md)
-- [Complete source field catalog](docs/phase1/2024_2025/field_catalog.md)
-- [Phase 1 validation and source exceptions](docs/phase1/2024_2025/phase1_validation.md)
-- [Phase 2 implementation handoff](docs/phase1/2024_2025/phase2_handoff.md)
-- [Acquisition manifest](docs/phase1/2024_2025/acquisition_manifest.json)
-- [Aggregate machine-readable profile](docs/phase1/2024_2025/aggregate_profile.json)
-- Monthly machine-readable profiles in `docs/phase1/2024_2025/profiles/`
-
-## Phase 2: build the Bronze Parquet layer
-
-The Phase 2 pipeline reads the official BTS monthly ZIPs in bounded PyArrow CSV batches, validates each source against Phase 1 checksums, and writes partitioned, ZSTD-compressed Parquet with row-level lineage. It supports month-range backfills, idempotent reruns, explicit reprocessing, and recovery of interrupted local outputs.
-
-Install the tested local dependencies in a virtual environment (Python 3.13 on Windows was used for the verified run):
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-phase2.txt
-```
-
-Activate the environment first, or call its Python executable directly. Run from the project root with the 24 raw ZIPs already downloaded:
-
-```bash
-python -m src.phase2.ingest --start 2024-01 --end 2025-12 --dry-run
-python -m src.phase2.ingest --start 2024-01 --end 2025-12
-python -m src.phase2.validate --deep --report docs/phase2/full_validation.json
-python -m pytest -q
-```
-
-**Verified local result:** 24/24 Parquet partitions, **14,080,680/14,080,680** rows reconciled, 113 fields per Bronze record (109 source + 4 lineage), and 445,109,486 Parquet bytes. The 24-month rerun skipped every partition without changing the ingestion manifest; 33 Python tests passed. Two reviewed Phase 1 source exceptions were preserved and checked.
-
-- [Phase 2 overview and documentation](docs/phase2/README.md)
-- [Bronze schema](docs/phase2/bronze_schema.md)
-- [Operations and recovery runbook](docs/phase2/runbook.md)
-- [Deep validation report](docs/phase2/full_validation.json)
-- [Measured performance](docs/phase2/performance_benchmark.md)
-
-The generated `data/bronze/` tree and its ingestion manifest are deliberately Git-ignored. Reproduce them locally from the official raw ZIPs; PostgreSQL and dbt modeling begin in Phase 3.
-
-## Phase 3, M3.1: local PostgreSQL foundation
-
-M3.1 provides a containerized PostgreSQL 17 warehouse, persistent Docker storage, versioned schema initialization, environment-based credentials and a dbt Core connection. It **does not yet load Bronze data** or publish Silver/Gold models; those belong to subsequent Phase 3 milestones.
-
-Install Phase 3 dependencies into the existing virtual environment:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-phase3.txt
-.\.venv\Scripts\python.exe -m src.phase3.bootstrap_env
-docker compose up -d --wait
-.\.venv\Scripts\python.exe -m src.phase3.check_database
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli debug
-```
-
-The bootstrap command generates a private `.env` with a random database password and refuses to overwrite an existing one. Docker publishes PostgreSQL to **127.0.0.1:5433** by default; the database is kept in a named volume. Start Docker Desktop before running Compose. To stop the service without removing data, run `docker compose stop`.
-
-- [M3.1 infrastructure and operation guide](docs/phase3/m31_infrastructure.md)
-- [M3.1 verification record](docs/phase3/m31_validation.md)
-
-## Phase 3, M3.2: Bronze to Silver
-
-M3.2 loads the 2024–2025 Bronze population into `silver.flights` using checksum-verified Parquet inputs, bounded Arrow batches and PostgreSQL `COPY`. Each monthly load is transactional and recorded in `audit.silver_loads`. Unchanged months are skipped; an explicit `--reprocess` is required for a replacement.
-
-```powershell
-.\.venv\Scripts\python.exe -m src.phase3.load_silver --start 2024-01 --end 2025-12 --dry-run
-.\.venv\Scripts\python.exe -m src.phase3.load_silver --start 2024-01 --end 2025-12
-.\.venv\Scripts\python.exe -m src.phase3.validate_silver --report docs/phase3/m32_reconciliation.json
-.\.venv\Scripts\python.exe -m pytest -q
-```
-
-**Verified local result:** all **24/24 months and 14,080,680/14,080,680 rows** reconciled between Bronze and Silver. All 24 partitions were skipped on an unchanged rerun. Silver maps 62 Bronze fields into typed columns, adds the source month and a load timestamp, and preserves the complete source population. The local PostgreSQL table and indexes occupied **7,536 MB** at verification. The full Python suite passed **45 tests**.
-
-- [M3.2 pipeline architecture and runbook](docs/phase3/m32_silver_pipeline.md)
-- [M3.2 source-to-Silver reconciliation](docs/phase3/m32_reconciliation.json)
-- [M3.2 validation record](docs/phase3/m32_validation.md)
-
-## Phase 3, M3.3: dbt Source and Staging Models
-
-M3.3 declares `silver.flights` as a dbt source and builds two PostgreSQL views:
-`staging.stg_flights` (all typed Silver fields plus normalized airline/airport
-codes) and `staging.stg_flight_outcomes` (mutually exclusive flight statuses
-and additive KPI numerators/denominators). Neither view filters, deduplicates,
-or physically copies source flights.
-
-```powershell
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli parse
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli build
-.\.venv\Scripts\python.exe -m pytest -q
-```
-
-**Verified local result:** dbt built 2 views and passed 9 data tests
-(**11/11 PASS**; no warnings or errors). All monthly Silver-to-staging row
-counts matched. The Python suite passed **48 tests**. Annual dbt staging
-arrival delay rates match Phase 1: **20.82% in 2024** and **22.31% in 2025**,
-using completed flights with a valid `ArrDel15` as the denominator.
-
-- [M3.3 staging design and runbook](docs/phase3/m33_staging_models.md)
-- [M3.3 verification record](docs/phase3/m33_validation.md)
-
-## Phase 3, M3.4: Dimensional Modeling
-
-M3.4 builds the physical PostgreSQL Star Schema in `gold` using dbt:
-`fct_flights`, `dim_airline`, `dim_airport` and `dim_date`. The airport
-dimension is used for both origin and destination roles. Stable numeric
-keys, unknown members and source lineage preserve every observation.
-
-```powershell
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli run --select path:models/marts/dimensions path:models/marts/facts
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli test --select path:models/marts/dimensions path:models/marts/facts
-.\.venv\Scripts\python.exe -m pytest -q
-```
-
-**Verified local result:** 15 airlines plus Unknown, 358 airports plus
-Unknown, 731 calendar dates, and **14,080,680 fact rows**. All **24
-M3.4 dbt tests passed**, including fact-to-dimension relationships,
-monthly Silver-to-Fact reconciliation and annual KPI consistency.
-The materialized fact and indexes occupied approximately **6,307 MB**.
-The fact is currently a fully rebuilt table, not an incremental merge.
-
-- [M3.4 dimensional design and runbook](docs/phase3/m34_dimensional_model.md)
-- [M3.4 Star Schema ERD](docs/phase3/m34_erd.md)
-- [M3.4 validation record](docs/phase3/m34_validation.md)
-
-## Phase 3, M3.5: Gold Analytics Data Marts
-
-M3.5 materializes five BI-ready aggregate tables from the complete Gold
-flight fact: `mart_network_monthly`, `mart_airline_monthly`,
-`mart_airport_daily`, `mart_route_monthly`, and `mart_delay_causes`.
-The airport mart retains separate origin/destination roles, routes are
-directed, and the cause mart distinguishes non-NULL observations from
-positive reported minutes. All flight-rate KPIs reuse a shared dbt macro.
-
-```powershell
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli parse
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli run --select path:models/marts/analytics --threads 2
-.\.venv\Scripts\python.exe -m src.phase3.dbt_cli test --select path:models/marts/analytics tag:m35 --threads 2
-.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
-```
-
-**Verified local result:** **24** network-month rows, **348** airline-months,
-**481,262** airport/role/days, **139,287** directed route-months and **1,740**
-airline/month/cause groups. An unchanged rebuild and a final indexed rebuild
-reproduced all row counts. **32/32 selected dbt tests** and **57/57 Python
-tests** passed; the full dbt regression suite passed **65/65 data tests**.
-Network delay 15+ rates remain **20.82% (2024)** and **22.31% (2025)**.
-PostgreSQL aggregate tables are currently full-rebuild, not incremental.
-
-- [M3.5 Gold marts design and SQL examples](docs/phase3/m35_gold_marts_design.md)
-- [M3.5 KPI and dimension mapping](docs/phase3/m35_kpi_mapping.md)
-- [M3.5 source-to-mart reconciliation](docs/phase3/m35_reconciliation.md)
-- [M3.5 measured performance](docs/phase3/m35_performance.md)
-- [M3.5 validation record](docs/phase3/m35_validation.md)
-
-## Phase 4: Data Quality & CI
-
-Phase 4 checks the complete two-year source-to-mart lineage using a read-only quality runner. It validates monthly source counts and hashes, KPI denominators, segment aggregations and the Phase 1 population baseline. A separate synthetic PostgreSQL fixture runs the full dbt project in CI without downloading raw BTS records.
-
-```powershell
-.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
-.\.venv\Scripts\ruff.exe check --select E4,E7,E9,F,I src/phase4 tests/test_phase4_quality_gates.py tests/test_phase4_ci_workflow.py
-.\.venv\Scripts\python.exe -m src.phase4.quality_gates --mode full --report docs/phase4/quality_report.json
-```
-
-**Verified locally:** **70/70 Python tests**, Ruff lint, and **76/76 dbt nodes** (11 models, 65 tests) on a throwaway PostgreSQL 17 fixture. Full 24-month quality gates returned **6 PASS, 2 REVIEW, 0 FAIL**; the two REVIEW findings are transparent BTS source exceptions. **Verified on GitHub:** the [Data quality CI workflow](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773) passed on commit `09d3b1a`, including lint, Python tests, the synthetic PostgreSQL/dbt build, rollback checks and fixture quality gates.
-
-- [Phase 4 scope and findings](docs/phase4/README.md)
-- [CI and recovery runbook](docs/phase4/ci_runbook.md)
-- [Verification results](docs/phase4/validation.md)
-- [Full dataset quality report (JSON)](docs/phase4/quality_report.json)
-
-## Planned stack and scope
-
-| Layer | Planned technology | Status |
+| Report page | Analytical purpose | Interaction / visualization |
 | --- | --- | --- |
-| Source acquisition / profiling | Python | Phase 1 |
-| Bronze storage | Python, PyArrow, Polars and partitioned Parquet | Phase 2 complete |
-| Silver warehouse | PostgreSQL + Docker Compose | M3.2 complete; 24 months loaded and reconciled |
-| Transformations | dbt Core | M3.5 Gold fact, dimensions and five aggregate marts complete |
-| Tests and CI | pytest, Ruff, 65 dbt data tests, synthetic PostgreSQL fixture and GitHub Actions | Phase 4 complete; GitHub Actions passed |
-| BI | Power BI Desktop (Import) | Phase 5 |
-| Weather integration | NOAA GHCNh, station mapping, IANA time zones | Phase 6 |
-| Orchestration | Dagster OSS | Phase 7 |
+| Executive Overview | Network reliability | Monthly trend, headline KPIs, fixed YoY delta strip |
+| Airline Performance | Carrier exposure versus reliability | Volume/delay scatter with cancellation-sized bubbles; traffic-share treemap |
+| Airports & Routes | Origin airport and corridor performance | State-to-airport drill; linked directed-route table |
+| Delay Causes | Reported cause minutes over time and by category | Monthly stacked area and share donut |
+| Seasonal Trends | Improving or worsening months | Two-year heatmap and signed percentage-point bars |
 
-The MVP includes **two complete years (2024–2025)** for year-over-year and seasonal comparisons. Spark, Kafka and paid Microsoft Fabric capacities are intentionally excluded until there is a demonstrated technical need. Credentials, raw datasets and local databases are not checked in.
+All five navigation tabs and Home were tested using actual Ctrl+click actions in Desktop Edit mode. YEAR / PERIOD selection synchronizes across pages. Headline KPIs follow the filter; fixed 2024-versus-2025 comparisons deliberately retain both years. Native drill controls and cross-filtering were also verified.
 
-## Phase roadmap
+### Dashboard showcase
 
-1. **Data Acquisition, Exploration & Business Requirements:** verify and profile all 24 monthly BTS files, document KPI rules and initial star schema.
-2. **Data Ingestion & Bronze:** repeatable ZIP ingestion, manifest, checksum, partitioned Parquet, backfill and idempotency.
-3. **PostgreSQL Warehouse & dbt Core:** Silver staging/intermediate models, fact/dimension tables and Gold data marts.
-4. **Data Quality & CI:** pytest, dbt tests, source-to-mart reconciliation and GitHub Actions.
-5. **Power BI Analytics:** Executive Overview, Airline Performance, Airport & Route Analytics, Delay Causes & Seasonal Trends.
-6. **NOAA Weather Integration:** airport-station mapping, timezone conversion, point-in-time weather joins and Weather Impact page.
-7. **Dagster OSS:** scheduling, retries, logging, monitoring, incremental updates and backfills.
-8. **Performance & Portfolio:** measured benchmarks, optimizations, architecture docs, screenshots, evidence-based insights and CV-ready presentation.
+Actual Power BI Desktop report canvases captured on 24 November 2026 with YEAR / PERIOD set to All (2024-2025). The screenshots are cropped to the report canvas; application chrome and account details are excluded.
 
-## Data integrity principles
+**Executive Overview**
 
-- Every published statistic must be calculated from downloaded source records; capacity estimates are explicitly labeled as estimates.
-- Flight delay percentages use documented eligible-arrival denominators, not all scheduled flights.
-- Cancelled and diverted flights remain in the source population.
-- High NULL rates in conditional delay and diversion fields are interpreted in context.
-- The candidate natural key is checked for collisions; no silent deduplication is performed.
-- Flight- and weather-time joins must account for local time, UTC, daylight saving and arrival-date rollover.
+[![Executive Overview: 14.08M flights, 21.56% arrival delay rate, annual risk changes and monthly trend](docs/phase5/screenshots/01-executive-overview.png)](docs/phase5/screenshots/01-executive-overview.png)
 
-## Repository status
+| Airline Performance | Airports & Routes |
+| --- | --- |
+| [![Carrier traffic and delay scatter with traffic share treemap](docs/phase5/screenshots/02-airline-performance.png)](docs/phase5/screenshots/02-airline-performance.png) | [![Origin airport traffic by state and directed route table](docs/phase5/screenshots/03-airports-routes.png)](docs/phase5/screenshots/03-airports-routes.png) |
+| **Delay Causes** | **Seasonal Trends** |
+| [![Monthly attributed delay minutes and cause share donut](docs/phase5/screenshots/04-delay-causes.png)](docs/phase5/screenshots/04-delay-causes.png) | [![Monthly delay rate heatmap and year-over-year percentage-point changes](docs/phase5/screenshots/05-seasonal-trends.png)](docs/phase5/screenshots/05-seasonal-trends.png) |
 
-GitHub repository: [thaquan/Flight_Operations_Intelligence](https://github.com/thaquan/Flight_Operations_Intelligence). **Phases 1–4 are completed and published on `main`**, with [Phase 4 CI passing on GitHub](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/44340972773); The Phase 5 Power BI dashboard is available in `powerbi/FlightOperations.pbip`. Public raw BTS ZIPs are available via the [data Release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1), while raw files, Bronze outputs, local databases and credentials remain excluded from version control.
+Click any screenshot to view it at full size. See the [report guide](docs/phase5/README.md) and [acceptance report](docs/phase5/m55_acceptance.md) for the interaction and reconciliation evidence. The [original M5.1 design concept](docs/phase5/dashboard_preview.png) is retained separately as historical design documentation.
+
+The PBIP stores report definitions and semantic metadata, not portable imported data. Reproduce the warehouse and enter PostgreSQL credentials locally to refresh it. No Fabric deployment is claimed.
+
+## System architecture
+
+```mermaid
+flowchart TD
+    BTS["BTS monthly ZIPs / 2024-2025"] --> ACQ["Python acquisition and profiling<br/>Checksums / manifests"]
+    ACQ --> BR["Bronze: partitioned Parquet<br/>PyArrow / ZSTD / lineage"]
+    BR --> SL["Silver: PostgreSQL<br/>Typed records / transactional COPY"]
+    SL --> ST["dbt staging<br/>Normalized codes / outcome flags"]
+    ST --> FACT["Gold: flight fact and dimensions<br/>Star schema"]
+    FACT --> MART["Gold: 5 analytics marts"]
+    MART --> SEM["Power BI Import semantic model<br/>11 tables / 49 measures"]
+    SEM --> REP["Flight Deck: 5-page performance dashboard"]
+    QA["Quality gates: pytest, dbt, SQL reconciliation<br/>Ruff / GitHub Actions"] -.-> ACQ
+    QA -.-> BR
+    QA -.-> SL
+    QA -.-> MART
+    NOAA["Planned: NOAA hourly weather"] -.-> WEATHER["Planned: validated station and time joins"]
+    WEATHER -.-> FACT
+    SEM -.-> RISK["Proposed: operational risk dashboard"]
+    ORCH["Planned: Dagster orchestration"] -.-> ACQ
+```
+
+Solid arrows represent the implemented data path; dashed connections indicate quality checks or explicitly labeled future work.
+
+## Technology stack
+
+| Layer | Technology | Status |
+| --- | --- | --- |
+| Acquisition and profiling | Python, BTS ZIPs, SHA-256 | Implemented |
+| Bronze storage | PyArrow, Polars, Parquet (ZSTD) | Implemented |
+| Warehouse | PostgreSQL 17, Docker Compose | Implemented |
+| Analytics engineering | dbt Core / dbt-postgres, SQL | Implemented |
+| Quality and CI | pytest, Ruff, dbt tests, GitHub Actions | Implemented |
+| Business intelligence | Power BI Desktop, PBIP, PBIR, TMDL, DAX | Implemented |
+| Version control | Git, GitHub, Azure DevOps Git remote | Synchronized at accepted baseline |
+| Weather enrichment | NOAA GHCNh, station mapping, IANA time zones | Planned |
+| Orchestration | Dagster OSS | Planned |
+
+## Dataset and access
+
+The [BTS Reporting Carrier On-Time Performance dataset](https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ) covers January 2024 to December 2025. All reported flight outcomes are retained, including cancellations and diversions. BI focuses on high-volume origin airports without filtering the source population.
+
+- [Official monthly ZIP directory](https://transtats.bts.gov/PREZIP/) and [BTS field selection](https://transtats.bts.gov/DL_SelectFields.aspx?QO_fu146_anzr=&gnoyr_VQ=FGJ).
+- [Full verified dataset release](https://github.com/thaquan/Flight_Operations_Intelligence/releases/tag/bts-data-2024-2025-v1): [2024 ZIP bundle](https://github.com/thaquan/Flight_Operations_Intelligence/releases/download/bts-data-2024-2025-v1/BTS_Reporting_Carrier_2024_Official_ZIPs.zip) | [2025 ZIP bundle](https://github.com/thaquan/Flight_Operations_Intelligence/releases/download/bts-data-2024-2025-v1/BTS_Reporting_Carrier_2025_Official_ZIPs.zip).
+- [1,200-row preview](data/sample/bts_flights_preview_1200.csv) | [10,000-row sample](data/sample/bts_flights_2024_2025_sample_10000.csv) | [Sampling method](data/sample/README.md).
+- [Source manifest and checksums](docs/phase1/2024_2025/acquisition_manifest.json) | [Field catalog](docs/phase1/2024_2025/field_catalog.md).
+
+The samples deliberately include uncommon outcomes and **are not representative**. Use the complete dataset for population KPIs. The secondary [NOAA hourly weather source](https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly) is planned, not currently integrated.
+
+## Data engineering and warehouse modeling
+
+| Stage | Design and output |
+| --- | --- |
+| Acquisition | ZIP integrity and SHA-256 verification, row profiling, monthly reconciliation |
+| Bronze | Monthly ZSTD Parquet; 109 source fields plus 4 lineage fields; bounded batches and idempotent ingestion |
+| Silver | Typed PostgreSQL records; transactional COPY, monthly audit trail and explicit reprocessing |
+| Staging | Two dbt views normalize codes and derive mutually exclusive outcomes and additive KPI counts |
+| Gold star schema | `fct_flights`, `dim_airline`, `dim_airport`, `dim_date`; role-playing airports, stable keys and Unknown members |
+| Gold marts | Five BI-ready aggregates with documented grains, shared KPI logic and indexes |
+
+[Star schema ERD](docs/phase3/m34_erd.md) | [Gold mart design](docs/phase3/m35_gold_marts_design.md) | [KPI mapping](docs/phase3/m35_kpi_mapping.md)
+
+### Gold analytics marts
+
+| Mart | Grain | Rows at verification |
+| --- | --- | ---: |
+| `mart_network_monthly` | Network / month | 24 |
+| `mart_airline_monthly` | Airline / month | 348 |
+| `mart_airport_daily` | Airport / role / day | 481,262 |
+| `mart_route_monthly` | Directed origin-destination / month | 139,287 |
+| `mart_delay_causes` | Airline / month / cause | 1,740 |
+
+The fact retains all 14,080,680 source rows. Origin and destination are distinct airport roles, not additive flight totals. Current dbt table materializations are full rebuilds; incremental models remain future work.
+
+## Key business insights
+
+| Metric | 2024 | 2025 | Full period |
+| --- | ---: | ---: | ---: |
+| Scheduled flights | 7,079,061 | 7,001,619 | 14,080,680 |
+| Eligible arrivals | 6,965,247 | 6,879,484 | 13,844,731 |
+| Arrivals delayed 15+ minutes | 1,449,966 | 1,534,638 | 2,984,604 |
+| Arrival delay 15+ rate | 20.82% | 22.31% | 21.56% |
+| Cancelled flights | 96,315 | 102,876 | 199,191 |
+| Diverted flights | 17,499 | 19,258 | 36,757 |
+
+- **Arrival reliability worsened:** the delayed-arrival rate increased by **1.49 percentage points** in 2025, despite lower scheduled volume.
+- **Other disruptions increased:** cancellation and diversion rates rose by **0.11 pp** and **0.03 pp**, respectively.
+- **Seasonal variation matters:** seven of twelve monthly delay-rate comparisons worsened in 2025; five improved.
+
+Arrival delay rates use eligible arrivals; cancellation and diversion rates use scheduled flights. Comparisons use ratios of aggregated counts, not averages of monthly percentages. Reported delay-cause minutes do not count unique delayed flights or measure actual weather conditions.
+
+Evidence: [SQL/DAX reconciliation](docs/phase5/m55_acceptance.md) | [KPI definitions](docs/phase5/kpi_catalog.md).
+
+## Data quality and validation
+
+| Check | Last documented result |
+| --- | --- |
+| Source-to-Bronze-to-Silver-to-Gold reconciliation | 14,080,680 rows across 24 months |
+| Full quality gates (Phase 4) | 6 PASS, 2 REVIEW, 0 FAIL; two documented BTS source exceptions |
+| dbt synthetic CI build (Phase 4) | 76/76 nodes: 11 models and 65 data tests |
+| Gold SQL vs live DAX (Phase 5 reconciliation) | 254/254 exact integer comparisons |
+| Python regression (Phase 5 acceptance) | 103 passed |
+| Ruff (Phase 5 acceptance) | PASS |
+| PBIR structural validation | 0 errors, 0 warnings |
+| Desktop interactions | Five tabs, Home, YEAR, cross-filter and drill level changes passed |
+
+[Full quality report](docs/phase4/quality_report.json) | [CI runbook](docs/phase4/ci_runbook.md) | [Recorded successful GitHub Actions run for aa4037c](https://github.com/thaquan/Flight_Operations_Intelligence/actions/runs/45022192579) | [Phase 5 acceptance](docs/phase5/m55_acceptance.md).
+
+CI builds an isolated synthetic PostgreSQL fixture without downloading full BTS data. Azure DevOps Git synchronization is separate from pipeline execution, which has not been verified.
+
+## Measured performance
+
+| Local measurement | Observed result |
+| --- | --- |
+| Uncompressed CSVs vs Bronze Parquet | 6.37 GB vs 445 MB (14.31:1 size ratio) |
+| Unchanged 24-month Bronze rerun | 3.918 s; all 24 partitions skipped |
+| Five Gold aggregates vs materialized flight fact | About 123 MB vs 6,307 MB (including indexes) |
+| Example top-20 origin query: route mart vs fact | 81.539 ms vs 5,913.233 ms (about 72.5x in one observed execution) |
+
+These are measured local results, not cloud SLAs or universal speedup claims. Cache state, indexing, workload and hardware can affect timings. See [Bronze benchmark](docs/phase2/performance_benchmark.md) and [Gold mart benchmark](docs/phase3/m35_performance.md).
+
+## Repository structure
+
+```text
+Flight_Operations_Intelligence/
+|-- .github/workflows/      # GitHub Actions CI
+|-- data/sample/           # Actual BTS preview and sample
+|-- dbt/                   # Staging, dimensions, fact, marts and tests
+|-- docker/                # PostgreSQL initialization
+|-- docs/                  # Phase documentation, validation and runbooks
+|-- powerbi/               # Canonical PBIP, PBIR, TMDL and themes
+|-- sql/                   # Warehouse and CI SQL
+|-- src/phase1 ... phase5/  # Acquisition, ETL, quality and BI utilities
+|-- tests/                 # Python regression suite
+|-- docker-compose.yml
+|-- .env.example
+|-- requirements-phase2.txt
+|-- requirements-phase3.txt
++-- requirements-phase4.txt
+```
+
+## Getting started
+
+**Prerequisites:** Git, Python (3.13 used for the verified run), Docker Desktop with Compose, sufficient disk space for raw archives, Bronze and warehouse tables, and Power BI Desktop on Windows for report refresh.
+
+From PowerShell:
+
+```powershell
+git clone https://github.com/thaquan/Flight_Operations_Intelligence.git
+cd Flight_Operations_Intelligence
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-phase2.txt -r requirements-phase3.txt -r requirements-phase4.txt
+.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
+```
+
+To reproduce the full warehouse, follow the [step-by-step reproduction guide](docs/reproduction.md): acquire and profile BTS data, ingest Bronze, bootstrap PostgreSQL, load Silver, build dbt models, validate Gold and run full quality gates. Start Docker Desktop before Compose; the default PostgreSQL endpoint is `127.0.0.1:5433`. Bootstrap generates a private `.env`; never commit it.
+
+After the warehouse is populated, open the PBIP in Desktop, configure local credentials and refresh the Import model. See the [Power BI setup guide](docs/phase5/README.md). No report regeneration is required.
+
+## Roadmap
+
+| Phase | Deliverable | Status |
+| --- | --- | --- |
+| 1 | Data acquisition, exploration and requirements | Complete |
+| 2 | Repeatable ingestion and Bronze Parquet | Complete |
+| 3 | PostgreSQL warehouse, dbt star schema and Gold marts | Complete |
+| 4 | Data quality gates and GitHub Actions CI | Complete |
+| 5A | Power BI Flight Performance dashboard | Complete |
+| 5B | Flight Network & Operational Risk Intelligence | Proposed; scope and KPIs to be validated |
+| 6 | NOAA weather integration and Weather Impact analysis | Planned |
+| 7 | Dagster OSS: schedules, retries, monitoring, incremental updates and backfills | Planned |
+| 8 | Performance optimization, architecture evidence and portfolio delivery | Planned |
+
+5A/5B subdivide the existing Phase 5 without renumbering Phases 6-8. The proposed risk dashboard must preserve the accepted report and its canonical PBIP. Downstream delay propagation is an optional extension, not an implemented feature.
+
+## Documentation
+
+| Topic | Start here |
+| --- | --- |
+| Reproduction and milestone results | [Full reproduction guide](docs/reproduction.md) |
+| Source scope and contract | [Scope](docs/phase1/2024_2025/source_and_scope.md), [requirements](docs/phase1/2024_2025/business_requirements.md), [dictionary](docs/phase1/2024_2025/data_dictionary.md) |
+| Ingestion and recovery | [Phase 2](docs/phase2/README.md), [runbook](docs/phase2/runbook.md) |
+| Warehouse and transformations | [Infrastructure](docs/phase3/m31_infrastructure.md), [Silver](docs/phase3/m32_silver_pipeline.md), [staging](docs/phase3/m33_staging_models.md), [star schema](docs/phase3/m34_dimensional_model.md), [marts](docs/phase3/m35_gold_marts_design.md) |
+| Quality and exceptions | [Phase 4](docs/phase4/README.md), [validation](docs/phase4/validation.md) |
+| BI model and acceptance | [Phase 5](docs/phase5/README.md), [semantic model](docs/phase5/m52_semantic_model.md), [KPI catalog](docs/phase5/kpi_catalog.md), [acceptance](docs/phase5/m55_acceptance.md) |
+
+## Limitations and data integrity
+
+- BTS covers reported U.S. domestic operations, not worldwide flights or live tracking; ticket prices and profitability are not available.
+- All source outcomes are retained. Conditional NULLs are interpreted in context, candidate-key collisions are checked and no silent deduplication is performed.
+- No verified airport-coordinate route map, formal SLA thresholds, dedicated mobile layout or Fabric deployment is claimed.
+- Weather analysis requires validated airport/station mappings, UTC/local-time conversion, daylight saving handling and arrival-date rollover; associations do not establish causation.
+- Raw datasets, Bronze outputs, local databases, Power BI caches and credentials stay outside Git. Large source archives are distributed through GitHub Releases.
+- Spark, Kafka and paid Fabric capacities are excluded until a demonstrated technical need exists.
