@@ -1,0 +1,4 @@
+load_from:
+  - python_module:
+      module_name: src.phase7.definitions
+      working_directory: .

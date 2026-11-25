@@ -1,0 +1,164 @@
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+import pytest
+
+from src.phase7.pipeline import (
+    MANIFEST,
+    MONTHS,
+    PipelineRunner,
+    step_args,
+    verify_source,
+)
+
+
+def test_partition_scope_and_commands():
+    assert len(MONTHS) == 24
+    assert MONTHS[0] == "2024-01" and MONTHS[-1] == "2025-12"
+    assert step_args("bronze", "2024-01") == ("-m", "src.phase2.ingest", "--month", "2024-01")
+    assert step_args("silver", "2025-12")[-2:] == ("--month", "2025-12")
+    assert step_args("dbt_build")[-3:] == ("build", "--threads", "2")
+    for step in ("bronze", "silver"):
+        for invalid in (None, "2026-01", "2024-13", "--reprocess"):
+            with pytest.raises(ValueError):
+                step_args(step, invalid)
+    with pytest.raises(ValueError):
+        step_args("quality", "2024-01")
+    with pytest.raises(ValueError):
+        step_args("arbitrary")
+
+
+def source_fixture(root):
+    path = root / "data/raw/bts/2024/test.zip"
+    path.parent.mkdir(parents=True)
+    data = b"test fixture bytes"
+    path.write_bytes(data)
+    manifest = root / MANIFEST
+    manifest.parent.mkdir(parents=True)
+    record = {"month": "2024-01", "relative_path": path.relative_to(root).as_posix(),
+              "zip_bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+    manifest.write_text(json.dumps({"files": [record]}), encoding="utf-8")
+    return path, manifest, record
+
+
+def test_source_integrity(tmp_path):
+    path, _, record = source_fixture(tmp_path)
+    assert verify_source("2024-01", tmp_path)["source_sha256"] == record["sha256"]
+    path.write_bytes(b"x" * record["zip_bytes"])
+    with pytest.raises(ValueError, match="checksum"):
+        verify_source("2024-01", tmp_path)
+
+
+def test_source_rejects_missing_duplicate_and_escaped_paths(tmp_path):
+    _, manifest, record = source_fixture(tmp_path)
+    manifest.write_text(json.dumps({"files": [record, record]}), encoding="utf-8")
+    with pytest.raises(ValueError, match="exactly one"):
+        verify_source("2024-01", tmp_path)
+    with pytest.raises(ValueError, match="exactly one"):
+        verify_source("2024-02", tmp_path)
+    record["relative_path"] = "../outside.zip"
+    manifest.write_text(json.dumps({"files": [record]}), encoding="utf-8")
+    with pytest.raises(ValueError, match="escapes"):
+        verify_source("2024-01", tmp_path)
+
+
+def test_runner_propagates_subprocess_exit(tmp_path, monkeypatch):
+    import logging
+
+    monkeypatch.setattr("src.phase7.pipeline.step_args", lambda *_: ("-c", "raise SystemExit(7)"))
+    runner = PipelineRunner(tmp_path, Path(sys.executable))
+    with pytest.raises(RuntimeError, match="code 7"):
+        runner.run("quality", logging.getLogger("test"))
+
+
+def test_runner_captures_success(tmp_path, monkeypatch, caplog):
+    import logging
+
+    monkeypatch.setattr("src.phase7.pipeline.step_args", lambda *_: ("-c", "print('pipeline result')"))
+    with caplog.at_level(logging.INFO):
+        result = PipelineRunner(tmp_path, Path(sys.executable)).run("quality", logging.getLogger("test"))
+    assert result["exit_code"] == 0
+    assert "pipeline result" in caplog.text
+
+
+@pytest.fixture
+def dagster_defs():
+    dagster = pytest.importorskip("dagster")
+    from src.phase7 import definitions
+
+    return dagster, definitions
+
+
+class FakeRunner:
+    def __init__(self, fail=None):
+        self.calls = []
+        self.fail = fail
+
+    def verify(self, month):
+        self.calls.append(("verify", month))
+        return {"month": month}
+
+    def run(self, step, log, month=None):
+        self.calls.append((step, month))
+        if step == self.fail:
+            raise RuntimeError("simulated failed step")
+        return {"step": step, "exit_code": 0}
+
+
+def execute(dagster_defs, name, fake, partition=None):
+    dagster, definitions = dagster_defs
+    return definitions.defs.resolve_job_def(name).execute_in_process(
+        partition_key=partition, resources={"pipeline": dagster.ResourceDefinition.hardcoded_resource(fake)},
+        raise_on_error=False,
+    )
+
+
+def test_definitions_and_schedule(dagster_defs):
+    dagster, definitions = dagster_defs
+    dagster.Definitions.validate_loadable(definitions.defs)
+    assert definitions.months.get_partition_keys() == list(MONTHS)
+    assert definitions.weekly_audit.default_status == dagster.DefaultScheduleStatus.STOPPED
+    assert definitions.weekly_audit.cron_schedule == "0 2 * * 1"
+
+
+def test_monthly_ingestion_order(dagster_defs):
+    fake = FakeRunner()
+    result = execute(dagster_defs, "ingest_flight_month", fake, "2024-01")
+    assert result.success
+    assert fake.calls == [("verify", "2024-01"), ("bronze", "2024-01"), ("silver", "2024-01")]
+
+
+def test_bronze_only(dagster_defs):
+    fake = FakeRunner()
+    assert execute(dagster_defs, "source_bronze_month", fake, "2025-12").success
+    assert fake.calls == [("verify", "2025-12"), ("bronze", "2025-12")]
+
+
+def test_bronze_failure_blocks_silver(dagster_defs):
+    fake = FakeRunner("bronze")
+    assert not execute(dagster_defs, "ingest_flight_month", fake, "2024-01").success
+    assert fake.calls == [("verify", "2024-01"), ("bronze", "2024-01")]
+
+
+def test_gold_preflight_and_quality_order(dagster_defs):
+    fake = FakeRunner()
+    assert execute(dagster_defs, "rebuild_gold_and_validate", fake).success
+    assert fake.calls == [("silver_reconcile", None), ("dbt_build", None), ("quality", None)]
+
+
+@pytest.mark.parametrize("failed,expected", [
+    ("silver_reconcile", ["silver_reconcile"]),
+    ("dbt_build", ["silver_reconcile", "dbt_build"]),
+])
+def test_failed_gold_blocks_quality(dagster_defs, failed, expected):
+    fake = FakeRunner(failed)
+    assert not execute(dagster_defs, "rebuild_gold_and_validate", fake).success
+    assert fake.calls == [(step, None) for step in expected]
+
+
+def test_audit_is_read_only(dagster_defs):
+    fake = FakeRunner()
+    assert execute(dagster_defs, "audit_job", fake).success
+    assert fake.calls == [("quality", None)]

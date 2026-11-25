@@ -1,0 +1,6 @@
+# Copy to a local DAGSTER_HOME; keep storage and logs outside Git.
+# Serialize Dagster-launched runs: monthly writers and full dbt rebuilds must not overlap.
+run_queue:
+  max_concurrent_runs: 1
+telemetry:
+  enabled: false

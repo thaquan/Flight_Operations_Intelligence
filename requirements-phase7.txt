@@ -1,0 +1,4 @@
+# Install in a separate orchestration virtual environment; keep the ETL .venv unchanged.
+dagster==1.13.31
+dagster-webserver==1.13.31
+pytest==9.2.0
