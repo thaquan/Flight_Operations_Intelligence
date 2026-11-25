@@ -181,3 +181,47 @@ model or production source-update mechanism is claimed.
 - Next: M7.4 scheduling and failure recovery, then M7.5 observability,
   CI acceptance and portfolio evidence. The weekly audit remains
   disabled until explicitly tested and enabled.
+
+## M7.4 - Scheduling and failure recovery
+
+Verified locally on 25 November 2026. The acceptance harness uses the
+M7.3 isolated database on port 5543 and dedicated ignored Dagster
+instances. No production schedule was enabled and no main data changed.
+
+| Drill | Observed result |
+| --- | --- |
+| Corrupt copy of January source ZIP | Checksum mismatch; one retry after 10 seconds; source failed; Bronze/Silver blocked |
+| Restored source copy | All three ingestion assets succeeded; existing 547,271 rows skipped |
+| Isolated PostgreSQL stopped | Source and Bronze succeeded; Silver connection timed out, exited 1; no write-step retry |
+| Isolated PostgreSQL restarted | All three assets succeeded; 547,271 rows skipped |
+| Failure during Silver replacement COPY | Second batch deliberately raised an error; transaction rolled back, all 1,066,492 rows and audit records preserved |
+| Post-rollback rerun | January skipped, 547,271 rows |
+| Real scheduler tick | SUCCESS at 2026-11-25 10:22 UTC (17:22 ICT); daemon created and launched read-only source probe |
+| Scheduled run | SUCCESS; January ZIP checksum verified; test schedule stopped afterwards |
+
+Recovery runs (separate local instance):
+
+- Corrupt source (expected FAILURE): 55ac1de5-b325-473f-bc40-20178a05c1ec.
+- Restored source (SUCCESS): 86a91aa1-5e9b-4062-860e-0855de72197b.
+- Database offline (expected FAILURE): 6a313fbb-6c2a-4208-ad6d-c4987cef20b0.
+- Database restored (SUCCESS): 2515b12a-3ee1-41d0-b605-94a47e764561.
+- Scheduled source probe (SUCCESS): d53ce8e4-69f5-4bcc-a76e-093efb18d64e.
+
+The rollback harness compared monthly row counts, sums of row hashes
+and complete load-audit rows before and after the injected failure.
+The connection returned to IDLE and the normal rerun skipped. This is
+evidence of transaction recovery, not a formal proof against hash
+collisions or every possible database failure.
+
+Final read-only reconciliation: main Silver and Gold network population
+14,080,680 across 24 months; isolated Silver and Gold network population
+1,066,492 across two months. Both containers healthy. Main Bronze SHA-256
+and all three pre-existing Power BI file hashes unchanged.
+
+Regression: 109 passed, 9 Dagster-only skips in the ETL environment;
+15 passed in the Dagster environment (118 unique tests overall); Ruff
+passed. The production weekly audit remains STOPPED by default. The
+real tick was for the isolated every-minute checksum probe, not a
+production weekly audit. Persistent production monitoring, external
+notifications, full-scale Gold recovery and final CI acceptance remain
+outside this milestone.

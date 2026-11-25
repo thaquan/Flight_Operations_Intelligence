@@ -62,7 +62,7 @@ Existing Gold tables are rebuilt by dbt, not incrementally merged. The historica
 .\data\tmp\dagster-venv\Scripts\python.exe -m pytest -q tests/test_phase7_orchestration.py
 ```
 
-The separate orchestration CI workflow installs Dagster and runs the contract/graph tests without raw data or PostgreSQL. Tests with a simulated runner verify order and failure propagation, not database outcomes. For live evidence see the [M7.1-M7.3 validation record](validation.md).
+The separate orchestration CI workflow installs Dagster and runs the contract/graph tests without raw data or PostgreSQL. Tests with a simulated runner verify order and failure propagation, not database outcomes. For live evidence see the [M7.1-M7.4 validation record](validation.md).
 
 ## M7.3 evidence and isolated benchmark
 
@@ -84,3 +84,36 @@ From the repository root:
 This script creates connection-local temporary tables only. It requires
 the isolated workspace and refuses unexpected database names, ports or
 baseline counts. It does not modify the production dbt models.
+
+## M7.4 - Failure recovery and schedule acceptance
+
+The opt-in recovery harness requires the existing isolated M7.3
+workspace, database flight_m73_test on port 5543 and two real months.
+Do not run other isolated jobs concurrently. The production jobs and
+weekly audit definition are unchanged.
+
+```powershell
+.\data\tmp\dagster-venv\Scripts\python.exe -m src.phase7.recovery_acceptance source
+.\.venv\Scripts\python.exe -m src.phase7.recovery_acceptance rollback
+```
+
+For the database outage drill, verify the exact isolated container and
+port before stopping it, run the harness in database-offline mode, and
+restart the isolated container in a finally block. After it becomes
+healthy, use database-restored mode. Never stop the main container
+for this exercise. Inspect the failed step and correct its root cause
+before rerunning; write steps intentionally have no automatic retry.
+
+For scheduler acceptance, use the separate code location
+src.phase7.schedule_probe with DAGSTER_HOME set to
+data/tmp/m74-schedule/dagster-home (absolute path); copy the existing
+orchestration/dagster.yaml into that directory first. Start the
+isolated_minute_probe schedule and a dedicated dagster-daemon with
+that module. Verify a successful tick and completed run in instance
+storage, then stop the probe schedule. The probe reads and verifies
+one isolated source file only; it is not included in production defs.
+Keep the production weekly audit stopped until an operator explicitly
+enables it with the full warehouse available.
+
+The [validation record](validation.md) contains the actual run IDs,
+recovery evidence and remaining limitations.
