@@ -162,3 +162,27 @@ def test_audit_is_read_only(dagster_defs):
     fake = FakeRunner()
     assert execute(dagster_defs, "audit_job", fake).success
     assert fake.calls == [("quality", None)]
+
+
+def test_recovery_refuses_main_database(monkeypatch):
+    from src.phase7 import recovery_acceptance
+
+    monkeypatch.setattr(recovery_acceptance, "read_env", lambda _: {
+        "POSTGRES_DB": "flight_warehouse", "POSTGRES_PORT": "5433",
+    })
+    with pytest.raises(RuntimeError, match="isolated"):
+        recovery_acceptance.isolated_settings()
+
+
+def test_schedule_probe_is_separate_and_stopped(dagster_defs, monkeypatch, tmp_path):
+    dagster, definitions = dagster_defs
+    from src.phase7 import schedule_probe
+
+    dagster.Definitions.validate_loadable(schedule_probe.defs)
+    assert schedule_probe.probe_schedule.default_status == dagster.DefaultScheduleStatus.STOPPED
+    assert schedule_probe.probe_schedule.cron_schedule == "* * * * *"
+    assert definitions.weekly_audit.default_status == dagster.DefaultScheduleStatus.STOPPED
+    assert definitions.weekly_audit.cron_schedule == "0 2 * * 1"
+    monkeypatch.setenv("DAGSTER_HOME", str(tmp_path))
+    result = schedule_probe.scheduled_source_probe.execute_in_process(raise_on_error=False)
+    assert not result.success
