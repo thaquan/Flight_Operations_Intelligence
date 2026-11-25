@@ -10,7 +10,7 @@
 
 A reproducible, local-first platform that transforms two years of official U.S. Department of Transportation flight records into a validated PostgreSQL warehouse, business-ready analytics marts and an interactive Power BI report. This Data Engineering / Analytics portfolio project emphasizes source lineage, reliable KPI definitions, repeatable processing and evidence-based operational insights.
 
-**Status:** Phases 1-4 and the five-page Flight Performance dashboard (Phase 5A) are complete at the [accepted baseline 93cf3dd](https://github.com/thaquan/Flight_Operations_Intelligence/commit/93cf3ddd00691337e5204cc5b49aaad33b748b32). Operational Risk (5B) is proposed; weather integration and orchestration are planned.
+**Status:** Phases 1-4 and the five-page Flight Performance dashboard (Phase 5) are complete at the [accepted baseline 93cf3dd](https://github.com/thaquan/Flight_Operations_Intelligence/commit/93cf3ddd00691337e5204cc5b49aaad33b748b32). The next priority is Phase 7: Dagster orchestration (M7.1-M7.3 foundation, UI, backfill and isolated incremental experiments verified locally; in progress). NOAA enrichment and a separate risk dashboard are deferred.
 
 [Dashboard](#power-bi-dashboard) | [Architecture](#system-architecture) | [Insights](#key-business-insights) | [Getting started](#getting-started) | [Roadmap](#roadmap)
 
@@ -35,7 +35,7 @@ Evidence: [dataset validation](docs/phase1/2024_2025/phase1_validation.md), [sta
 
 ## Power BI dashboard
 
-**Flight Deck | Flight Performance (Phase 5A)**
+**Flight Deck | Flight Performance (Phase 5)**
 
 Open [`powerbi/FlightOperations.pbip`](powerbi/FlightOperations.pbip), the single canonical project, in Power BI Desktop. The report imports PostgreSQL Gold marts.
 
@@ -83,10 +83,10 @@ flowchart TD
     QA -.-> BR
     QA -.-> SL
     QA -.-> MART
-    NOAA["Planned: NOAA hourly weather"] -.-> WEATHER["Planned: validated station and time joins"]
+    NOAA["Optional: NOAA hourly weather"] -.-> WEATHER["Future: validated station and time joins"]
     WEATHER -.-> FACT
-    SEM -.-> RISK["Proposed: operational risk dashboard"]
-    ORCH["Planned: Dagster orchestration"] -.-> ACQ
+
+    ORCH["Dagster orchestration: in progress"] -.-> BR
 ```
 
 Solid arrows represent the implemented data path; dashed connections indicate quality checks or explicitly labeled future work.
@@ -102,8 +102,8 @@ Solid arrows represent the implemented data path; dashed connections indicate qu
 | Quality and CI | pytest, Ruff, dbt tests, GitHub Actions | Implemented |
 | Business intelligence | Power BI Desktop, PBIP, PBIR, TMDL, DAX | Implemented |
 | Version control | Git, GitHub, Azure DevOps Git remote | Synchronized at accepted baseline |
-| Weather enrichment | NOAA GHCNh, station mapping, IANA time zones | Planned |
-| Orchestration | Dagster OSS | Planned |
+| Weather enrichment | NOAA GHCNh, station mapping, IANA time zones | Deferred / optional |
+| Orchestration | Dagster OSS | In progress; see [Phase 7 runbook](docs/phase7/README.md) |
 
 ## Dataset and access
 
@@ -114,7 +114,7 @@ The [BTS Reporting Carrier On-Time Performance dataset](https://www.transtats.bt
 - [1,200-row preview](data/sample/bts_flights_preview_1200.csv) | [10,000-row sample](data/sample/bts_flights_2024_2025_sample_10000.csv) | [Sampling method](data/sample/README.md).
 - [Source manifest and checksums](docs/phase1/2024_2025/acquisition_manifest.json) | [Field catalog](docs/phase1/2024_2025/field_catalog.md).
 
-The samples deliberately include uncommon outcomes and **are not representative**. Use the complete dataset for population KPIs. The secondary [NOAA hourly weather source](https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly) is planned, not currently integrated.
+The samples deliberately include uncommon outcomes and **are not representative**. Use the complete dataset for population KPIs. The secondary [NOAA hourly weather source](https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly) is deferred as an optional enhancement, not currently integrated.
 
 ## Data engineering and warehouse modeling
 
@@ -200,12 +200,15 @@ Flight_Operations_Intelligence/
 |-- powerbi/               # Canonical PBIP, PBIR, TMDL and themes
 |-- sql/                   # Warehouse and CI SQL
 |-- src/phase1 ... phase5/  # Acquisition, ETL, quality and BI utilities
+|-- src/phase7/            # Dagster assets, jobs and benchmark
+|-- orchestration/         # Dagster instance and workspace config
 |-- tests/                 # Python regression suite
 |-- docker-compose.yml
 |-- .env.example
 |-- requirements-phase2.txt
 |-- requirements-phase3.txt
-+-- requirements-phase4.txt
+|-- requirements-phase4.txt
++-- requirements-phase7.txt
 ```
 
 ## Getting started
@@ -234,13 +237,12 @@ After the warehouse is populated, open the PBIP in Desktop, configure local cred
 | 2 | Repeatable ingestion and Bronze Parquet | Complete |
 | 3 | PostgreSQL warehouse, dbt star schema and Gold marts | Complete |
 | 4 | Data quality gates and GitHub Actions CI | Complete |
-| 5A | Power BI Flight Performance dashboard | Complete |
-| 5B | Flight Network & Operational Risk Intelligence | Proposed; scope and KPIs to be validated |
-| 6 | NOAA weather integration and Weather Impact analysis | Planned |
-| 7 | Dagster OSS: schedules, retries, monitoring, incremental updates and backfills | Planned |
+| 5 | Power BI Flight Performance dashboard | Complete |
+| 6 | NOAA weather integration | Deferred / optional |
+| 7 | Dagster OSS: monthly ingestion, backfills, scheduled audits and run monitoring | M7.1-M7.3 verified locally; scheduling and CI acceptance pending |
 | 8 | Performance optimization, architecture evidence and portfolio delivery | Planned |
 
-5A/5B subdivide the existing Phase 5 without renumbering Phases 6-8. The proposed risk dashboard must preserve the accepted report and its canonical PBIP. Downstream delay propagation is an optional extension, not an implemented feature.
+The original phase numbering is retained. Phase 6 is deferred to prioritize operating the existing pipeline in Phase 7. A separate operational risk dashboard, NOAA enrichment and downstream delay propagation remain optional future enhancements. See the [Phase 7 runbook](docs/phase7/README.md). Gold remains full rebuild; monthly Bronze/Silver ingestion is idempotent.
 
 ## Documentation
 
@@ -252,6 +254,7 @@ After the warehouse is populated, open the PBIP in Desktop, configure local cred
 | Warehouse and transformations | [Infrastructure](docs/phase3/m31_infrastructure.md), [Silver](docs/phase3/m32_silver_pipeline.md), [staging](docs/phase3/m33_staging_models.md), [star schema](docs/phase3/m34_dimensional_model.md), [marts](docs/phase3/m35_gold_marts_design.md) |
 | Quality and exceptions | [Phase 4](docs/phase4/README.md), [validation](docs/phase4/validation.md) |
 | BI model and acceptance | [Phase 5](docs/phase5/README.md), [semantic model](docs/phase5/m52_semantic_model.md), [KPI catalog](docs/phase5/kpi_catalog.md), [acceptance](docs/phase5/m55_acceptance.md) |
+| Orchestration and backfill | [Phase 7 runbook](docs/phase7/README.md), [local validation](docs/phase7/validation.md) |
 
 ## Limitations and data integrity
 
