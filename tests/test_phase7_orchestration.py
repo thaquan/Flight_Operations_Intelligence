@@ -252,3 +252,15 @@ def test_health_source_rejects_incomplete_manifest(tmp_path, monkeypatch):
     manifest.write_text('{"files": [{"month": "2024-01"}]}', encoding="utf-8")
     monkeypatch.setattr(health_check, "ROOT", tmp_path)
     assert health_check.source_check()[0] == "FAIL"
+
+
+def test_gold_acceptance_refuses_main_and_m73(monkeypatch):
+    from src.phase7 import gold_acceptance
+
+    for name, port in [("flight_warehouse", "5433"), ("flight_m73_test", "5543"),
+                       ("flight_m75_acceptance", "5433")]:
+        monkeypatch.setattr(gold_acceptance, "read_env", lambda _, n=name, p=port: {
+            "POSTGRES_DB": n, "POSTGRES_PORT": p,
+        })
+        with pytest.raises(RuntimeError, match="dedicated snapshot"):
+            gold_acceptance.acceptance_settings()
