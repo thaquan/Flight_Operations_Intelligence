@@ -226,3 +226,29 @@ def test_empty_observability_has_no_invented_rates():
     assert result["success_rate"] is None
     assert result["last_success_utc"] is None
     assert result["duration_seconds"]["median"] is None
+
+
+def test_health_status_preserves_review_and_failure():
+    from src.phase7.health_check import check, report
+
+    good = check("good", lambda: ("PASS", {}))
+    review = check("quality", lambda: ("REVIEW", {"FAIL": 0}))
+    assert report([good, review])["status"] == "REVIEW"
+
+    def broken():
+        raise RuntimeError("private connection detail")
+
+    failed = check("database", broken)
+    assert failed == {"name": "database", "status": "FAIL",
+                      "detail": {"error_type": "RuntimeError"}}
+    assert report([good, failed])["status"] == "FAIL"
+
+
+def test_health_source_rejects_incomplete_manifest(tmp_path, monkeypatch):
+    from src.phase7 import health_check
+
+    manifest = tmp_path / health_check.MANIFEST
+    manifest.parent.mkdir(parents=True)
+    manifest.write_text('{"files": [{"month": "2024-01"}]}', encoding="utf-8")
+    monkeypatch.setattr(health_check, "ROOT", tmp_path)
+    assert health_check.source_check()[0] == "FAIL"
