@@ -186,3 +186,43 @@ def test_schedule_probe_is_separate_and_stopped(dagster_defs, monkeypatch, tmp_p
     monkeypatch.setenv("DAGSTER_HOME", str(tmp_path))
     result = schedule_probe.scheduled_source_probe.execute_in_process(raise_on_error=False)
     assert not result.success
+
+
+def test_observability_distinguishes_history_and_row_events():
+    from types import SimpleNamespace as NS
+
+    from src.phase7.observability import summarize
+
+    def record(rid, status, tags):
+        return NS(dagster_run=NS(run_id=rid, status=NS(value=status),
+                                 job_name="ingest_flight_month", tags=tags),
+                  start_time=100, end_time=110)
+
+    def event(step, kind, message=""):
+        return NS(step_key=step, dagster_event_type=NS(value=kind), message=message)
+
+    month = {"dagster/partition": "2024-01"}
+    good = record("good", "SUCCESS", month)
+    failed = record("fault", "FAILURE", {**month, "acceptance": "M7.4", "drill": "corrupt_source"})
+    log = event("bronze_flights", None, '{"month":"2024-01","rows":5,"status":"skipped"}')
+    logs = {"good": [log, log, event("bronze_flights", "STEP_SUCCESS")],
+            "fault": [event("bts_source", "STEP_UP_FOR_RETRY"),
+                      event("bts_source", "STEP_FAILURE"), log]}
+    result = summarize([good, failed], logs.__getitem__)
+    assert result["success_rate"] == 0.5
+    assert result["expected_test_failures"] == 1
+    assert result["unexpected_failures"] == 0
+    assert result["partition_coverage"] == 1
+    assert result["row_events_by_layer"]["bronze_flights"] == {"skipped": 5}
+    assert result["row_events_by_layer"]["silver_flights"] == {}
+    assert result["retry_events"] == 1
+
+
+def test_empty_observability_has_no_invented_rates():
+    from src.phase7.observability import summarize
+
+    result = summarize([], lambda _: [])
+    assert result["total_runs"] == 0
+    assert result["success_rate"] is None
+    assert result["last_success_utc"] is None
+    assert result["duration_seconds"]["median"] is None
