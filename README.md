@@ -3,6 +3,7 @@
 **End-to-end aviation data engineering and analytics platform**
 
 [![Data quality CI](https://github.com/thaquan/Flight_Operations_Intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/thaquan/Flight_Operations_Intelligence/actions/workflows/ci.yml)
+[![Dagster orchestration CI](https://github.com/thaquan/Flight_Operations_Intelligence/actions/workflows/orchestration.yml/badge.svg)](https://github.com/thaquan/Flight_Operations_Intelligence/actions/workflows/orchestration.yml)
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1)
 ![dbt](https://img.shields.io/badge/dbt-Core-FF694B)
@@ -10,7 +11,7 @@
 
 A reproducible, local-first platform that transforms two years of official U.S. Department of Transportation flight records into a validated PostgreSQL warehouse, business-ready analytics marts and an interactive Power BI report. This Data Engineering / Analytics portfolio project emphasizes source lineage, reliable KPI definitions, repeatable processing and evidence-based operational insights.
 
-**Status:** Phases 1-4 and the five-page Flight Performance dashboard (Phase 5) are complete at the [accepted baseline 93cf3dd](https://github.com/thaquan/Flight_Operations_Intelligence/commit/93cf3ddd00691337e5204cc5b49aaad33b748b32). The next priority is Phase 7: Dagster orchestration (M7.1-M7.4 foundation, UI, backfill, incremental experiments and isolated scheduling/recovery verified locally; in progress). NOAA enrichment and a separate risk dashboard are deferred.
+**Status:** Phases 1-4 and the five-page Flight Performance dashboard (Phase 5) are complete at the [accepted baseline 93cf3dd](https://github.com/thaquan/Flight_Operations_Intelligence/commit/93cf3ddd00691337e5204cc5b49aaad33b748b32). Phase 7: Dagster orchestration is complete for the local-first historical scope ([M7.1-M7.5 acceptance](docs/phase7/acceptance.md)). Phase 8 is next. NOAA enrichment and a separate risk dashboard are deferred.
 
 [Dashboard](#power-bi-dashboard) | [Architecture](#system-architecture) | [Insights](#key-business-insights) | [Getting started](#getting-started) | [Roadmap](#roadmap)
 
@@ -86,7 +87,7 @@ flowchart TD
     NOAA["Optional: NOAA hourly weather"] -.-> WEATHER["Future: validated station and time joins"]
     WEATHER -.-> FACT
 
-    ORCH["Dagster orchestration: in progress"] -.-> BR
+    ORCH["Dagster orchestration: accepted"] -.-> BR
 ```
 
 Solid arrows represent the implemented data path; dashed connections indicate quality checks or explicitly labeled future work.
@@ -103,7 +104,7 @@ Solid arrows represent the implemented data path; dashed connections indicate qu
 | Business intelligence | Power BI Desktop, PBIP, PBIR, TMDL, DAX | Implemented |
 | Version control | Git, GitHub, Azure DevOps Git remote | Synchronized at accepted baseline |
 | Weather enrichment | NOAA GHCNh, station mapping, IANA time zones | Deferred / optional |
-| Orchestration | Dagster OSS | In progress; see [Phase 7 runbook](docs/phase7/README.md) |
+| Orchestration | Dagster OSS | Complete; see [Phase 7 runbook](docs/phase7/README.md) |
 
 ## Dataset and access
 
@@ -229,6 +230,10 @@ To reproduce the full warehouse, follow the [step-by-step reproduction guide](do
 
 After the warehouse is populated, open the PBIP in Desktop, configure local credentials and refresh the Import model. See the [Power BI setup guide](docs/phase5/README.md). No report regeneration is required.
 
+## Operational acceptance
+
+Dagster coordinates all 24 monthly partitions with two successful backfills. A full Gold build on an isolated 14,080,680-flight Silver snapshot passed 11 dbt models, 65 data tests and the quality gates (6 PASS, 2 documented REVIEW, 0 FAIL). The main warehouse was not rebuilt. See the [acceptance report](docs/phase7/acceptance.md) and [operational screenshots](docs/phase7/monitoring_runbook.md).
+
 ## Roadmap
 
 | Phase | Deliverable | Status |
@@ -239,7 +244,7 @@ After the warehouse is populated, open the PBIP in Desktop, configure local cred
 | 4 | Data quality gates and GitHub Actions CI | Complete |
 | 5 | Power BI Flight Performance dashboard | Complete |
 | 6 | NOAA weather integration | Deferred / optional |
-| 7 | Dagster OSS: monthly ingestion, backfills, scheduled audits and run monitoring | M7.1-M7.4 verified locally; final observability and CI acceptance pending |
+| 7 | Dagster OSS: monthly ingestion, backfills, scheduled audits and run monitoring | Complete; M7.1-M7.5 accepted |
 | 8 | Performance optimization, architecture evidence and portfolio delivery | Planned |
 
 The original phase numbering is retained. Phase 6 is deferred to prioritize operating the existing pipeline in Phase 7. A separate operational risk dashboard, NOAA enrichment and downstream delay propagation remain optional future enhancements. See the [Phase 7 runbook](docs/phase7/README.md). Gold remains full rebuild; monthly Bronze/Silver ingestion is idempotent.
@@ -254,7 +259,7 @@ The original phase numbering is retained. Phase 6 is deferred to prioritize oper
 | Warehouse and transformations | [Infrastructure](docs/phase3/m31_infrastructure.md), [Silver](docs/phase3/m32_silver_pipeline.md), [staging](docs/phase3/m33_staging_models.md), [star schema](docs/phase3/m34_dimensional_model.md), [marts](docs/phase3/m35_gold_marts_design.md) |
 | Quality and exceptions | [Phase 4](docs/phase4/README.md), [validation](docs/phase4/validation.md) |
 | BI model and acceptance | [Phase 5](docs/phase5/README.md), [semantic model](docs/phase5/m52_semantic_model.md), [KPI catalog](docs/phase5/kpi_catalog.md), [acceptance](docs/phase5/m55_acceptance.md) |
-| Orchestration and backfill | [Phase 7 runbook](docs/phase7/README.md), [local validation](docs/phase7/validation.md) |
+| Orchestration and backfill | [Phase 7 runbook](docs/phase7/README.md), [monitoring](docs/phase7/monitoring_runbook.md), [acceptance](docs/phase7/acceptance.md) |
 
 ## Limitations and data integrity
 
