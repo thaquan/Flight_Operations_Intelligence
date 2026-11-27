@@ -62,7 +62,7 @@ Existing Gold tables are rebuilt by dbt, not incrementally merged. The historica
 .\data\tmp\dagster-venv\Scripts\python.exe -m pytest -q tests/test_phase7_orchestration.py
 ```
 
-The separate orchestration CI workflow installs Dagster and runs the contract/graph tests without raw data or PostgreSQL. Tests with a simulated runner verify order and failure propagation, not database outcomes. For live evidence see the [M7.1-M7.4 validation record](validation.md).
+The separate orchestration CI workflow installs Dagster and runs the contract/graph tests without raw data or PostgreSQL. Tests with a simulated runner verify order and failure propagation, not database outcomes. For live evidence see the [M7.1-M7.5 validation record](validation.md).
 
 ## M7.3 evidence and isolated benchmark
 
@@ -117,3 +117,7 @@ enables it with the full warehouse available.
 
 The [validation record](validation.md) contains the actual run IDs,
 recovery evidence and remaining limitations.
+
+## M7.5 - Operational acceptance
+
+See the [monitoring runbook](monitoring_runbook.md) and [Phase 7 acceptance](acceptance.md). The full Gold job passed on the isolated 24-month snapshot; the main warehouse remains unchanged. Phase 7 is accepted for the agreed local-first scope.

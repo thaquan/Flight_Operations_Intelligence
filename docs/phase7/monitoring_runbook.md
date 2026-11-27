@@ -105,3 +105,5 @@ the real existing rebuild_gold_and_validate job in a separate instance:
 Silver reconciliation, dbt build and data-quality gates. Check the
 actual run result and logs, and reconcile the main warehouse afterward.
 The wrapper is opt-in; it is not a recurring production job.
+
+The actual full Gold acceptance run completed successfully on 26 November 2026; see the [accepted results](acceptance.md).

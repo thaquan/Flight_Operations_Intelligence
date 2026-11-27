@@ -225,3 +225,36 @@ real tick was for the isolated every-minute checksum probe, not a
 production weekly audit. Persistent production monitoring, external
 notifications, full-scale Gold recovery and final CI acceptance remain
 outside this milestone.
+
+
+## M7.5 - Observability and final acceptance
+
+On 26 November 2026 the live monitoring report recorded 25 successful
+main runs (24 monthly ingestion, one audit), 24/24 partitions, no failed
+runs and two successful backfills. Bronze and Silver each recorded
+14,080,680 skipped row-events; median main run duration was 6.861 s.
+Two intentional recovery failures and one retry were reported separately.
+The warehouse health report was REVIEW (6 PASS, 2 known REVIEW, 0 FAIL),
+with all 24 ZIP and Bronze partitions verified and 14,080,680 reconciled
+flights. The orchestration health report was PASS: HTTP 200, six required
+daemons healthy, weekly audit STOPPED. Four real screenshots are linked
+in the [monitoring runbook](monitoring_runbook.md).
+
+The full-scope isolated database restored 24 Silver/audit months and
+14,080,680 rows. Dagster run a4338d96-0de0-43f5-b1d5-f03f08405879
+completed SUCCESS (540.684 s) with both Gold and quality assets
+materialized. dbt build returned 76/76 nodes successful (11 models,
+65 data tests), 0 warnings/errors/skips, elapsed 494.093 s. Quality
+was REVIEW with 6 PASS, 2 documented REVIEW, 0 FAIL.
+
+On 27 November the persisted events and dbt result artifact were checked
+again, and independent read-only database comparisons confirmed monthly
+Silver/fact counts, audit lineage, network metrics and the remaining
+Gold table row counts matched the main warehouse. Main Bronze and
+pre-existing Power BI hashes were unchanged. Final local regression:
+114 passed, 9 skipped in ETL; 20 passed in Dagster; Ruff PASS. The eight
+GitHub CI runs of the four M7.5 implementation/evidence commits passed.
+
+See [Phase 7 operational acceptance](acceptance.md) for the precise
+scope, timings, row counts and remaining limitations. Phase 7 is
+accepted for the local-first historical portfolio scope.
