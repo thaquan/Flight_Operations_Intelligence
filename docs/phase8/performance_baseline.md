@@ -57,7 +57,7 @@ network and airline marts, and its timings varied substantially.
 | gold.mart_airport_daily | 102801408 | 20955136 |
 | gold.mart_route_monthly | 26558464 | 5545984 |
 | gold.mart_delay_causes | 278528 | 81920 |
-| Five marts combined | 129785856 | 26681344 |
+| Five marts combined | 129785856 | 26615808 |
 
 The five marts occupy approximately 123.8 MiB, about 1.96% of the
 materialized fact size. This is additional storage, not a replacement

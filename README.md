@@ -260,6 +260,7 @@ The original phase numbering is retained. Phase 6 is deferred to prioritize oper
 | Quality and exceptions | [Phase 4](docs/phase4/README.md), [validation](docs/phase4/validation.md) |
 | BI model and acceptance | [Phase 5](docs/phase5/README.md), [semantic model](docs/phase5/m52_semantic_model.md), [KPI catalog](docs/phase5/kpi_catalog.md), [acceptance](docs/phase5/m55_acceptance.md) |
 | Orchestration and backfill | [Phase 7 runbook](docs/phase7/README.md), [monitoring](docs/phase7/monitoring_runbook.md), [acceptance](docs/phase7/acceptance.md) |
+| Performance optimization | [Phase 8 plan](docs/phase8/README.md), [measured baseline](docs/phase8/performance_baseline.md) |
 
 ## Limitations and data integrity
 
