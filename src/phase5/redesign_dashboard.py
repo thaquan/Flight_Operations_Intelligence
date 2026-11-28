@@ -333,7 +333,7 @@ def plan_redesign(pages: Path = PAGES, report: Path = REPORT,
             _save_if_changed(changes, path, v)
 
     source_theme = _load(theme_src)
-    digest = hashlib.sha256(theme_src.read_bytes()).hexdigest()[:10]
+    digest = hashlib.sha256(theme_src.read_bytes().replace(b"\r\n", b"\n")).hexdigest()[:10]
     theme_name = f"FlightDeck-{digest}.json"
     source_theme["name"] = theme_name
     theme_path = report / "StaticResources" / "RegisteredResources" / theme_name

@@ -280,3 +280,11 @@ def test_active_nav_tab_uses_wcag_aa_readable_text_against_teal():
     contrast = (max(foreground, background) + 0.05) / (
         min(foreground, background) + 0.05)
     assert contrast >= 4.5
+
+def test_theme_resource_name_is_independent_of_checkout_line_endings(tmp_path):
+    theme = REPORT.parent / "themes" / "FlightNetworkRiskIntel.json"
+    lf = theme.read_bytes().replace(b"\r\n", b"\n")
+    for name, data in (("lf.json", lf), ("crlf.json", lf.replace(b"\n", b"\r\n"))):
+        path = tmp_path / name
+        path.write_bytes(data)
+        assert plan_redesign(theme_src=path) == {}

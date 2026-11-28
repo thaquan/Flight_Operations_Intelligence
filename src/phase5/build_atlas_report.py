@@ -578,7 +578,7 @@ def chart(page: str, role: str, chart_type: str, categories: list,
 
 def save_theme() -> None:
     theme = json.loads(PALETTE.read_text(encoding="utf-8-sig"))
-    digest = hashlib.sha256(PALETTE.read_bytes()).hexdigest()[:10]
+    digest = hashlib.sha256(PALETTE.read_bytes().replace(b"\r\n", b"\n")).hexdigest()[:10]
     filename = "FlightNetworkRiskIntel-" + digest + ".json"
     theme["name"] = filename
     dump(REPORT / "StaticResources" / "RegisteredResources" / filename, theme)
