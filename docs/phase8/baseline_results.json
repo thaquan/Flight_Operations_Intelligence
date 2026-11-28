@@ -1,0 +1,464 @@
+{
+  "measured_at_utc": "2026-11-28T03:30:04.053225+00:00",
+  "repetitions": 3,
+  "warmup_per_variant": 1,
+  "method": "alternating EXPLAIN ANALYZE BUFFERS, no cache reset",
+  "queries": {
+    "network_monthly": {
+      "matched_rows": 24,
+      "fact": {
+        "samples": [
+          {
+            "execution_ms": 28178.591,
+            "planning_ms": 2.177,
+            "shared_hit_blocks": 112,
+            "shared_read_blocks": 744480,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 6111.922,
+            "planning_ms": 0.122,
+            "shared_hit_blocks": 208,
+            "shared_read_blocks": 744384,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 6032.438,
+            "planning_ms": 0.396,
+            "shared_hit_blocks": 304,
+            "shared_read_blocks": 744288,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Seq Scan",
+              "Sort"
+            ]
+          }
+        ],
+        "median_ms": 6111.922,
+        "min_ms": 6032.438,
+        "max_ms": 28178.591
+      },
+      "mart": {
+        "samples": [
+          {
+            "execution_ms": 0.121,
+            "planning_ms": 0.198,
+            "shared_hit_blocks": 1,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 0.07,
+            "planning_ms": 0.076,
+            "shared_hit_blocks": 1,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 0.083,
+            "planning_ms": 0.137,
+            "shared_hit_blocks": 1,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Seq Scan",
+              "Sort"
+            ]
+          }
+        ],
+        "median_ms": 0.083,
+        "min_ms": 0.07,
+        "max_ms": 0.121
+      },
+      "median_ratio": 73637.61
+    },
+    "airline_2025": {
+      "matched_rows": 14,
+      "fact": {
+        "samples": [
+          {
+            "execution_ms": 4346.734,
+            "planning_ms": 0.18,
+            "shared_hit_blocks": 494,
+            "shared_read_blocks": 744096,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 3927.646,
+            "planning_ms": 0.194,
+            "shared_hit_blocks": 590,
+            "shared_read_blocks": 744000,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 3898.975,
+            "planning_ms": 0.24,
+            "shared_hit_blocks": 686,
+            "shared_read_blocks": 743904,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Seq Scan",
+              "Sort"
+            ]
+          }
+        ],
+        "median_ms": 3927.646,
+        "min_ms": 3898.975,
+        "max_ms": 4346.734
+      },
+      "mart": {
+        "samples": [
+          {
+            "execution_ms": 0.454,
+            "planning_ms": 0.18,
+            "shared_hit_blocks": 8,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 0.2,
+            "planning_ms": 0.145,
+            "shared_hit_blocks": 8,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 0.46,
+            "planning_ms": 0.251,
+            "shared_hit_blocks": 8,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Seq Scan",
+              "Sort"
+            ]
+          }
+        ],
+        "median_ms": 0.454,
+        "min_ms": 0.2,
+        "max_ms": 0.46
+      },
+      "median_ratio": 8651.2
+    },
+    "top_origin_20": {
+      "matched_rows": 20,
+      "fact": {
+        "samples": [
+          {
+            "execution_ms": 8172.873,
+            "planning_ms": 0.236,
+            "shared_hit_blocks": 878,
+            "shared_read_blocks": 743712,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Limit",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 5394.855,
+            "planning_ms": 0.202,
+            "shared_hit_blocks": 974,
+            "shared_read_blocks": 743616,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Limit",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 4454.428,
+            "planning_ms": 0.184,
+            "shared_hit_blocks": 1070,
+            "shared_read_blocks": 743520,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Gather Merge",
+              "Limit",
+              "Seq Scan",
+              "Sort"
+            ]
+          }
+        ],
+        "median_ms": 5394.855,
+        "min_ms": 4454.428,
+        "max_ms": 8172.873
+      },
+      "mart": {
+        "samples": [
+          {
+            "execution_ms": 287.619,
+            "planning_ms": 0.231,
+            "shared_hit_blocks": 2560,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Limit",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 195.434,
+            "planning_ms": 0.251,
+            "shared_hit_blocks": 2560,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Limit",
+              "Seq Scan",
+              "Sort"
+            ]
+          },
+          {
+            "execution_ms": 56.241,
+            "planning_ms": 0.106,
+            "shared_hit_blocks": 2560,
+            "shared_read_blocks": 0,
+            "temp_read_blocks": 0,
+            "temp_written_blocks": 0,
+            "nodes": [
+              "Aggregate",
+              "Limit",
+              "Seq Scan",
+              "Sort"
+            ]
+          }
+        ],
+        "median_ms": 195.434,
+        "min_ms": 56.241,
+        "max_ms": 287.619
+      },
+      "median_ratio": 27.6
+    }
+  },
+  "storage": {
+    "silver.flights": {
+      "heap_bytes": 7363035136,
+      "index_bytes": 537477120,
+      "total_bytes": 7902543872
+    },
+    "gold.fct_flights": {
+      "heap_bytes": 6099566592,
+      "index_bytes": 511950848,
+      "total_bytes": 6613229568
+    },
+    "gold.dim_airline": {
+      "heap_bytes": 8192,
+      "index_bytes": 16384,
+      "total_bytes": 32768
+    },
+    "gold.dim_airport": {
+      "heap_bytes": 32768,
+      "index_bytes": 16384,
+      "total_bytes": 57344
+    },
+    "gold.dim_date": {
+      "heap_bytes": 65536,
+      "index_bytes": 32768,
+      "total_bytes": 98304
+    },
+    "gold.mart_network_monthly": {
+      "heap_bytes": 8192,
+      "index_bytes": 16384,
+      "total_bytes": 32768
+    },
+    "gold.mart_airline_monthly": {
+      "heap_bytes": 65536,
+      "index_bytes": 16384,
+      "total_bytes": 114688
+    },
+    "gold.mart_airport_daily": {
+      "heap_bytes": 81788928,
+      "index_bytes": 20955136,
+      "total_bytes": 102801408
+    },
+    "gold.mart_route_monthly": {
+      "heap_bytes": 20971520,
+      "index_bytes": 5545984,
+      "total_bytes": 26558464
+    },
+    "gold.mart_delay_causes": {
+      "heap_bytes": 155648,
+      "index_bytes": 81920,
+      "total_bytes": 278528
+    }
+  },
+  "indexes": [
+    {
+      "schema": "gold",
+      "table": "dim_airline",
+      "name": "e15011132c2468f3647da1b160b3056f",
+      "definition": "CREATE UNIQUE INDEX e15011132c2468f3647da1b160b3056f ON gold.dim_airline USING btree (airline_sk)"
+    },
+    {
+      "schema": "gold",
+      "table": "dim_airport",
+      "name": "7061cd5380b8c17a0891d633d2fc80c9",
+      "definition": "CREATE UNIQUE INDEX \"7061cd5380b8c17a0891d633d2fc80c9\" ON gold.dim_airport USING btree (airport_sk)"
+    },
+    {
+      "schema": "gold",
+      "table": "dim_date",
+      "name": "52877716cc3c173f298ae03ff81a919d",
+      "definition": "CREATE UNIQUE INDEX \"52877716cc3c173f298ae03ff81a919d\" ON gold.dim_date USING btree (date_key)"
+    },
+    {
+      "schema": "gold",
+      "table": "fct_flights",
+      "name": "108cbb00e94dc559b870e900acbe3f6f",
+      "definition": "CREATE UNIQUE INDEX \"108cbb00e94dc559b870e900acbe3f6f\" ON gold.fct_flights USING btree (flight_sk)"
+    },
+    {
+      "schema": "gold",
+      "table": "fct_flights",
+      "name": "4e44de7886a9c12cf1fa5b50d0cd7dc1",
+      "definition": "CREATE INDEX \"4e44de7886a9c12cf1fa5b50d0cd7dc1\" ON gold.fct_flights USING btree (flight_date_key)"
+    },
+    {
+      "schema": "gold",
+      "table": "fct_flights",
+      "name": "7f515c12c9e7cacdc14c7d7c004f8363",
+      "definition": "CREATE INDEX \"7f515c12c9e7cacdc14c7d7c004f8363\" ON gold.fct_flights USING btree (origin_airport_sk)"
+    },
+    {
+      "schema": "gold",
+      "table": "mart_airline_monthly",
+      "name": "7231fbe8ab66c40476c87a31c7e35fa9",
+      "definition": "CREATE UNIQUE INDEX \"7231fbe8ab66c40476c87a31c7e35fa9\" ON gold.mart_airline_monthly USING btree (airline_sk, source_month)"
+    },
+    {
+      "schema": "gold",
+      "table": "mart_airport_daily",
+      "name": "3e283cfd335a5c6d029cce6c4c9f3ba6",
+      "definition": "CREATE UNIQUE INDEX \"3e283cfd335a5c6d029cce6c4c9f3ba6\" ON gold.mart_airport_daily USING btree (airport_sk, airport_role, flight_date)"
+    },
+    {
+      "schema": "gold",
+      "table": "mart_airport_daily",
+      "name": "f8cf820869eae34971b03ebcdd35c7fe",
+      "definition": "CREATE INDEX f8cf820869eae34971b03ebcdd35c7fe ON gold.mart_airport_daily USING btree (flight_date, airport_role)"
+    },
+    {
+      "schema": "gold",
+      "table": "mart_delay_causes",
+      "name": "2cd8ac904dabff8675cc4a0b3b904f92",
+      "definition": "CREATE UNIQUE INDEX \"2cd8ac904dabff8675cc4a0b3b904f92\" ON gold.mart_delay_causes USING btree (airline_sk, source_month, cause_type)"
+    },
+    {
+      "schema": "gold",
+      "table": "mart_network_monthly",
+      "name": "7fa8d5d75f253f7fa79050627e60d744",
+      "definition": "CREATE UNIQUE INDEX \"7fa8d5d75f253f7fa79050627e60d744\" ON gold.mart_network_monthly USING btree (source_month)"
+    },
+    {
+      "schema": "gold",
+      "table": "mart_route_monthly",
+      "name": "83260a219d4b8e3690f8ba669d40bb62",
+      "definition": "CREATE INDEX \"83260a219d4b8e3690f8ba669d40bb62\" ON gold.mart_route_monthly USING btree (source_month, origin_airport_sk)"
+    },
+    {
+      "schema": "gold",
+      "table": "mart_route_monthly",
+      "name": "a239fa1c3713ad074a0285d404ff4345",
+      "definition": "CREATE UNIQUE INDEX a239fa1c3713ad074a0285d404ff4345 ON gold.mart_route_monthly USING btree (origin_airport_sk, dest_airport_sk, source_month)"
+    },
+    {
+      "schema": "silver",
+      "table": "flights",
+      "name": "flights_flight_date_idx",
+      "definition": "CREATE INDEX flights_flight_date_idx ON silver.flights USING btree (flight_date)"
+    },
+    {
+      "schema": "silver",
+      "table": "flights",
+      "name": "flights_pk",
+      "definition": "CREATE UNIQUE INDEX flights_pk ON silver.flights USING btree (source_month, source_row_number)"
+    }
+  ],
+  "postgres_version": "17.12 (Debian 17.12-1.pgdg13+1)",
+  "settings": {
+    "shared_buffers": "128MB",
+    "work_mem": "4MB",
+    "effective_cache_size": "4GB",
+    "max_parallel_workers_per_gather": "2",
+    "jit": "on",
+    "block_size": "8192"
+  },
+  "database_bytes": 14654338739,
+  "audit_months": 24,
+  "audit_rows": 14080680
+}
