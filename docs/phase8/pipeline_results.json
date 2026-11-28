@@ -1,0 +1,538 @@
+{
+  "measured_at_utc": "2026-11-28T15:05:58.789013+00:00",
+  "month": "2024-01",
+  "rows": 547271,
+  "pyarrow_version": "26.0.1",
+  "parquet_reads": [
+    {
+      "batch_size": 25000,
+      "projection": "silver",
+      "columns": 62,
+      "samples": [
+        {
+          "seconds": 0.557446,
+          "rows": 547271,
+          "batches": 22,
+          "rows_per_second": 981747.5
+        },
+        {
+          "seconds": 0.620008,
+          "rows": 547271,
+          "batches": 22,
+          "rows_per_second": 882683.2
+        },
+        {
+          "seconds": 0.663315,
+          "rows": 547271,
+          "batches": 22,
+          "rows_per_second": 825054.6
+        }
+      ],
+      "median_seconds": 0.620008,
+      "peak_process_bytes": 205398016,
+      "arrow_peak_bytes": 53703744
+    },
+    {
+      "batch_size": 50000,
+      "projection": "silver",
+      "columns": 62,
+      "samples": [
+        {
+          "seconds": 0.788135,
+          "rows": 547271,
+          "batches": 11,
+          "rows_per_second": 694387.1
+        },
+        {
+          "seconds": 0.811556,
+          "rows": 547271,
+          "batches": 11,
+          "rows_per_second": 674348.2
+        },
+        {
+          "seconds": 0.700044,
+          "rows": 547271,
+          "batches": 11,
+          "rows_per_second": 781766.4
+        }
+      ],
+      "median_seconds": 0.788135,
+      "peak_process_bytes": 273801216,
+      "arrow_peak_bytes": 88683520
+    },
+    {
+      "batch_size": 100000,
+      "projection": "silver",
+      "columns": 62,
+      "samples": [
+        {
+          "seconds": 0.76156,
+          "rows": 547271,
+          "batches": 6,
+          "rows_per_second": 718617.9
+        },
+        {
+          "seconds": 0.752137,
+          "rows": 547271,
+          "batches": 6,
+          "rows_per_second": 727621.2
+        },
+        {
+          "seconds": 0.546557,
+          "rows": 547271,
+          "batches": 6,
+          "rows_per_second": 1001305.6
+        }
+      ],
+      "median_seconds": 0.752137,
+      "peak_process_bytes": 406458368,
+      "arrow_peak_bytes": 160639872
+    },
+    {
+      "batch_size": 50000,
+      "projection": "all",
+      "columns": 113,
+      "samples": [
+        {
+          "seconds": 0.668198,
+          "rows": 547271,
+          "batches": 11,
+          "rows_per_second": 819025.6
+        },
+        {
+          "seconds": 0.660799,
+          "rows": 547271,
+          "batches": 11,
+          "rows_per_second": 828195.4
+        },
+        {
+          "seconds": 1.147605,
+          "rows": 547271,
+          "batches": 11,
+          "rows_per_second": 476881.1
+        }
+      ],
+      "median_seconds": 0.668198,
+      "peak_process_bytes": 316416000,
+      "arrow_peak_bytes": 122481984
+    }
+  ],
+  "silver_replacements": [
+    {
+      "batch_size": 25000,
+      "rows": 547271,
+      "seconds": 30.416,
+      "rows_per_second": 17993.0,
+      "loader_seconds": 29.78,
+      "peak_process_bytes": 241713152,
+      "arrow_peak_bytes": 55248192,
+      "rollback_seconds": 0.002
+    },
+    {
+      "batch_size": 50000,
+      "rows": 547271,
+      "seconds": 40.376,
+      "rows_per_second": 13554.5,
+      "loader_seconds": 40.12,
+      "peak_process_bytes": 267984896,
+      "arrow_peak_bytes": 91054016,
+      "rollback_seconds": 0.003
+    },
+    {
+      "batch_size": 100000,
+      "rows": 547271,
+      "seconds": 37.802,
+      "rows_per_second": 14477.1,
+      "loader_seconds": 37.35,
+      "peak_process_bytes": 394485760,
+      "arrow_peak_bytes": 164805248,
+      "rollback_seconds": 0.002
+    }
+  ],
+  "historical_dbt": {
+    "elapsed_seconds": 494.093,
+    "nodes": [
+      {
+        "id": "model.flight_operations_intelligence.fct_flights",
+        "status": "success",
+        "seconds": 156.638
+      },
+      {
+        "id": "model.flight_operations_intelligence.dim_airport",
+        "status": "success",
+        "seconds": 82.255
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_fact_kpi_totals",
+        "status": "pass",
+        "seconds": 75.182
+      },
+      {
+        "id": "model.flight_operations_intelligence.mart_airport_daily",
+        "status": "success",
+        "seconds": 67.859
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_arrival_kpi_flags",
+        "status": "pass",
+        "seconds": 62.555
+      },
+      {
+        "id": "test.flight_operations_intelligence.unique_fct_flights_flight_sk.b0050c2318",
+        "status": "pass",
+        "seconds": 44.615
+      },
+      {
+        "id": "model.flight_operations_intelligence.mart_delay_causes",
+        "status": "success",
+        "seconds": 43.435
+      },
+      {
+        "id": "model.flight_operations_intelligence.dim_airline",
+        "status": "success",
+        "seconds": 36.499
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_mart_cause_fact_totals",
+        "status": "pass",
+        "seconds": 35.337
+      },
+      {
+        "id": "model.flight_operations_intelligence.mart_route_monthly",
+        "status": "success",
+        "seconds": 33.869
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_staging_monthly_row_counts",
+        "status": "pass",
+        "seconds": 23.432
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_fact_monthly_row_counts",
+        "status": "pass",
+        "seconds": 16.494
+      },
+      {
+        "id": "test.flight_operations_intelligence.accepted_values_stg_flight_outcomes_flight_status__cancelled__diverted__completed__unknown.6af90d7663",
+        "status": "pass",
+        "seconds": 13.979
+      },
+      {
+        "id": "model.flight_operations_intelligence.mart_airline_monthly",
+        "status": "success",
+        "seconds": 11.1
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_stg_flight_outcomes_flight_status.163239948c",
+        "status": "pass",
+        "seconds": 9.783
+      },
+      {
+        "id": "model.flight_operations_intelligence.mart_network_monthly",
+        "status": "success",
+        "seconds": 9.729
+      },
+      {
+        "id": "model.flight_operations_intelligence.dim_date",
+        "status": "success",
+        "seconds": 8.678
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_flight_key_range",
+        "status": "pass",
+        "seconds": 7.284
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_mart_network_fact_totals",
+        "status": "pass",
+        "seconds": 6.338
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_fct_flights_airline_sk__airline_sk___ref_dim_airline_.e74f6089e3",
+        "status": "pass",
+        "seconds": 5.793
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_fct_flights_dest_airport_sk__airport_sk___ref_dim_airport_.6930e01645",
+        "status": "pass",
+        "seconds": 5.398
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_fct_flights_origin_airport_sk__airport_sk___ref_dim_airport_.7966941994",
+        "status": "pass",
+        "seconds": 5.241
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_fct_flights_airline_sk.0d0bc51410",
+        "status": "pass",
+        "seconds": 4.799
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_fct_flights_flight_date_key__date_key___ref_dim_date_.3ce9f07bd2",
+        "status": "pass",
+        "seconds": 4.158
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_fct_flights_source_row_number.ba919a4b2a",
+        "status": "pass",
+        "seconds": 3.318
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_fct_flights_dest_airport_sk.09c5e678bd",
+        "status": "pass",
+        "seconds": 3.285
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_mart_unique_grains",
+        "status": "pass",
+        "seconds": 2.713
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_fct_flights_source_month.2667803e0f",
+        "status": "pass",
+        "seconds": 2.685
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_mart_rate_boundaries",
+        "status": "pass",
+        "seconds": 2.427
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_mart_kpi_reconciliation",
+        "status": "pass",
+        "seconds": 2.134
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_mart_airport_daily_flight_date_key__date_key___ref_dim_date_.74a1649b02",
+        "status": "pass",
+        "seconds": 0.298
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_airport_daily_flight_date_key.0fba9b4cc2",
+        "status": "pass",
+        "seconds": 0.276
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_mart_route_monthly_dest_airport_sk__airport_sk___ref_dim_airport_.2df67112eb",
+        "status": "pass",
+        "seconds": 0.274
+      },
+      {
+        "id": "test.flight_operations_intelligence.accepted_values_mart_airport_daily_airport_role__origin__destination.4c50f6073c",
+        "status": "pass",
+        "seconds": 0.255
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_mart_airport_daily_airport_sk__airport_sk___ref_dim_airport_.ef918e45ba",
+        "status": "pass",
+        "seconds": 0.252
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_mart_route_monthly_origin_airport_sk__airport_sk___ref_dim_airport_.b79fa3a63f",
+        "status": "pass",
+        "seconds": 0.223
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_route_monthly_source_month.2561074905",
+        "status": "pass",
+        "seconds": 0.217
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_fct_flights_origin_airport_sk.8914576a13",
+        "status": "pass",
+        "seconds": 0.211
+      },
+      {
+        "id": "model.flight_operations_intelligence.stg_flights",
+        "status": "success",
+        "seconds": 0.209
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_fct_flights_flight_date_key.8dc565081b",
+        "status": "pass",
+        "seconds": 0.201
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_airport_daily_flight_date.44768b877b",
+        "status": "pass",
+        "seconds": 0.198
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_fct_flights_flight_sk.e66ec480f2",
+        "status": "pass",
+        "seconds": 0.187
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_route_monthly_origin_airport_sk.461c5d5a6f",
+        "status": "pass",
+        "seconds": 0.181
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_route_monthly_dest_airport_sk.9a86e9259b",
+        "status": "pass",
+        "seconds": 0.176
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_airport_daily_airport_role.494b0a43cc",
+        "status": "pass",
+        "seconds": 0.172
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_network_monthly_scheduled_flights.d45d98dd56",
+        "status": "pass",
+        "seconds": 0.162
+      },
+      {
+        "id": "test.flight_operations_intelligence.source_not_null_silver_flights_source_month.8bc5e1e818",
+        "status": "pass",
+        "seconds": 0.142
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_network_monthly_eligible_arrivals.4a716b94ee",
+        "status": "pass",
+        "seconds": 0.134
+      },
+      {
+        "id": "test.flight_operations_intelligence.source_not_null_silver_flights_flight_date.6cb3ed49bf",
+        "status": "pass",
+        "seconds": 0.129
+      },
+      {
+        "id": "model.flight_operations_intelligence.stg_flight_outcomes",
+        "status": "success",
+        "seconds": 0.123
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_airline_monthly_airline_sk.6e3a8136e4",
+        "status": "pass",
+        "seconds": 0.12
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_airline_monthly_source_month.8a3834037e",
+        "status": "pass",
+        "seconds": 0.107
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_network_monthly_source_month.5fa7e191cb",
+        "status": "pass",
+        "seconds": 0.107
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_dim_date_date_key.881d0a31b6",
+        "status": "pass",
+        "seconds": 0.104
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_stg_flights_source_month.b77c738cb4",
+        "status": "pass",
+        "seconds": 0.103
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_stg_flights_source_row_number.df252cc193",
+        "status": "pass",
+        "seconds": 0.099
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_mart_airline_monthly_airline_sk__airline_sk___ref_dim_airline_.5e149bf354",
+        "status": "pass",
+        "seconds": 0.099
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_dim_date_flight_date.967348e523",
+        "status": "pass",
+        "seconds": 0.094
+      },
+      {
+        "id": "test.flight_operations_intelligence.accepted_values_mart_delay_causes_cause_type__carrier__weather__nas__security__late_aircraft.ca55deec3e",
+        "status": "pass",
+        "seconds": 0.089
+      },
+      {
+        "id": "test.flight_operations_intelligence.unique_mart_network_monthly_source_month.28d542a138",
+        "status": "pass",
+        "seconds": 0.089
+      },
+      {
+        "id": "test.flight_operations_intelligence.unique_dim_airport_airport_sk.060e329615",
+        "status": "pass",
+        "seconds": 0.087
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_airport_daily_airport_sk.37e100b0e9",
+        "status": "pass",
+        "seconds": 0.082
+      },
+      {
+        "id": "test.flight_operations_intelligence.unique_dim_airline_airline_sk.24a11be2c3",
+        "status": "pass",
+        "seconds": 0.08
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_delay_causes_source_month.e40ac882b5",
+        "status": "pass",
+        "seconds": 0.079
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_delay_causes_reported_observations.974f6f77b2",
+        "status": "pass",
+        "seconds": 0.078
+      },
+      {
+        "id": "test.flight_operations_intelligence.assert_unknown_dimension_members",
+        "status": "pass",
+        "seconds": 0.077
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_dim_airport_airport_sk.f41dd4e587",
+        "status": "pass",
+        "seconds": 0.076
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_delay_causes_positive_delay_observations.308c07cdec",
+        "status": "pass",
+        "seconds": 0.075
+      },
+      {
+        "id": "test.flight_operations_intelligence.unique_dim_date_date_key.0869fd48f9",
+        "status": "pass",
+        "seconds": 0.072
+      },
+      {
+        "id": "test.flight_operations_intelligence.unique_dim_date_flight_date.fbd07a5eee",
+        "status": "pass",
+        "seconds": 0.072
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_delay_causes_reported_delay_minutes.bf6235e2c1",
+        "status": "pass",
+        "seconds": 0.069
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_delay_causes_airline_sk.b22fb8132f",
+        "status": "pass",
+        "seconds": 0.068
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_dim_airline_airline_sk.518bdde1d4",
+        "status": "pass",
+        "seconds": 0.066
+      },
+      {
+        "id": "test.flight_operations_intelligence.relationships_mart_delay_causes_airline_sk__airline_sk___ref_dim_airline_.4a2b015fbd",
+        "status": "pass",
+        "seconds": 0.066
+      },
+      {
+        "id": "test.flight_operations_intelligence.source_not_null_silver_flights_source_row_number.b0b77e533c",
+        "status": "pass",
+        "seconds": 0.064
+      },
+      {
+        "id": "test.flight_operations_intelligence.not_null_mart_delay_causes_cause_type.d83d6fa58e",
+        "status": "pass",
+        "seconds": 0.064
+      }
+    ]
+  },
+  "isolated_fingerprint_restored": true
+}
