@@ -58,3 +58,22 @@ def test_index_names_walk_nested_plans():
         ]},
     ]}) == ["month_index", "airport_index"]
     assert index_names({"Node Type": "Seq Scan"}) == []
+
+
+def test_pipeline_benchmark_rejects_nonisolated_database():
+    from src.phase8.pipeline_benchmark import require_target
+
+    require_target({"POSTGRES_DB": "flight_m73_test", "POSTGRES_PORT": "5543"})
+    for db, port in (("flight_warehouse", "5433"), ("flight_m75_acceptance", "5543"),
+                     ("flight_m73_test", "5433")):
+        with pytest.raises(RuntimeError, match="isolated"):
+            require_target({"POSTGRES_DB": db, "POSTGRES_PORT": port})
+
+
+def test_pipeline_scan_lineage_validation():
+    from src.phase8.pipeline_benchmark import verify_lineage
+
+    verify_lineage(5, 15, 5)
+    for rows, row_sum in ((4, 15), (5, 14)):
+        with pytest.raises(RuntimeError, match="lineage"):
+            verify_lineage(rows, row_sum, 5)
