@@ -1,0 +1,724 @@
+{
+  "measured_at_utc": "2026-11-28T13:24:25.452915+00:00",
+  "repetitions": 3,
+  "warmup_per_query": 1,
+  "origin_airport_sk": 1013930,
+  "database": "flight_m75_acceptance",
+  "stages": {
+    "baseline": {
+      "queries": {
+        "single_month": {
+          "samples": [
+            {
+              "execution_ms": 2242.793,
+              "planning_ms": 5.23,
+              "shared_hit_blocks": 16180,
+              "shared_read_blocks": 728396,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3589.564,
+              "planning_ms": 0.15,
+              "shared_hit_blocks": 16201,
+              "shared_read_blocks": 728375,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 2386.193,
+              "planning_ms": 0.204,
+              "shared_hit_blocks": 16180,
+              "shared_read_blocks": 728396,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            }
+          ],
+          "median_ms": 2386.193,
+          "min_ms": 2242.793,
+          "max_ms": 3589.564
+        },
+        "origin_month": {
+          "samples": [
+            {
+              "execution_ms": 2301.511,
+              "planning_ms": 0.571,
+              "shared_hit_blocks": 0,
+              "shared_read_blocks": 179655,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe"
+              ]
+            },
+            {
+              "execution_ms": 2271.378,
+              "planning_ms": 0.119,
+              "shared_hit_blocks": 0,
+              "shared_read_blocks": 179655,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe"
+              ]
+            },
+            {
+              "execution_ms": 1857.184,
+              "planning_ms": 0.144,
+              "shared_hit_blocks": 0,
+              "shared_read_blocks": 179655,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe"
+              ]
+            }
+          ],
+          "median_ms": 2271.378,
+          "min_ms": 1857.184,
+          "max_ms": 2301.511
+        },
+        "full_year": {
+          "samples": [
+            {
+              "execution_ms": 3793.933,
+              "planning_ms": 0.313,
+              "shared_hit_blocks": 16206,
+              "shared_read_blocks": 728370,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3546.749,
+              "planning_ms": 0.194,
+              "shared_hit_blocks": 16178,
+              "shared_read_blocks": 728398,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3334.88,
+              "planning_ms": 0.198,
+              "shared_hit_blocks": 16180,
+              "shared_read_blocks": 728396,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            }
+          ],
+          "median_ms": 3546.749,
+          "min_ms": 3334.88,
+          "max_ms": 3793.933
+        }
+      }
+    },
+    "brin": {
+      "index_name": "m82_probe_month_brin",
+      "build_seconds": 4.989,
+      "index_bytes": 172032,
+      "queries": {
+        "single_month": {
+          "samples": [
+            {
+              "execution_ms": 806.12,
+              "planning_ms": 0.199,
+              "shared_hit_blocks": 1193,
+              "shared_read_blocks": 34417,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "m82_probe_month_brin"
+              ]
+            },
+            {
+              "execution_ms": 834.94,
+              "planning_ms": 0.208,
+              "shared_hit_blocks": 1194,
+              "shared_read_blocks": 34416,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "m82_probe_month_brin"
+              ]
+            },
+            {
+              "execution_ms": 985.08,
+              "planning_ms": 0.128,
+              "shared_hit_blocks": 9,
+              "shared_read_blocks": 35601,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "m82_probe_month_brin"
+              ]
+            }
+          ],
+          "median_ms": 834.94,
+          "min_ms": 806.12,
+          "max_ms": 985.08
+        },
+        "origin_month": {
+          "samples": [
+            {
+              "execution_ms": 261.962,
+              "planning_ms": 0.243,
+              "shared_hit_blocks": 2100,
+              "shared_read_blocks": 7009,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "BitmapAnd",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe",
+                "m82_probe_month_brin"
+              ]
+            },
+            {
+              "execution_ms": 243.017,
+              "planning_ms": 0.207,
+              "shared_hit_blocks": 8970,
+              "shared_read_blocks": 139,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "BitmapAnd",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe",
+                "m82_probe_month_brin"
+              ]
+            },
+            {
+              "execution_ms": 262.769,
+              "planning_ms": 0.234,
+              "shared_hit_blocks": 2126,
+              "shared_read_blocks": 6983,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "BitmapAnd",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe",
+                "m82_probe_month_brin"
+              ]
+            }
+          ],
+          "median_ms": 261.962,
+          "min_ms": 243.017,
+          "max_ms": 262.769
+        },
+        "full_year": {
+          "samples": [
+            {
+              "execution_ms": 3566.933,
+              "planning_ms": 0.18,
+              "shared_hit_blocks": 15634,
+              "shared_read_blocks": 728942,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3704.641,
+              "planning_ms": 0.83,
+              "shared_hit_blocks": 15622,
+              "shared_read_blocks": 728954,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3475.056,
+              "planning_ms": 0.272,
+              "shared_hit_blocks": 15634,
+              "shared_read_blocks": 728942,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            }
+          ],
+          "median_ms": 3566.933,
+          "min_ms": 3475.056,
+          "max_ms": 3704.641
+        }
+      }
+    },
+    "btree": {
+      "index_name": "m82_probe_month_btree",
+      "build_seconds": 18.386,
+      "index_bytes": 97607680,
+      "queries": {
+        "single_month": {
+          "samples": [
+            {
+              "execution_ms": 1029.967,
+              "planning_ms": 0.602,
+              "shared_hit_blocks": 2069,
+              "shared_read_blocks": 30075,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "m82_probe_month_btree"
+              ]
+            },
+            {
+              "execution_ms": 952.343,
+              "planning_ms": 0.21,
+              "shared_hit_blocks": 2142,
+              "shared_read_blocks": 30002,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "m82_probe_month_btree"
+              ]
+            },
+            {
+              "execution_ms": 878.135,
+              "planning_ms": 0.203,
+              "shared_hit_blocks": 0,
+              "shared_read_blocks": 32144,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "m82_probe_month_btree"
+              ]
+            }
+          ],
+          "median_ms": 952.343,
+          "min_ms": 878.135,
+          "max_ms": 1029.967
+        },
+        "origin_month": {
+          "samples": [
+            {
+              "execution_ms": 280.491,
+              "planning_ms": 0.167,
+              "shared_hit_blocks": 6127,
+              "shared_read_blocks": 3066,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "BitmapAnd"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe",
+                "m82_probe_month_btree"
+              ]
+            },
+            {
+              "execution_ms": 208.528,
+              "planning_ms": 0.709,
+              "shared_hit_blocks": 6107,
+              "shared_read_blocks": 3086,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "BitmapAnd"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe",
+                "m82_probe_month_btree"
+              ]
+            },
+            {
+              "execution_ms": 261.381,
+              "planning_ms": 0.193,
+              "shared_hit_blocks": 6129,
+              "shared_read_blocks": 3064,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "BitmapAnd"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe",
+                "m82_probe_month_btree"
+              ]
+            }
+          ],
+          "median_ms": 261.381,
+          "min_ms": 208.528,
+          "max_ms": 280.491
+        },
+        "full_year": {
+          "samples": [
+            {
+              "execution_ms": 3623.463,
+              "planning_ms": 0.173,
+              "shared_hit_blocks": 15199,
+              "shared_read_blocks": 729377,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3670.386,
+              "planning_ms": 0.12,
+              "shared_hit_blocks": 15295,
+              "shared_read_blocks": 729281,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3150.552,
+              "planning_ms": 0.156,
+              "shared_hit_blocks": 15199,
+              "shared_read_blocks": 729377,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            }
+          ],
+          "median_ms": 3623.463,
+          "min_ms": 3150.552,
+          "max_ms": 3670.386
+        }
+      }
+    },
+    "baseline_after": {
+      "queries": {
+        "single_month": {
+          "samples": [
+            {
+              "execution_ms": 2120.933,
+              "planning_ms": 0.221,
+              "shared_hit_blocks": 16180,
+              "shared_read_blocks": 728396,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 2508.473,
+              "planning_ms": 0.17,
+              "shared_hit_blocks": 16180,
+              "shared_read_blocks": 728396,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 2426.666,
+              "planning_ms": 0.141,
+              "shared_hit_blocks": 16180,
+              "shared_read_blocks": 728396,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            }
+          ],
+          "median_ms": 2426.666,
+          "min_ms": 2120.933,
+          "max_ms": 2508.473
+        },
+        "origin_month": {
+          "samples": [
+            {
+              "execution_ms": 2968.042,
+              "planning_ms": 0.135,
+              "shared_hit_blocks": 0,
+              "shared_read_blocks": 179655,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe"
+              ]
+            },
+            {
+              "execution_ms": 1964.984,
+              "planning_ms": 0.261,
+              "shared_hit_blocks": 0,
+              "shared_read_blocks": 179655,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe"
+              ]
+            },
+            {
+              "execution_ms": 1834.376,
+              "planning_ms": 0.131,
+              "shared_hit_blocks": 0,
+              "shared_read_blocks": 179655,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Bitmap Heap Scan",
+                "Bitmap Index Scan",
+                "Gather"
+              ],
+              "indexes_used": [
+                "5717fe7e86dad1b08c6f800c16a9bbfe"
+              ]
+            }
+          ],
+          "median_ms": 1964.984,
+          "min_ms": 1834.376,
+          "max_ms": 2968.042
+        },
+        "full_year": {
+          "samples": [
+            {
+              "execution_ms": 4607.409,
+              "planning_ms": 0.819,
+              "shared_hit_blocks": 16172,
+              "shared_read_blocks": 728404,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3311.435,
+              "planning_ms": 0.141,
+              "shared_hit_blocks": 16168,
+              "shared_read_blocks": 728408,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            },
+            {
+              "execution_ms": 3343.274,
+              "planning_ms": 0.171,
+              "shared_hit_blocks": 16206,
+              "shared_read_blocks": 728370,
+              "temp_read_blocks": 0,
+              "temp_written_blocks": 0,
+              "nodes": [
+                "Aggregate",
+                "Gather",
+                "Seq Scan"
+              ],
+              "indexes_used": []
+            }
+          ],
+          "median_ms": 3343.274,
+          "min_ms": 3311.435,
+          "max_ms": 4607.409
+        }
+      }
+    }
+  },
+  "original_indexes": [
+    [
+      "074a5d14edea44786ea232c80beeb3d1",
+      "CREATE INDEX \"074a5d14edea44786ea232c80beeb3d1\" ON gold.fct_flights USING btree (flight_date_key)"
+    ],
+    [
+      "3ee9e3453e945f18bc5b5a726d2676a3",
+      "CREATE UNIQUE INDEX \"3ee9e3453e945f18bc5b5a726d2676a3\" ON gold.fct_flights USING btree (flight_sk)"
+    ],
+    [
+      "5717fe7e86dad1b08c6f800c16a9bbfe",
+      "CREATE INDEX \"5717fe7e86dad1b08c6f800c16a9bbfe\" ON gold.fct_flights USING btree (origin_airport_sk)"
+    ]
+  ],
+  "postgres_version": "17.12 (Debian 17.12-1.pgdg13+1)",
+  "settings": {
+    "shared_buffers": "128MB",
+    "work_mem": "4MB",
+    "effective_cache_size": "4GB",
+    "max_parallel_workers_per_gather": "2",
+    "jit": "on",
+    "block_size": "8192"
+  },
+  "source_month_correlation": -0.14193362,
+  "matched_counts": {
+    "single_month": [
+      582304,
+      571924,
+      153113
+    ],
+    "origin_month": [
+      27790,
+      27007,
+      10531
+    ],
+    "full_year": [
+      7001619,
+      6879484,
+      1534638
+    ]
+  },
+  "original_indexes_restored": true
+}
