@@ -203,3 +203,37 @@ report has five pages, 11 tables, 11 relationships and 49 measures. The final
 local regression recorded 103 tests passed, Ruff PASS and zero PBIR errors
 or warnings. The PBIP is already source controlled; do not regenerate it
 merely to open the existing report.
+
+## Phase 7: orchestration and operational validation
+
+After installing Phase 2-4 dependencies, follow the
+[Dagster setup and operations runbook](phase7/README.md). Use a separate
+virtual environment from requirements-phase7.txt and a dedicated local
+DAGSTER_HOME. Run all 24 supported monthly partitions before
+rebuild_gold_and_validate. The weekly audit is stopped by default;
+do not enable it until the warehouse and daemon are available.
+
+See the [monitoring runbook](phase7/monitoring_runbook.md) and
+[full-population acceptance](phase7/acceptance.md) for actual
+scheduler/recovery evidence and the successful isolated full Gold
+build (11 models and 65 tests).
+
+## Phase 8: performance and reproducibility
+
+Use the [Phase 8 plan](phase8/README.md), [performance baseline](phase8/performance_baseline.md),
+[index experiments](phase8/index_optimization.md) and
+[pipeline measurements](phase8/pipeline_performance.md). The latter
+two require their documented isolated databases and are not steps
+for normal initial deployment.
+
+The [final architecture](phase8/architecture.md),
+[engineering decisions](phase8/engineering_decisions.md) and
+[clean-checkout trial](phase8/clean_reproduction.md) explain the
+implemented scope and verified fresh-install procedure.
+
+**Important isolation warning:** the Compose file uses a fixed default
+project name. A second clone on the same machine must use a different
+project name (docker compose -p UNIQUE_NAME), unused host port and
+independent credentials/volume. Verify the target database before
+any fixture, benchmark or rebuild. Never run docker compose down -v
+against the accepted warehouse.
