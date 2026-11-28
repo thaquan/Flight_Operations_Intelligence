@@ -11,7 +11,7 @@
 
 A reproducible, local-first platform that transforms two years of official U.S. Department of Transportation flight records into a validated PostgreSQL warehouse, business-ready analytics marts and an interactive Power BI report. This Data Engineering / Analytics portfolio project emphasizes source lineage, reliable KPI definitions, repeatable processing and evidence-based operational insights.
 
-**Status:** Phases 1-4 and the five-page Flight Performance dashboard (Phase 5) are complete at the [accepted baseline 93cf3dd](https://github.com/thaquan/Flight_Operations_Intelligence/commit/93cf3ddd00691337e5204cc5b49aaad33b748b32). Phase 7: Dagster orchestration is complete for the local-first historical scope ([M7.1-M7.5 acceptance](docs/phase7/acceptance.md)). Phase 8 is next. NOAA enrichment and a separate risk dashboard are deferred.
+**Status:** Phases 1-4 and the five-page Flight Performance dashboard (Phase 5) are complete at the [accepted baseline 93cf3dd](https://github.com/thaquan/Flight_Operations_Intelligence/commit/93cf3ddd00691337e5204cc5b49aaad33b748b32). Phase 7: Dagster orchestration is complete for the local-first historical scope ([M7.1-M7.5 acceptance](docs/phase7/acceptance.md)). Phase 8 is in progress: [M8.1 measured baseline](docs/phase8/performance_baseline.md) is verified locally. NOAA enrichment and a separate risk dashboard are deferred.
 
 [Dashboard](#power-bi-dashboard) | [Architecture](#system-architecture) | [Insights](#key-business-insights) | [Getting started](#getting-started) | [Roadmap](#roadmap)
 
@@ -245,7 +245,7 @@ Dagster coordinates all 24 monthly partitions with two successful backfills. A f
 | 5 | Power BI Flight Performance dashboard | Complete |
 | 6 | NOAA weather integration | Deferred / optional |
 | 7 | Dagster OSS: monthly ingestion, backfills, scheduled audits and run monitoring | Complete; M7.1-M7.5 accepted |
-| 8 | Performance optimization, architecture evidence and portfolio delivery | Planned |
+| 8 | Performance optimization, architecture evidence and portfolio delivery | M8.1 verified; M8.2-M8.5 planned |
 
 The original phase numbering is retained. Phase 6 is deferred to prioritize operating the existing pipeline in Phase 7. A separate operational risk dashboard, NOAA enrichment and downstream delay propagation remain optional future enhancements. See the [Phase 7 runbook](docs/phase7/README.md). Gold remains full rebuild; monthly Bronze/Silver ingestion is idempotent.
 
