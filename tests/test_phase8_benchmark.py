@@ -37,3 +37,24 @@ def test_equivalence_required():
     require_equal([(1, 2)], [(1, 2)], "test")
     with pytest.raises(ValueError, match="differ"):
         require_equal([(1, 2)], [(1, 3)], "test")
+
+
+def test_index_experiment_refuses_main_and_wrong_port():
+    from src.phase8.index_experiment import require_target
+
+    require_target({"POSTGRES_DB": "flight_m75_acceptance", "POSTGRES_PORT": "5543"})
+    for db, port in (("flight_warehouse", "5433"), ("flight_m73_test", "5543"),
+                     ("flight_m75_acceptance", "5433")):
+        with pytest.raises(RuntimeError, match="isolated"):
+            require_target({"POSTGRES_DB": db, "POSTGRES_PORT": port})
+
+
+def test_index_names_walk_nested_plans():
+    from src.phase8.index_experiment import index_names
+
+    assert index_names({"Node Type": "Bitmap Heap Scan", "Plans": [
+        {"Node Type": "BitmapAnd", "Plans": [
+            {"Index Name": "month_index"}, {"Index Name": "airport_index"},
+        ]},
+    ]}) == ["month_index", "airport_index"]
+    assert index_names({"Node Type": "Seq Scan"}) == []
